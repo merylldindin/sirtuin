@@ -6,7 +6,7 @@ requires = ["poetry-core>=1.0.0"]
 color = true
 line-length = 88
 skip-string-normalization = true
-target-version = ['py311']
+target-version = ['py310']
 
 [tool.isort]
 combine_as_imports = true
@@ -33,7 +33,7 @@ follow_imports = 'silent'
 namespace_packages = true
 no_implicit_optional = true
 no_implicit_reexport = true
-python_version = '3.11'
+python_version = '3.10'
 show_error_codes = true
 strict_concatenate = true
 strict_equality = true
@@ -53,7 +53,7 @@ version = "0.1.0"
 
 [tool.poetry.dependencies]
 pydantic = "^1.10.2"
-python = "3.11.*"
+python = ">=3.10,<4.0"
 pyyaml = "^6.0"
 tomli = "^2.0.1"
 
@@ -79,4 +79,4 @@ pythonpath = ["."]
 [tool.ruff]
 extend-select = ["Q"]
 line-length = 88
-target-version = "py311"
+target-version = "py310"
