@@ -158,10 +158,12 @@ def _setup_beanstalk_deployment(config: ElasticBeanstalkSirtuinConfig) -> str:
 
     with ZipFile(artifact, mode="w") as zip_file:
         for filepath in filepaths:
-            zip_file.write(
-                filepath,
-                arcname=filepath.replace(config.directory, "."),
-            )
+            if len(config.directory) > 0:
+                zip_file.write(
+                    filepath, arcname=filepath.replace(config.directory, ".")
+                )
+            else:
+                zip_file.write(filepath)
 
     return artifact
 
