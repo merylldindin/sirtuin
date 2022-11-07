@@ -11,10 +11,10 @@ from sirtuin.controllers.aws_cloudfront import (
     invalidate_cloudfront_distribution,
 )
 from sirtuin.controllers.http_headers import print_content_security_policy
-from sirtuin.models.routines import DEFAULT_CONFIG_FILE
 
 cli = typer.Typer()
 
+DEFAULT_CONFIG_FILE: str = "sirtuin.toml"
 
 # ? HTTP Headers
 
