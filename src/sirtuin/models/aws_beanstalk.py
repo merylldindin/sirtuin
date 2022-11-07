@@ -13,7 +13,7 @@ DEFAULT_BEANSTALK_EBEXTENSIONS_SCHEMAS: str = "ebextensions"
 DEFAULT_BEANSTALK_PLATFORM: str = "Docker running on 64bit Amazon Linux 2"
 DEFAULT_BEANSTALK_PLATFORM_DIRECTORY: str = ".platform"
 DEFAULT_BEANSTALK_PLATFORM_SCHEMAS: str = "platform"
-DEFAULT_BEANSTALK_TEMPORARY_DIRECTORY: str = ".sirtuin"
+DEFAULT_BEANSTALK_TEMPORARY_DIRECTORY: str = ".sirtuin_cache"
 
 
 # ? .elasticbeanstalk/config.yml
