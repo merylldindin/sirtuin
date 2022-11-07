@@ -5,7 +5,7 @@ import subprocess
 def _get_virtual_environment_path() -> str:
     try:
         return subprocess.check_output(["poetry env info", "--path"]).decode()[:-1]
-    except Exception as _:
+    except Exception:
         return os.path.join(os.getcwd(), ".venv")
 
 
