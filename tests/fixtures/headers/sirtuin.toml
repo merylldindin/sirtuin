@@ -1,0 +1,102 @@
+static-redirection = "true"
+
+[cache-control]
+key = "Cache-Control"
+value = "max-age=43200"
+
+[content-security-policy]
+key = "Content-Security-Policy"
+
+[csp.application]
+base-uri = ["self", "*.domain.com"]
+connect-src = ["self", "*.domain.com"]
+default-src = ["self"]
+font-src = ["self", "https://cdn.com"]
+frame-ancestors = ["*.domain.com"]
+img-src = ["self", "*.domain.com", "https://cdn.com"]
+media-src = ["self"]
+object-src = ["self"]
+prefetch-src = ["self"]
+script-src = ["self", "*.domain.com"]
+style-src = ["self"]
+
+[csp.facebook]
+child-src = ["*.facebook.com", "connect.facebook.net"]
+connect-src = ["*.facebook.com", "connect.facebook.net"]
+font-src = ["data:"]
+form-action = ["*.facebook.com", "connect.facebook.net"]
+frame-src = ["*.facebook.com", "connect.facebook.net"]
+img-src = ["data:", "*.facebook.com", "*.facebook.net", "*.fbcdn.net"]
+script-src = ["https://connect.facebook.net", "https://graph.facebook.com", "https://js.facebook.com"]
+style-src = ["unsafe-inline"]
+
+[csp.google-ads]
+child-src = ["blob:", "*.google.com", "*.doubleclick.net", "*.googlesyndication.com"]
+connect-src = ["*.doubleclick.net", "*.google.com", "*.googlesyndication.com", "www.googletagservices.com", "about:"]
+font-src = ["data:"]
+form-action = ["*.google.com"]
+frame-src = ["*.google.com", "*.doubleclick.net", "*.googlesyndication.com"]
+img-src = ["data:", "*.google.com", "*.doubleclick.net", "*.googlesyndication.com", "www.googleadservices.com"]
+media-src = ["dai.google.com"]
+object-src = ["*.googlesyndication.com"]
+prefetch-src = ["*.googlesyndication.com"]
+script-src = ["unsafe-eval", "https://*.doubleclick.net", "https://*.googleadservices.com", "https://*.google.com", "https://*.googlesyndication.com", "https://*.googletagservices.com"]
+style-src = ["unsafe-inline", "*.google.com"]
+worker-src = ["blob:", "www.google.com"]
+
+[csp.google-analytics]
+connect-src = ["www.google-analytics.com", "stats.g.doubleclick.net", "ampcid.google.com", "analytics.google.com", "about:"]
+font-src = ["data:"]
+img-src = ["data:", "blob:", "www.google-analytics.com", "ssl.google-analytics.com", "www.google.com", "analytics.google.com"]
+script-src = ["https://www.google-analytics.com", "https://ssl.google-analytics.com", "https://google-analytics.com"]
+
+[csp.google-tag-manager]
+child-src = ["www.googletagmanager.com"]
+connect-src = ["www.googletagmanager.com"]
+font-src = ["data:"]
+frame-src = ["www.googletagmanager.com"]
+img-src = ["data:", "www.googletagmanager.com"]
+script-src = ["unsafe-inline", "unsafe-eval", "https://www.googletagmanager.com", "https://googletagmanager.com", "https://tagmanager.google.com"]
+style-src = ["www.googletagmanager.com", "tagmanager.google.com"]
+
+[csp.intercom]
+child-src = ["www.intercom-reporting.com", "intercom-sheets.com", "www.youtube.com", "player.vimeo.com", "fast.wistia.net"]
+connect-src = ["*.intercom.io", "wss://*.intercom.io", "uploads.intercomcdn.com", "uploads.intercomusercontent.com"]
+font-src = ["js.intercomcdn.com", "fonts.intercomcdn.com"]
+form-action = ["api-iam.intercom.io", "intercom.help"]
+frame-src = ["www.intercom-reporting.com", "intercom-sheets.com"]
+img-src = ["data:", "blob:", "static.intercomassets.com", "*.intercomcdn.com", "*.intercom-mail.com", "*.intercom.io", "*.intercomusercontent.com"]
+media-src = ["js.intercomcdn.com"]
+script-src = ["https://js.intercomcdn.com", "https://widget.intercom.io", "https://app.intercom.io"]
+style-src = ["unsafe-inline"]
+
+[csp.sentry]
+connect-src = ["*.sentry.io"]
+
+[expect-ct]
+key = "Expect-CT"
+value = "max-age=86400, enforce"
+
+[referrer-policy]
+key = "Referrer-Policy"
+value = "no-referrer"
+
+[strict-transport-security]
+key = "Strict-Transport-Security"
+value = "max-age=63072000; includeSubdomains; preload"
+
+[x-content-type-options]
+key = "X-Content-Type-Options"
+value = "nosniff"
+
+[x-frame-options]
+key = "X-Frame-Options"
+value = "DENY"
+
+[x-permitted-cross-domain-policies]
+key = "X-Permitted-Cross-Domain-Policies"
+value = "none"
+
+[x-xss-protection]
+key = "X-XSS-Protection"
+value = "1; mode=block"

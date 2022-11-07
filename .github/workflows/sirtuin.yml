@@ -1,0 +1,53 @@
+name: sirtuin
+
+on: [pull_request]
+
+env:
+  SERVICE_NAME: "sirtuin"
+  PYTHON_VERSION: "3.11"
+  POETRY_VERSION: "1.2.2"
+  POETRY_INSTALL_URL: "https://install.python-poetry.org"
+
+jobs:
+  workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v3
+
+      - name: Setup Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache Dependencies
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pypoetry
+            ./.venv/
+          key: ${{ runner.os }}-platform-${{ env.SERVICE_NAME }}-${{ env.PYTHON_VERSION }}-${{ env.POETRY_VERSION }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Install Poetry ${{ env.POETRY_VERSION }}
+        run: curl -sSL ${{ env.POETRY_INSTALL_URL }} | python3 - --version ${{ env.POETRY_VERSION }}
+
+      - name: Install Dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: make install
+
+      - name: Run Black
+        run: make black
+
+      - name: Run Isort
+        run: make isort
+
+      - name: Run Ruff
+        run: make ruff
+
+      # - name: Run MyPy
+      #   run: make mypy
+
+      - name: Run Pytest
+        run: make pytest

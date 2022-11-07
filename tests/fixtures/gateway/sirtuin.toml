@@ -1,0 +1,21 @@
+profile = "my-profile"
+
+[code]
+Handler = "handler.lambda_handler"
+Layers = ["layer"]
+Runtime = "python3.9"
+
+[configuration]
+EphemeralStorageSize = 512
+MemorySize = 128
+Timeout = 30
+
+[environment]
+KEY = "VARIABLE"
+
+[lambda]
+Architecture = "x86_64"
+FunctionArn = "my-lambda-function-arn"
+FunctionName = "my-lambda-function-name"
+PackageType = "Zip"
+Role = "my-lambda-function-execution-role"

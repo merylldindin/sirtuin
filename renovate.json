@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "assignees": ["merylldindin"],
+  "dependencyDashboard": true,
+  "dependencyDashboardAutoclose": true,
+  "extends": ["config:base"],
+  "packageRules": [
+    {
+      "automerge": true,
+      "groupName": "minor",
+      "matchDepTypes": [
+        "dependencies",
+        "dev",
+        "devDependencies",
+        "extras",
+        "test",
+        "typing"
+      ],
+      "matchUpdateTypes": [
+        "bump",
+        "digest",
+        "lockFileMaintenance",
+        "minor",
+        "patch",
+        "pin",
+        "rollback"
+      ],
+      "semanticCommitType": "chore"
+    }
+  ],
+  "schedule": ["every weekend"]
+}

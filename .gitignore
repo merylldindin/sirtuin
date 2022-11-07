@@ -1,0 +1,8 @@
+# dependencies
+.venv/
+node_modules/
+
+# cache
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/

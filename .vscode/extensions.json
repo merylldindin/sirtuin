@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "sourcery.sourcery",
+    "SonarSource.sonarlint-vscode",
+    "kisstkondoros.vscode-codemetrics",
+    "aaron-bond.better-comments",
+    "njpwerner.autodocstring",
+    "GitHub.copilot",
+    "ms-python.python",
+    "ms-python.black-formatter",
+    "ms-python.vscode-pylance",
+    "ms-python.isort",
+    "ms-toolsai.jupyter",
+    "esbenp.prettier-vscode"
+  ],
+  "unwantedRecommendations": []
+}

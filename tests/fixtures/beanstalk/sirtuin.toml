@@ -1,0 +1,64 @@
+profile = "my-profile"
+
+[beanstalk]
+ApplicationName = "my-application"
+DotenvPath = ".env"
+EC2KeyName = "my-ec2-keyname"
+ServiceName = "my-service"
+
+[docker]
+AuthBucket = "my-bucket"
+AuthKey = "my-key"
+Image = "my-dockerhub-repository/my-image"
+Ports = [{ container = 5000, host = 5000 }]
+Volumes = []
+
+[ebextensions."autoscaling-policy.config"]
+
+[ebextensions."autoscaling.config"]
+
+[ebextensions."healthcheck.config"]
+HealthCheckInterval = 60
+HealthCheckPath = "my-health-url"
+HealthCheckTimeout = 5
+ProcessPort = 80
+ProcessProtocol = "HTTP"
+StickinessEnabled = true
+StickinessLBCookieDuration = 86400
+
+[ebextensions."platform-update.config"]
+
+[ebextensions."security.config"]
+EC2KeyName = "my-ec2-keyname"
+SecurityGroups = "my-security-group"
+
+[ebextensions."timezone.config"]
+TimeZone = "my-timezone"
+
+[instance]
+InstanceType = "t3.small"
+MaxInstances = 1
+MinInstances = 1
+Proxy = "nginx"
+Region = "us-east-2"
+Timeout = 30
+
+[load-balancer]
+ElbType = "application"
+IsShared = true
+SharedAlbName = "my-shared-load-balancer-name"
+SharedAlbPort = 443
+
+[platform."hooks/prebuild/set_timezone.sh"]
+
+[platform."nginx/conf.d/sizes.conf"]
+BodySize = "20m"
+
+[platform."nginx/conf.d/timeouts.conf"]
+Timeout = 60
+
+[vpc]
+DbSubnets = "my-db-subnets"
+Ec2Subnets = "my-ec2-subnets"
+ElbSubnets = "my-elb-subnets"
+VpcId = "my-vpc-id"
