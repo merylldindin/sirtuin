@@ -63,7 +63,7 @@ typer = {extras = ["all"], version = "^0.7.0"}
 black = "^22.10.0"
 isort = "^5.10.1"
 mypy = "^0.982"
-ruff = "^0.0.103"
+ruff = "^0.0.105"
 toml-sort = "^0.20.1"
 tomli = "^2.0.1"
 
