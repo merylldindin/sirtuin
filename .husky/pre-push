@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn checks:run
+make black
+make isort
+make ruff
