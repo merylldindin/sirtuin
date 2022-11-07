@@ -36,7 +36,11 @@ def _copy_application_bundle_to_bucket(config: CloudfrontSirtuinConfig) -> str:
 
 
 @run_command
-def _invalidate_cloudfront_distribution(config: CloudfrontSirtuinConfig) -> str:
+def invalidate_cloudfront_distribution(
+    filepath: str, config: CloudfrontSirtuinConfig | None = None
+) -> str:
+    config = config or _get_sirtuin_config(filepath)
+
     return (
         f"aws "
         f"cloudfront create-invalidation "
@@ -52,4 +56,4 @@ def deploy_cloudfront_from_config(filepath: str) -> None:
 
     _synchronize_hosting_bucket(sirtuin_config)
     _copy_application_bundle_to_bucket(sirtuin_config)
-    _invalidate_cloudfront_distribution(sirtuin_config)
+    invalidate_cloudfront_distribution(filepath, config=sirtuin_config)
