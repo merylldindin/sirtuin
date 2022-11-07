@@ -1,12 +1,10 @@
 import os
 import shutil
 
-from .decorators import if_exists
 
-
-@if_exists
 def delete_file(filepath: str) -> None:
-    os.remove(filepath)
+    if os.path.isfile(filepath):
+        os.remove(filepath)
 
 
 def delete_directory(directory: str) -> None:

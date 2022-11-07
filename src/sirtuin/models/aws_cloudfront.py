@@ -1,24 +1,24 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .aws_regions import AwsRegion
 
 
 class CloudfrontApplicationConfig(BaseModel):
-    bundle: str
+    bundle: str = Field(alias="Bundle")
 
 
 class CloudfrontBucketConfig(BaseModel):
-    name: str
-    region: AwsRegion
+    name: str = Field(alias="Name")
+    region: AwsRegion = Field(alias="Region")
 
 
 class CloudfrontDistributionConfig(BaseModel):
-    distribution: str
+    distribution: str = Field(alias="Distribution")
 
 
 class CloudfrontSirtuinConfig(BaseModel):
     application: CloudfrontApplicationConfig
     bucket: CloudfrontBucketConfig
     cloudfront: CloudfrontDistributionConfig
-    directory: str = "."
-    profile: str | None = None
+    directory: str = Field(default=".", alias="Directory")
+    profile: str | None = Field(default=None, alias="Profile")

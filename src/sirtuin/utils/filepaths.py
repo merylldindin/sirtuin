@@ -1,5 +1,14 @@
 import os
 import subprocess
+from pathlib import Path
+
+
+def get_service_directory(filepath: str, config_directory: str = ".") -> str:
+    service_directory = os.path.dirname(filepath)
+    for _ in Path(config_directory).parents:
+        service_directory = os.path.dirname(filepath)
+
+    return service_directory
 
 
 def _get_virtual_environment_path() -> str:

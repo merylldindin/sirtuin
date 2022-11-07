@@ -1,14 +1,14 @@
-import os
-
 from sirtuin.models.aws_cloudfront import CloudfrontSirtuinConfig
 from sirtuin.utils.decorators import run_command
+from sirtuin.utils.filepaths import get_service_directory
 from sirtuin.utils.loaders import read_toml_file
 
 
 def _get_sirtuin_config(filepath: str) -> CloudfrontSirtuinConfig:
-    return CloudfrontSirtuinConfig(
-        **read_toml_file(filepath), directory=os.path.dirname(filepath)
-    )
+    config = CloudfrontSirtuinConfig(**read_toml_file(filepath))
+    config.directory = get_service_directory(filepath, config.directory)
+
+    return config
 
 
 @run_command

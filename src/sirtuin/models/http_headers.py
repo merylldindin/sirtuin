@@ -4,12 +4,12 @@ ESCAPED_SOURCES: list[str] = ["self", "unsafe-inline", "unsafe-eval"]
 
 
 class HttpHeaderConfig(BaseModel):
-    key: str
-    value: str | None
+    key: str = Field(alias="Key")
+    value: str | None = Field(default=None, alias="Value")
 
 
 class HttpHeadersSirtuinConfig(BaseModel):
-    static_redirection: bool = Field(default=True)
+    static_redirection: bool = Field(default=True, alias="StaticRedirection")
     cache_control: HttpHeaderConfig
     content_security_policy: HttpHeaderConfig
     csp: dict[str, dict[str, list[str]]]

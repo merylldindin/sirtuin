@@ -1,11 +1,11 @@
-profile = "my-profile"
+Profile = "my-profile"
 
 [application]
-bundle = "my-application-bundle"
+Bundle = "my-application-bundle"
 
 [bucket]
-name = "my-bucket-name"
-region = "us-east-2"
+Name = "my-bucket-name"
+Region = "us-east-2"
 
 [cloudfront]
-distribution = "my-cloudfront-distribution-id"
+Distribution = "my-cloudfront-distribution-id"

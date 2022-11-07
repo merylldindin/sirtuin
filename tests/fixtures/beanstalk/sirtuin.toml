@@ -1,4 +1,4 @@
-profile = "my-profile"
+Profile = "my-profile"
 
 [beanstalk]
 ApplicationName = "my-application"

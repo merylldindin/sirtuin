@@ -1,11 +1,11 @@
-static-redirection = "true"
+StaticRedirection = "true"
 
 [cache-control]
-key = "Cache-Control"
-value = "max-age=43200"
+Key = "Cache-Control"
+Value = "max-age=43200"
 
 [content-security-policy]
-key = "Content-Security-Policy"
+Key = "Content-Security-Policy"
 
 [csp.application]
 base-uri = ["self", "*.domain.com"]
@@ -74,29 +74,29 @@ style-src = ["unsafe-inline"]
 connect-src = ["*.sentry.io"]
 
 [expect-ct]
-key = "Expect-CT"
-value = "max-age=86400, enforce"
+Key = "Expect-CT"
+Value = "max-age=86400, enforce"
 
 [referrer-policy]
-key = "Referrer-Policy"
-value = "no-referrer"
+Key = "Referrer-Policy"
+Value = "no-referrer"
 
 [strict-transport-security]
-key = "Strict-Transport-Security"
-value = "max-age=63072000; includeSubdomains; preload"
+Key = "Strict-Transport-Security"
+Value = "max-age=63072000; includeSubdomains; preload"
 
 [x-content-type-options]
-key = "X-Content-Type-Options"
-value = "nosniff"
+Key = "X-Content-Type-Options"
+Value = "nosniff"
 
 [x-frame-options]
-key = "X-Frame-Options"
-value = "DENY"
+Key = "X-Frame-Options"
+Value = "DENY"
 
 [x-permitted-cross-domain-policies]
-key = "X-Permitted-Cross-Domain-Policies"
-value = "none"
+Key = "X-Permitted-Cross-Domain-Policies"
+Value = "none"
 
 [x-xss-protection]
-key = "X-XSS-Protection"
-value = "1; mode=block"
+Key = "X-XSS-Protection"
+Value = "1; mode=block"

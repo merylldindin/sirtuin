@@ -2,7 +2,12 @@ import os
 
 from sirtuin.controllers import aws_beanstalk
 from sirtuin.models.aws_instances import AwsInstance
-from sirtuin.utils.loaders import list_zip_files, read_json_file, read_yaml_file
+from sirtuin.utils.loaders import (
+    list_zip_files,
+    read_json_file,
+    read_raw_file,
+    read_yaml_file,
+)
 
 
 def test_get_sirtuin_config(beanstalk_sirtuin_config: str) -> None:
@@ -27,6 +32,17 @@ def test_get_environment_variables(beanstalk_sirtuin_config: str) -> None:
 
     assert variables is not None
     assert variables["KEY"] == "VARIABLE"
+
+
+def test_write_ebignore_config(beanstalk_sirtuin_config: str) -> None:
+    config = aws_beanstalk._get_sirtuin_config(beanstalk_sirtuin_config)
+
+    filepath = aws_beanstalk._write_ebignore_config(config)
+
+    assert os.path.exists(filepath)
+    assert read_raw_file(filepath) == "*\n\n!artifact.zip"
+
+    aws_beanstalk._clean_beanstalk_deployment(config)
 
 
 def test_write_beanstalk_config(beanstalk_sirtuin_config: str) -> None:
@@ -66,24 +82,11 @@ def test_write_beanstalk_customization(beanstalk_sirtuin_config: str) -> None:
     filepaths = aws_beanstalk._write_beanstalk_customization(config)
 
     assert len(filepaths) == 9
+    assert "tests/fixtures/beanstalk/.ebextensions/autoscaling.config" in filepaths
+    assert "tests/fixtures/beanstalk/.platform/nginx/conf.d/sizes.conf" in filepaths
+    assert "tests/fixtures/beanstalk/.ebextensions/security.config" in filepaths
 
-    assert (
-        "tests/fixtures/beanstalk/.sirtuin/.ebextensions/autoscaling.config"
-        in filepaths
-    )
-
-    assert (
-        "tests/fixtures/beanstalk/.sirtuin/.platform/nginx/conf.d/sizes.conf"
-        in filepaths
-    )
-
-    assert (
-        "tests/fixtures/beanstalk/.sirtuin/.ebextensions/security.config" in filepaths
-    )
-
-    security = read_yaml_file(
-        "tests/fixtures/beanstalk/.sirtuin/.ebextensions/security.config"
-    )
+    security = read_yaml_file("tests/fixtures/beanstalk/.ebextensions/security.config")
 
     assert (
         security["option_settings"]["aws:autoscaling:launchconfiguration"]["EC2KeyName"]

@@ -10,11 +10,10 @@ DEFAULT_BEANSTALK_CONFIG_PATH: str = f"{DEFAULT_BEANSTALK_CONFIG_DIRECTORY}/conf
 DEFAULT_BEANSTALK_DOCKERRUN_PATH: str = "Dockerrun.aws.json"
 DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY: str = ".ebextensions"
 DEFAULT_BEANSTALK_EBEXTENSIONS_SCHEMAS: str = "ebextensions"
+DEFAULT_BEANSTALK_EBIGNORE_PATH: str = ".ebignore"
 DEFAULT_BEANSTALK_PLATFORM: str = "Docker running on 64bit Amazon Linux 2"
 DEFAULT_BEANSTALK_PLATFORM_DIRECTORY: str = ".platform"
 DEFAULT_BEANSTALK_PLATFORM_SCHEMAS: str = "platform"
-DEFAULT_BEANSTALK_TEMPORARY_DIRECTORY: str = ".sirtuin_cache"
-
 
 # ? .elasticbeanstalk/config.yml
 
@@ -130,11 +129,11 @@ class ElasticBeanstalkVpcConfig(BaseModel):
 
 class ElasticBeanstalkSirtuinConfig(BaseModel):
     beanstalk: ElasticBeanstalkServiceConfig
-    directory: str = "."
+    directory: str = Field(default=".", alias="Directory")
     docker: ElasticBeanstalkDockerConfig
     ebextensions: dict[str, dict[str, str | int] | None]
     instance: ElasticBeanstalkInstanceConfig
     load_balancer: ElasticBeanstalkLoadBalancerConfig = Field(alias="load-balancer")
     platform: dict[str, dict[str, str | int] | None]
-    profile: str
+    profile: str = Field(alias="Profile")
     vpc: ElasticBeanstalkVpcConfig
