@@ -34,3 +34,10 @@ def _generate_content_security_policy(config: HttpHeadersSirtuinConfig) -> str:
             for source_type, sources in csp_sources.items()
         ]
     )
+
+
+def print_content_security_policy(filepath: str) -> None:
+    print(_generate_content_security_policy(_get_sirtuin_config(filepath)))
+
+
+# TODO strategy is to generate lambda edge function directly
