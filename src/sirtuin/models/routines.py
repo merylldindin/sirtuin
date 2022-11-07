@@ -1,5 +1,6 @@
 from enum import Enum
 
+DEFAULT_CONFIG_FILE = 'sirtuin.toml'
 
 class Environment(str, Enum):
     DEVELOPMENT = "development"
