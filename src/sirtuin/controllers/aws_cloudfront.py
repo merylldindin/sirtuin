@@ -6,7 +6,7 @@ from sirtuin.utils.loaders import read_toml_file
 
 def _get_sirtuin_config(filepath: str) -> CloudfrontSirtuinConfig:
     config = CloudfrontSirtuinConfig(**read_toml_file(filepath))
-    config.directory = get_service_directory(filepath, config.directory)
+    config.directory = get_service_directory(filepath)
 
     return config
 

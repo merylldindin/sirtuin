@@ -130,7 +130,7 @@ class ElasticBeanstalkVpcConfig(BaseModel):
 
 class ElasticBeanstalkSirtuinConfig(BaseModel):
     beanstalk: ElasticBeanstalkServiceConfig
-    directory: str = Field(default=".", alias="Directory")
+    directory: str = Field(default=".")
     docker: ElasticBeanstalkDockerConfig
     ebextensions: dict[str, dict[str, str | int] | None]
     instance: ElasticBeanstalkInstanceConfig

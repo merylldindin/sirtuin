@@ -24,7 +24,7 @@ from sirtuin.utils.loaders import read_dotenv_file, read_raw_file, read_toml_fil
 
 def _get_sirtuin_config(filepath: str) -> ElasticBeanstalkSirtuinConfig:
     config = ElasticBeanstalkSirtuinConfig(**read_toml_file(filepath))
-    config.directory = get_service_directory(filepath, config.directory)
+    config.directory = get_service_directory(filepath)
 
     return config
 
@@ -147,9 +147,11 @@ def _write_beanstalk_customization(config: ElasticBeanstalkSirtuinConfig) -> lis
 
 
 def _setup_beanstalk_deployment(config: ElasticBeanstalkSirtuinConfig) -> str:
+    _write_ebignore_config(config)
+
+    _write_beanstalk_config(config)
+
     filepaths: list[str] = [
-        _write_ebignore_config(config),
-        _write_beanstalk_config(config),
         _write_dockerrun_config(config),
         *_write_beanstalk_customization(config),
     ]

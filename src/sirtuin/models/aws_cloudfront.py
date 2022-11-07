@@ -20,5 +20,5 @@ class CloudfrontSirtuinConfig(BaseModel):
     application: CloudfrontApplicationConfig
     bucket: CloudfrontBucketConfig
     cloudfront: CloudfrontDistributionConfig
-    directory: str = Field(default=".", alias="Directory")
+    directory: str = Field(default=".")
     profile: str | None = Field(default=None, alias="Profile")
