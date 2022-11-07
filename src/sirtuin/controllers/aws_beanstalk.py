@@ -54,14 +54,13 @@ def _write_beanstalk_config(config: ElasticBeanstalkSirtuinConfig) -> str:
             "branch-defaults": {
                 "default": {
                     "environment": config.beanstalk.service,
-                },
-                "master": {
-                    "environment": config.beanstalk.service,
-                },
+                }
             },
             "global": {
                 "application_name": config.beanstalk.application,
                 "default_ec2_keyname": config.beanstalk.ec2_keyname,
+                "default_region": config.instance.region.value,
+                "profile": config.profile,
             },
         }
     )

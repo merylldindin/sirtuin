@@ -22,6 +22,8 @@ class ElasticBeanstalkGlobalConfig(BaseModel):
     application: str = Field(alias="application_name")
     ec2_keyname: str = Field(alias="default_ec2_keyname")
     platform: str = Field(default=DEFAULT_BEANSTALK_PLATFORM, alias="default_platform")
+    profile: str
+    region: str = Field(alias="default_region")
     workspace: str = Field(default="Application", alias="workspace_type")
 
 
@@ -31,7 +33,6 @@ class ElasticBeanstalkEnvironment(BaseModel):
 
 class ElasticBeanstalkBranchConfig(BaseModel):
     default: ElasticBeanstalkEnvironment
-    master: ElasticBeanstalkEnvironment
 
 
 class ElasticBeanstalkArtifact(BaseModel):
