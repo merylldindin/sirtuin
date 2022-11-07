@@ -5,8 +5,8 @@ from pathlib import Path
 
 def get_service_directory(filepath: str, config_directory: str = ".") -> str:
     service_directory = os.path.dirname(filepath)
-    for _ in Path(config_directory).parents:
-        service_directory = os.path.dirname(filepath)
+    for _ in range(len(Path(config_directory).parents)):
+        service_directory = os.path.dirname(service_directory)
 
     return service_directory
 
