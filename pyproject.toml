@@ -75,7 +75,7 @@ pytest-cov = "^4.0.0"
 types-pyyaml = "^6.0.12.1"
 
 [tool.poetry.scripts]
-sirtuin = "src.sirtuin.main:cli"
+sirtuin = "sirtuin.main:cli"
 
 [tool.pytest.ini_options]
 addopts = "--no-header -rA"
