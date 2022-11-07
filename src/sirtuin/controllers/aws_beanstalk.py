@@ -17,6 +17,7 @@ from sirtuin.models.aws_beanstalk import (
 from sirtuin.utils.cleaners import delete_directory
 from sirtuin.utils.decorators import run_command
 from sirtuin.utils.dumpers import copy_file, dump_as_json, dump_as_raw, dump_as_yaml
+from sirtuin.utils.filepaths import get_schemas_path
 from sirtuin.utils.loaders import read_dotenv_file, read_raw_file, read_toml_file
 
 
@@ -129,7 +130,7 @@ def _write_beanstalk_customization(config: ElasticBeanstalkSirtuinConfig) -> lis
 
     _write_extensions(
         config.ebextensions,
-        DEFAULT_BEANSTALK_EBEXTENSIONS_SCHEMAS,
+        os.path.join(get_schemas_path(), DEFAULT_BEANSTALK_EBEXTENSIONS_SCHEMAS),
         os.path.join(
             config.directory,
             DEFAULT_BEANSTALK_TEMPORARY_DIRECTORY,
@@ -140,7 +141,7 @@ def _write_beanstalk_customization(config: ElasticBeanstalkSirtuinConfig) -> lis
 
     _write_extensions(
         config.platform,
-        DEFAULT_BEANSTALK_PLATFORM_SCHEMAS,
+        os.path.join(get_schemas_path(), DEFAULT_BEANSTALK_PLATFORM_SCHEMAS),
         os.path.join(
             config.directory,
             DEFAULT_BEANSTALK_TEMPORARY_DIRECTORY,
