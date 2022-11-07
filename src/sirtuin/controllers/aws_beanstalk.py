@@ -3,7 +3,6 @@ from zipfile import ZipFile
 
 from sirtuin.models.aws_beanstalk import (
     DEFAULT_BEANSTALK_ARTIFACT_PATH,
-    DEFAULT_BEANSTALK_CONFIG_DIRECTORY,
     DEFAULT_BEANSTALK_CONFIG_PATH,
     DEFAULT_BEANSTALK_DOCKERRUN_PATH,
     DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY,
@@ -15,7 +14,7 @@ from sirtuin.models.aws_beanstalk import (
     ElasticBeanstalkDockerrunConfig,
     ElasticBeanstalkSirtuinConfig,
 )
-from sirtuin.utils.cleaners import delete_directory, delete_file
+from sirtuin.utils.cleaners import delete_directory
 from sirtuin.utils.decorators import run_command
 from sirtuin.utils.dumpers import copy_file, dump_as_json, dump_as_raw, dump_as_yaml
 from sirtuin.utils.loaders import read_dotenv_file, read_raw_file, read_toml_file
