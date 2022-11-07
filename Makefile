@@ -16,7 +16,7 @@ toml-sort: ## Sort pyproject.toml
 	poetry run toml-sort --all --in-place $(TOML_FILES)
 
 black: ## Run Black
-	poetry run black --check
+	poetry run black --check $(PYTHON_FILES)
 
 black-fix: ## Run Black with automated fix
 	poetry run black $(PYTHON_FILES)
