@@ -222,7 +222,7 @@ def create_beanstalk_from_config(filepath: str) -> None:
 
     _setup_beanstalk_deployment(config)
     _create_beanstalk_service(config)
-    _clean_beanstalk_deployment(config)
+    # _clean_beanstalk_deployment(config)
 
 
 @run_command
@@ -251,7 +251,7 @@ def deploy_beanstalk_from_config(filepath: str) -> None:
 
     _setup_beanstalk_deployment(config)
     _deploy_beanstalk_service(config)
-    _clean_beanstalk_deployment(config)
+    # _clean_beanstalk_deployment(config)
 
 
 @run_command
