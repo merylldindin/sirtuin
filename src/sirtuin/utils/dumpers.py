@@ -11,7 +11,7 @@ from yaml import SafeDumper
 def _ensure_directory_existence(filepath: str) -> None:
     directory_name = os.path.dirname(filepath)
 
-    if not os.path.exists(directory_name):
+    if len(directory_name) > 0 and not os.path.exists(directory_name):
         os.makedirs(directory_name)
 
 
