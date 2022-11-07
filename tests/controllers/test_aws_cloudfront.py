@@ -34,10 +34,20 @@ def test_copy_application_bundle_to_bucket(cloudfront_sirtuin_config: str) -> No
 
 
 def test_invalidate_cloudfront_distribution(cloudfront_sirtuin_config: str) -> None:
+    assert aws_cloudfront.invalidate_cloudfront_distribution(
+        cloudfront_sirtuin_config
+    ) == (
+        "aws cloudfront create-invalidation "
+        "--distribution-id my-cloudfront-distribution-id "
+        "--paths '/*' --region us-east-2 --profile my-profile"
+    )
+
     config = aws_cloudfront._get_sirtuin_config(cloudfront_sirtuin_config)
 
-    assert aws_cloudfront._invalidate_cloudfront_distribution(config) == (
-        "aws cloudfront create-invalidation "  # noqa: F541
+    assert aws_cloudfront.invalidate_cloudfront_distribution(
+        cloudfront_sirtuin_config, config=config
+    ) == (
+        "aws cloudfront create-invalidation "
         "--distribution-id my-cloudfront-distribution-id "
         "--paths '/*' --region us-east-2 --profile my-profile"
     )

@@ -10,10 +10,10 @@ DEFAULT_BEANSTALK_CONFIG_PATH: str = f"{DEFAULT_BEANSTALK_CONFIG_DIRECTORY}/conf
 DEFAULT_BEANSTALK_DOCKERRUN_PATH: str = "Dockerrun.aws.json"
 DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY: str = ".ebextensions"
 DEFAULT_BEANSTALK_EBEXTENSIONS_SCHEMAS: str = "src/sirtuin/schemas/ebextensions"
-DEFAULT_BEANSTALK_EBIGNORE_PATH: str = ".ebignore"
 DEFAULT_BEANSTALK_PLATFORM: str = "Docker running on 64bit Amazon Linux 2"
 DEFAULT_BEANSTALK_PLATFORM_DIRECTORY: str = ".platform"
 DEFAULT_BEANSTALK_PLATFORM_SCHEMAS: str = "src/sirtuin/schemas/platform"
+DEFAULT_BEANSTALK_TEMPORARY_DIRECTORY: str = ".sirtuin"
 
 
 # ? .elasticbeanstalk/config.yml

@@ -2,13 +2,7 @@ import os
 
 from sirtuin.controllers import aws_beanstalk
 from sirtuin.models.aws_instances import AwsInstance
-from sirtuin.utils.cleaners import delete_directory, delete_file
-from sirtuin.utils.loaders import (
-    list_zip_files,
-    read_json_file,
-    read_raw_file,
-    read_yaml_file,
-)
+from sirtuin.utils.loaders import list_zip_files, read_json_file, read_yaml_file
 
 
 def test_get_sirtuin_config(beanstalk_sirtuin_config: str) -> None:
@@ -35,18 +29,6 @@ def test_get_environment_variables(beanstalk_sirtuin_config: str) -> None:
     assert variables["KEY"] == "VARIABLE"
 
 
-def test_write_ebignore(beanstalk_sirtuin_config: str) -> None:
-    config = aws_beanstalk._get_sirtuin_config(beanstalk_sirtuin_config)
-
-    filepath = aws_beanstalk._write_ebignore(config)
-
-    assert os.path.exists(filepath)
-    ebignore = read_raw_file(filepath)
-    assert ebignore == "*\n\n!artifact.zip"
-
-    delete_file(filepath)
-
-
 def test_write_beanstalk_config(beanstalk_sirtuin_config: str) -> None:
     config = aws_beanstalk._get_sirtuin_config(beanstalk_sirtuin_config)
 
@@ -59,7 +41,7 @@ def test_write_beanstalk_config(beanstalk_sirtuin_config: str) -> None:
     assert beanstalk["global"]["application_name"] == "my-application"
     assert beanstalk["global"]["workspace_type"] == "Application"
 
-    delete_directory(os.path.dirname(filepath))
+    aws_beanstalk._clean_beanstalk_deployment(config)
 
 
 def test_write_dockerrun_config(beanstalk_sirtuin_config: str) -> None:
@@ -75,7 +57,7 @@ def test_write_dockerrun_config(beanstalk_sirtuin_config: str) -> None:
     assert dockerrun["Ports"][0]["ContainerPort"] == "5000"
     assert dockerrun["Authentication"]["Bucket"] == "my-bucket"
 
-    delete_file(filepath)
+    aws_beanstalk._clean_beanstalk_deployment(config)
 
 
 def test_write_beanstalk_customization(beanstalk_sirtuin_config: str) -> None:
@@ -84,18 +66,31 @@ def test_write_beanstalk_customization(beanstalk_sirtuin_config: str) -> None:
     filepaths = aws_beanstalk._write_beanstalk_customization(config)
 
     assert len(filepaths) == 9
-    assert "tests/fixtures/beanstalk/.ebextensions/autoscaling.config" in filepaths
-    assert "tests/fixtures/beanstalk/.platform/nginx/conf.d/sizes.conf" in filepaths
 
-    assert "tests/fixtures/beanstalk/.ebextensions/security.config" in filepaths
-    security = read_yaml_file("tests/fixtures/beanstalk/.ebextensions/security.config")
+    assert (
+        "tests/fixtures/beanstalk/.sirtuin/.ebextensions/autoscaling.config"
+        in filepaths
+    )
+
+    assert (
+        "tests/fixtures/beanstalk/.sirtuin/.platform/nginx/conf.d/sizes.conf"
+        in filepaths
+    )
+
+    assert (
+        "tests/fixtures/beanstalk/.sirtuin/.ebextensions/security.config" in filepaths
+    )
+
+    security = read_yaml_file(
+        "tests/fixtures/beanstalk/.sirtuin/.ebextensions/security.config"
+    )
+
     assert (
         security["option_settings"]["aws:autoscaling:launchconfiguration"]["EC2KeyName"]
         == "my-ec2-keyname"
     )
 
-    delete_directory(f"{config.directory}/.ebextensions")
-    delete_directory(f"{config.directory}/.platform")
+    aws_beanstalk._clean_beanstalk_deployment(config)
 
 
 def test_setup_beanstalk_deployment(beanstalk_sirtuin_config: str) -> None:
@@ -106,7 +101,6 @@ def test_setup_beanstalk_deployment(beanstalk_sirtuin_config: str) -> None:
     assert os.path.exists(filepath)
 
     zip_files = list_zip_files(filepath)
-    assert ".ebignore" in zip_files
     assert ".elasticbeanstalk/config.yml" in zip_files
     assert any(filepath.startswith(".ebextensions/") for filepath in zip_files)
     assert any(filepath.startswith(".platform/") for filepath in zip_files)
