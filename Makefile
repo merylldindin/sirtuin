@@ -33,7 +33,7 @@ mypy: ## Run Mypy
 ruff: ## Run Ruff
 	poetry run ruff $(PYTHON_FILES)
 
-ruff-fix: ## Run Ruff
+ruff-fix: ## Run Ruff with automated fix
 	poetry run ruff --fix $(PYTHON_FILES)
 
 pytest: ## Run Pytest
