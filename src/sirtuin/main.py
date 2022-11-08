@@ -3,8 +3,8 @@ import typer
 from sirtuin.controllers.aws_beanstalk import (
     create_beanstalk_from_config,
     deploy_beanstalk_from_config,
-    terminate_beanstalk_service,
-    upgrade_beanstalk_instance,
+    terminate_beanstalk_from_config,
+    upgrade_beanstalk_from_config,
 )
 from sirtuin.controllers.aws_cloudfront import (
     deploy_cloudfront_from_config,
@@ -40,7 +40,7 @@ def create_beanstalk(
 def upgrade_beanstalk(
     filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
-    upgrade_beanstalk_instance(filepath)
+    upgrade_beanstalk_from_config(filepath)
 
 
 @cli.command()
@@ -54,7 +54,7 @@ def deploy_beanstalk(
 def terminate_beanstalk(
     filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
-    terminate_beanstalk_service(filepath)
+    terminate_beanstalk_from_config(filepath)
 
 
 # ? Cloudfront

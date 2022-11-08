@@ -230,15 +230,21 @@ def create_beanstalk_from_config(filepath: str) -> None:
 
 
 @run_command
-def upgrade_beanstalk_instance(filepath: str) -> str:
-    config = _get_sirtuin_config(filepath)
-
+def _upgrade_beanstalk_instance(config: ElasticBeanstalkSirtuinConfig) -> str:
     return (
         f"eb upgrade {config.beanstalk.service} "
         f"--force "
         f"--region {config.instance.region.value} "
         + (f"--profile {config.profile}" if config.profile is not None else "")
     )
+
+
+def upgrade_beanstalk_from_config(filepath: str) -> None:
+    config = _get_sirtuin_config(filepath)
+
+    _write_beanstalk_config(config)
+    _upgrade_beanstalk_instance(filepath)
+    _clean_beanstalk_deployment(config)
 
 
 @run_command
@@ -259,12 +265,18 @@ def deploy_beanstalk_from_config(filepath: str) -> None:
 
 
 @run_command
-def terminate_beanstalk_service(filepath: str) -> str:
-    config = _get_sirtuin_config(filepath)
-
+def _terminate_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
     return (
         f"eb terminate {config.beanstalk.service} "
         f"--force "
         f"--region {config.instance.region.value} "
         + (f"--profile {config.profile}" if config.profile is not None else "")
     )
+
+
+def terminate_beanstalk_from_config(filepath: str) -> None:
+    config = _get_sirtuin_config(filepath)
+
+    _write_beanstalk_config(config)
+    _terminate_beanstalk_service(config)
+    _clean_beanstalk_deployment(config)

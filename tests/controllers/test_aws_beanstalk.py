@@ -190,9 +190,13 @@ def test_upgrade_beanstalk_instance(
 ) -> None:
     monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
 
-    assert aws_beanstalk.upgrade_beanstalk_instance(
+    config = aws_beanstalk._get_sirtuin_config(
         os.path.basename(beanstalk_sirtuin_config)
-    ) == ("eb upgrade my-service --force --region us-east-2 --profile my-profile")
+    )
+
+    assert aws_beanstalk._upgrade_beanstalk_instance(config) == (
+        "eb upgrade my-service --force --region us-east-2 --profile my-profile"
+    )
 
 
 def test_deploy_beanstalk_service(
@@ -214,6 +218,10 @@ def test_terminate_beanstalk_service(
 ) -> None:
     monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
 
-    assert aws_beanstalk.terminate_beanstalk_service(
+    config = aws_beanstalk._get_sirtuin_config(
         os.path.basename(beanstalk_sirtuin_config)
-    ) == ("eb terminate my-service --force --region us-east-2 --profile my-profile")
+    )
+
+    assert aws_beanstalk._terminate_beanstalk_service(config) == (
+        "eb terminate my-service --force --region us-east-2 --profile my-profile"
+    )
