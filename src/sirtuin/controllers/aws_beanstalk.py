@@ -171,17 +171,19 @@ def _setup_beanstalk_deployment(config: ElasticBeanstalkSirtuinConfig) -> str:
 
 
 def _clean_beanstalk_deployment(config: ElasticBeanstalkSirtuinConfig) -> None:
-    delete_file(os.path.join(config.directory, DEFAULT_BEANSTALK_ARTIFACT_PATH))
-    delete_file(os.path.join(config.directory, DEFAULT_BEANSTALK_DOCKERRUN_PATH))
-    delete_file(os.path.join(config.directory, DEFAULT_BEANSTALK_EBIGNORE_PATH))
+    for filepath in [
+        DEFAULT_BEANSTALK_ARTIFACT_PATH,
+        DEFAULT_BEANSTALK_DOCKERRUN_PATH,
+        DEFAULT_BEANSTALK_EBIGNORE_PATH,
+    ]:
+        delete_file(os.path.join(config.directory, filepath))
 
-    delete_directory(os.path.join(config.directory, DEFAULT_BEANSTALK_CONFIG_DIRECTORY))
-    delete_directory(
-        os.path.join(config.directory, DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY)
-    )
-    delete_directory(
-        os.path.join(config.directory, DEFAULT_BEANSTALK_PLATFORM_DIRECTORY)
-    )
+    for directory in [
+        DEFAULT_BEANSTALK_CONFIG_DIRECTORY,
+        DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY,
+        DEFAULT_BEANSTALK_PLATFORM_DIRECTORY,
+    ]:
+        delete_directory(os.path.join(config.directory, directory))
 
 
 @run_command
