@@ -243,7 +243,7 @@ def upgrade_beanstalk_from_config(filepath: str) -> None:
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)
-    _upgrade_beanstalk_instance(filepath)
+    _upgrade_beanstalk_instance(config)
     _clean_beanstalk_deployment(config)
 
 
