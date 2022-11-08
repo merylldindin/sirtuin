@@ -24,7 +24,7 @@ from sirtuin.utils.loaders import read_dotenv_file, read_raw_file, read_toml_fil
 
 def _get_sirtuin_config(filepath: str) -> ElasticBeanstalkSirtuinConfig:
     config = ElasticBeanstalkSirtuinConfig(**read_toml_file(filepath))
-    config.directory = get_service_directory(filepath)
+    config.directory = get_service_directory()
 
     return config
 

@@ -2,8 +2,8 @@ import os
 import subprocess
 
 
-def get_service_directory(filepath: str) -> str:
-    return os.path.dirname(filepath)
+def get_service_directory() -> str:
+    return os.getcwd()
 
 
 def _get_virtual_environment_path() -> str:
@@ -24,6 +24,10 @@ def get_schemas_path() -> str:
     )
 
     if not os.path.exists(filepath):
-        return os.path.join(os.getcwd(), "src", "sirtuin", "schemas")
+        package_root = os.getcwd()
+        while not package_root.endswith("sirtuin"):
+            package_root = os.path.dirname(package_root)
+
+        return os.path.join(package_root, "src", "sirtuin", "schemas")
 
     return filepath
