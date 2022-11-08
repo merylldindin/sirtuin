@@ -3,7 +3,9 @@ from typing import Any
 from pydantic import BaseModel
 
 
-def _sanitize_value(value: str | int | bool | dict | list) -> str | list | dict:
+def _sanitize_value(
+    value: str | int | bool | dict[Any, Any] | list[Any]
+) -> str | dict[Any, Any] | list[Any]:
     if isinstance(value, (int, bool)):
         return str(value).lower()
 
@@ -17,7 +19,7 @@ def _sanitize_value(value: str | int | bool | dict | list) -> str | list | dict:
 
 
 class SanitizedBaseModel(BaseModel):
-    def dict(self, *, use_sanitization: bool = False, **kwargs) -> dict[str, Any]:
+    def dict(self, *, use_sanitization: bool = False, **kwargs) -> dict[str, Any]:  # type: ignore
         base_object = super().dict(**kwargs)
 
         return (

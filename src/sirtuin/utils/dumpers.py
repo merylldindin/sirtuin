@@ -15,7 +15,7 @@ def _ensure_directory_existence(filepath: str) -> None:
         os.makedirs(directory_name)
 
 
-def dump_as_json(content: dict, filepath: str) -> None:
+def dump_as_json(content: dict[Any, Any], filepath: str) -> None:
     _ensure_directory_existence(filepath)
 
     with open(filepath, mode="w", encoding="utf-8") as stream:
@@ -30,7 +30,7 @@ class CustomYamlDumper(SafeDumper):
         return super().represent_data(data)
 
 
-def dump_as_yaml(content: dict, filepath: str) -> None:
+def dump_as_yaml(content: dict[Any, Any], filepath: str) -> None:
     _ensure_directory_existence(filepath)
 
     with open(filepath, mode="w", encoding="utf-8") as stream:

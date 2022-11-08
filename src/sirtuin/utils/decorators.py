@@ -1,10 +1,12 @@
 import os
 import sys
-from typing import Any, Callable
+from typing import Any, Callable, TypeVar
+
+T = TypeVar("T")
 
 
-def if_exists(function: Callable[[str], Any]) -> Callable[[Any], Any]:
-    def wrapper(filepath: str, *args, **kwargs) -> Any:
+def if_exists(function: Callable[[str], T]) -> Callable[[str], T]:
+    def wrapper(filepath: str, *args: Any, **kwargs: Any) -> T:
         if not os.path.exists(filepath):
             raise FileNotFoundError(f"The file {filepath} cannot be found")
 
@@ -13,8 +15,8 @@ def if_exists(function: Callable[[str], Any]) -> Callable[[Any], Any]:
     return wrapper
 
 
-def run_command(function: Callable[[Any], str]) -> Callable[[Any], int | str]:
-    def wrapper(*args, **kwargs) -> int | str:
+def run_command(function: Callable[[T], str]) -> Callable[[T], int | str]:
+    def wrapper(*args: Any, **kwargs: Any) -> int | str:
         return (
             function(*args, **kwargs)
             if "pytest" in sys.modules

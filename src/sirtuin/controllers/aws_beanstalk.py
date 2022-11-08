@@ -189,10 +189,12 @@ def _clean_beanstalk_deployment(config: ElasticBeanstalkSirtuinConfig) -> None:
 @run_command
 def _create_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
     environment_variables = _get_environment_variables(config)
-    if environment_variables is not None:
-        environment_variables = ",".join(
-            [f"{key}={value}" for key, value in environment_variables.items()]
-        )
+
+    dumped_variables = (
+        ",".join([f"{key}={value}" for key, value in environment_variables.items()])
+        if environment_variables is not None
+        else None
+    )
 
     return (
         f"eb create {config.beanstalk.service} "
@@ -205,11 +207,7 @@ def _create_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
         f"--vpc.ec2subnets {config.vpc.ec2_subnets} "
         f"--vpc.dbsubnets {config.vpc.db_subnets} "
         f"--vpc.elbsubnets {config.vpc.elb_subnets} "
-        + (
-            f"--envvars {environment_variables} "
-            if environment_variables is not None
-            else ""
-        )
+        + (f"--envvars {dumped_variables} " if dumped_variables is not None else "")
         + (
             (
                 f"--shared-lb {config.load_balancer.shared_alb_name} "

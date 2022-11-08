@@ -7,7 +7,7 @@ def _get_sirtuin_config(filepath: str) -> HttpHeadersSirtuinConfig:
 
 
 def _merge_csp_sources(config: HttpHeadersSirtuinConfig) -> dict[str, list[str]]:
-    csp_sources = {}
+    csp_sources: dict[str, set[str]] = {}
 
     for _, rules in config.csp.items():
         for source_type, sources in rules.items():
