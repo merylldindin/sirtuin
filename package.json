@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "husky": "husky install && chmod ug+x .husky/*"
+    "husky:install": "husky install && chmod ug+x .husky/*"
   },
   "browserslist": [
     "> 1%",

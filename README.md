@@ -17,7 +17,6 @@ Make sure you correctly initialized your hooks prior to starting:
 
 ```bash
 yarn husky:install
-yarn husky:prepare
 ```
 
 ### Return Statements
