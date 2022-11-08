@@ -1,6 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "assignees": ["merylldindin"],
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": true,
   "extends": ["config:base"],
@@ -8,14 +7,7 @@
     {
       "automerge": true,
       "groupName": "minor",
-      "matchDepTypes": [
-        "dependencies",
-        "dev",
-        "devDependencies",
-        "extras",
-        "test",
-        "typing"
-      ],
+      "matchDepTypes": ["dependencies", "dev", "test", "types"],
       "matchUpdateTypes": [
         "bump",
         "digest",

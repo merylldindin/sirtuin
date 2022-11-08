@@ -4,6 +4,7 @@
     "files.trimTrailingWhitespace": true,
     "editor.formatOnSave": true,
     "editor.inlineSuggest.enabled": true,
+    "npm.packageManager": "yarn",
     "python.formatting.provider": "black",
     "python.languageServer": "Pylance",
     "python.analysis.importFormat": "relative",
