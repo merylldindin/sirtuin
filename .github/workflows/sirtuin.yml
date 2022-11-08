@@ -43,11 +43,11 @@ jobs:
       - name: Run Isort
         run: make isort
 
-      - name: Run Ruff
-        run: make ruff
-
       - name: Run MyPy
         run: make mypy
+
+      - name: Run Ruff
+        run: make ruff
 
       - name: Run Pytest
         run: make pytest

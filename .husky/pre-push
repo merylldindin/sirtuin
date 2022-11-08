@@ -3,4 +3,5 @@
 
 make black
 make isort
+make mypy
 make ruff
