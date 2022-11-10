@@ -7,7 +7,13 @@
     {
       "automerge": true,
       "groupName": "minor",
-      "matchDepTypes": ["dependencies", "dev", "test", "types"],
+      "matchDepTypes": [
+        "dependencies",
+        "dev",
+        "test",
+        "types",
+        "devDependencies"
+      ],
       "matchUpdateTypes": [
         "bump",
         "digest",
