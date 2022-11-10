@@ -4,7 +4,7 @@ on: [pull_request]
 
 env:
   SERVICE_NAME: "sirtuin"
-  PYTHON_VERSION: "3.11"
+  PYTHON_VERSION: "3.10"
   POETRY_VERSION: "1.2.2"
   POETRY_INSTALL_URL: "https://install.python-poetry.org"
 
