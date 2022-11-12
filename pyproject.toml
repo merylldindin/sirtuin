@@ -59,8 +59,8 @@ typer = {extras = ["all"], version = "^0.7.0"}
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"
 isort = "^5.10.1"
-mypy = "^0.982"
-ruff = "^0.0.105"
+mypy = "^0.990"
+ruff = "^0.0.112"
 toml-sort = "^0.20.1"
 tomli = "^2.0.1"
 
