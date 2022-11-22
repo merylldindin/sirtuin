@@ -10,11 +10,11 @@ target-version = ['py310']
 
 [tool.isort]
 combine_as_imports = true
-force_grid_wrap = 0
 include_trailing_comma = true
-known_first_party = 'pydantic'
+known_first_party = "pydantic"
 line_length = 88
 multi_line_output = 3
+profile = "black"
 
 [tool.mypy]
 check_untyped_defs = true
@@ -31,7 +31,7 @@ ignore_missing_imports = true
 namespace_packages = true
 no_implicit_optional = true
 no_implicit_reexport = true
-python_version = '3.10'
+python_version = "3.10"
 show_error_codes = true
 strict_concatenate = true
 strict_equality = true

@@ -117,8 +117,8 @@ class ElasticBeanstalkInstanceConfig(BaseModel):
 class ElasticBeanstalkLoadBalancerConfig(BaseModel):
     is_shared: bool = Field(default=False, alias="IsShared")
     elb_type: str = Field(default="application", alias="ElbType")
-    shared_alb_name: str | None = Field(default=None, alias="SharedAlbName")
-    shared_alb_port: PositiveInt | None = Field(default=None, alias="SharedAlbPort")
+    shared_elb_name: str | None = Field(default=None, alias="SharedElbName")
+    shared_elb_port: PositiveInt | None = Field(default=None, alias="SharedElbPort")
 
 
 class ElasticBeanstalkVpcConfig(BaseModel):

@@ -141,32 +141,21 @@ aws-cli/2.7.27 Python/3.9.11 Linux/5.15.0-46-generic exe/x86_64.ubuntu.22 prompt
 
 ## Installing `awsebcli`
 
-A fully documented tutorial is available [here](https://github.com/aws/aws-elastic-beanstalk-cli-setup). A compilation of the necessary steps is described below:
-
-```bash
-# update your distribution
-sudo apt update && sudo apt upgrade -y
-# clean your distribution
-sudo apt autoremove -y
-# ensure the installation of required dependencies
-sudo apt-get install build-essential zlib1g-dev libssl-dev libncurses-dev libffi-dev libsqlite3-dev libreadline-dev libbz2-dev
-# upgrade pip ecosystem
-pip install pip wheel setuptools --upgrade
-# install virtualenv
-pip install virtualenv
-# upgrade core python packages
-pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
-# clone the repository
-git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git ./awsebcli/
-# install awsebcli and link it to python3.10
-python ./awsebcli/scripts/ebcli_installer.py --python-installation /usr/bin/python3.10
-# update bash profile
-echo 'export PATH="/home/meryll/.ebcli-virtual-env/executables:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
-```
+A fully documented tutorial is available [here](https://github.com/aws/aws-elastic-beanstalk-cli-setup), and is recommended to follow depending on your distribution.
 
 Verify whether your installation worked by opening a new terminal:
 
 ```bash
 meryll@xps:~/Venvs$ eb --version
 EB CLI 3.20.3 (Python 3.10.)
+```
+
+## TODO
+
+Introduce command:
+
+```bash
+aws elbv2 create-load-balancer --name CONSTELLIUM-s --profile dillygence --region eu-central-1 --subnets subnet-05d76aa35150cda9a subnet-021cfd2857d0fd005
+
+aws elbv2 create-load-balancer --type network --name CONSTELLIUM-n --profile dillygence --region eu-central-1 --subnets subnet-05d76aa35150cda9a subnet-021cfd2857d0fd005
 ```

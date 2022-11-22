@@ -210,8 +210,8 @@ def _create_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
         + (f"--envvars {dumped_variables} " if dumped_variables is not None else "")
         + (
             (
-                f"--shared-lb {config.load_balancer.shared_alb_name} "
-                f"--shared-lb-port {config.load_balancer.shared_alb_port} "
+                f"--shared-lb {config.load_balancer.shared_elb_name} "
+                f"--shared-lb-port {config.load_balancer.shared_elb_port} "
             )
             if config.load_balancer.is_shared
             else ""

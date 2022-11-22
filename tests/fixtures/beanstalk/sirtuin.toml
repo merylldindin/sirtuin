@@ -46,8 +46,8 @@ Timeout = 30
 [load-balancer]
 ElbType = "application"
 IsShared = true
-SharedAlbName = "my-shared-load-balancer-name"
-SharedAlbPort = 443
+SharedElbName = "my-shared-load-balancer-name"
+SharedElbPort = 443
 
 [platform."hooks/prebuild/set_timezone.sh"]
 

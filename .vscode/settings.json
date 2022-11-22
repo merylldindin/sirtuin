@@ -5,6 +5,7 @@
     "editor.formatOnSave": true,
     "editor.inlineSuggest.enabled": true,
     "npm.packageManager": "yarn",
+    "isort.args": ["--profile", "black"],
     "python.formatting.provider": "black",
     "python.languageServer": "Pylance",
     "python.analysis.importFormat": "relative",

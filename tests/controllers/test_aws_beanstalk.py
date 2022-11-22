@@ -25,7 +25,7 @@ def test_get_sirtuin_config(
     assert config.docker.image == "my-dockerhub-repository/my-image"
     assert "autoscaling.config" in config.ebextensions
     assert config.instance.instance_type == AwsInstance.T3_SMALL
-    assert config.load_balancer.shared_alb_port == 443
+    assert config.load_balancer.shared_elb_port == 443
     assert "hooks/prebuild/set_timezone.sh" in config.platform
     assert config.profile == "my-profile"
     assert config.vpc.vpc_id == "my-vpc-id"
