@@ -29,21 +29,23 @@ def generate_csp(
 
 # ? Elastic Compute
 
+
 @cli.command()
 def create_load_balancer(
-        load_balancer_name = typer.Option(..., prompt="Choose Load Balancer Name"),
-        load_balancer_type = typer.Option(..., prompt="Choose Load Balancer Type"),
-        load_balancer_subnets = typer.Option(..., prompt="Choose Subnets"),
-        aws_region = typer.Option(..., prompt="Choose AWS Region"),
-        aws_profile = typer.Option(..., prompt="Choose AWS Profile"),
-    ) -> None:
+    load_balancer_name=typer.Option(..., prompt="Choose Load Balancer Name"),
+    load_balancer_type=typer.Option(..., prompt="Choose Load Balancer Type"),
+    load_balancer_subnets=typer.Option(..., prompt="Choose Subnets"),
+    aws_region=typer.Option(..., prompt="Choose AWS Region"),
+    aws_profile=typer.Option(..., prompt="Choose AWS Profile"),
+) -> None:
     create_load_balancer_from_prompt(
         load_balancer_name,
         load_balancer_type,
         load_balancer_subnets,
         aws_region,
-        aws_profile
+        aws_profile,
     )
+
 
 # ? Elastic Beanstalk
 

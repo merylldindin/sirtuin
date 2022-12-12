@@ -7,7 +7,7 @@ def test_create_application_load_balancer() -> None:
         "application",
         "subnet-123 subnet-456",
         "us-east-1",
-        "my-profile"
+        "my-profile",
     ) == (
         "aws elbv2 create-load-balancer "
         "--name LOAD-BALANCER "
@@ -17,13 +17,10 @@ def test_create_application_load_balancer() -> None:
         "--profile my-profile"
     )
 
+
 def test_create_network_load_balancer() -> None:
     assert aws_compute.create_load_balancer_from_prompt(
-        "LOAD-BALANCER",
-        "network",
-        "subnet-123 subnet-456",
-        "us-east-1",
-        "my-profile"
+        "LOAD-BALANCER", "network", "subnet-123 subnet-456", "us-east-1", "my-profile"
     ) == (
         "aws elbv2 create-load-balancer "
         "--name LOAD-BALANCER "
