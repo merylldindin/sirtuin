@@ -17,7 +17,7 @@ Volumes = []
 
 [ebextensions."autoscaling.config"]
 
-[ebextensions."healthcheck.config"]
+[ebextensions."health-alb-listener.config"]
 HealthCheckInterval = 60
 HealthCheckPath = "my-health-url"
 HealthCheckTimeout = 5
