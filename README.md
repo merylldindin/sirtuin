@@ -136,7 +136,7 @@ Verify whether your installation worked by opening a new terminal:
 
 ```bash
 meryll@xps:~/Venvs$ aws --version
-aws-cli/2.7.27 Python/3.9.11 Linux/5.15.0-46-generic exe/x86_64.ubuntu.22 prompt/off
+aws-cli/2.7.27 Python/3.9.11 Linux/5.15.0-56-generic exe/x86_64.ubuntu.22 prompt/off
 ```
 
 ## Installing `awsebcli`
