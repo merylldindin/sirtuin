@@ -32,11 +32,11 @@ def generate_csp(
 
 @cli.command()
 def create_load_balancer(
-    load_balancer_name=typer.Option(..., prompt="Choose Load Balancer Name"),
-    load_balancer_type=typer.Option(..., prompt="Choose Load Balancer Type"),
-    load_balancer_subnets=typer.Option(..., prompt="Choose Subnets"),
-    aws_region=typer.Option(..., prompt="Choose AWS Region"),
-    aws_profile=typer.Option(..., prompt="Choose AWS Profile"),
+    load_balancer_name: str = typer.Option(..., prompt="Choose Load Balancer Name"),
+    load_balancer_type: str = typer.Option(..., prompt="Choose Load Balancer Type"),
+    load_balancer_subnets: str = typer.Option(..., prompt="Choose Subnets"),
+    aws_region: str = typer.Option(..., prompt="Choose AWS Region"),
+    aws_profile: str = typer.Option(..., prompt="Choose AWS Profile"),
 ) -> None:
     create_load_balancer_from_prompt(
         load_balancer_name,
