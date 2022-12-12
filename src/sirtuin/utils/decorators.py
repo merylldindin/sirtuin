@@ -14,7 +14,6 @@ def if_exists(function: Callable[[str], T]) -> Callable[[str], T]:
 
     return wrapper
 
-
 def run_command(function: Callable[[T], str]) -> Callable[[T], int | str]:
     def wrapper(*args: Any, **kwargs: Any) -> int | str:
         return (
@@ -24,3 +23,4 @@ def run_command(function: Callable[[T], str]) -> Callable[[T], int | str]:
         )
 
     return wrapper
+

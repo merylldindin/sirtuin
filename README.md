@@ -119,8 +119,6 @@ There are simple rules in regards to our PR management:
 
 ## Get Started
 
-All required credentials will be shared via 1Password.
-
 To get started with the skeleton of the application (database, backend and frontend), here are a few steps:
 
 ```bash
@@ -150,12 +148,11 @@ meryll@xps:~/Venvs$ eb --version
 EB CLI 3.20.3 (Python 3.10.)
 ```
 
-## TODO
+# TODO's
 
-Introduce command:
-
-```bash
-aws elbv2 create-load-balancer --name CONSTELLIUM-s --profile dillygence --region eu-central-1 --subnets subnet-05d76aa35150cda9a subnet-021cfd2857d0fd005
-
-aws elbv2 create-load-balancer --type network --name CONSTELLIUM-n --profile dillygence --region eu-central-1 --subnets subnet-05d76aa35150cda9a subnet-021cfd2857d0fd005
-```
+- [ ] Move from `os.system` to `subprocess`
+- [ ] Share configs properly using `CLI Application Directory`
+- [ ] Embed processes within descriptive spinners
+- [ ] Add lambda / gateway routines
+- [ ] Build CDN for assets (best practices) via sirtuin
+- [ ] Add EC2 SSH routines (Docker, NGNIX, ...)

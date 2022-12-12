@@ -10,6 +10,7 @@ from sirtuin.controllers.aws_cloudfront import (
     deploy_cloudfront_from_config,
     invalidate_cloudfront_distribution,
 )
+from sirtuin.controllers.aws_compute import create_load_balancer_from_prompt
 from sirtuin.controllers.http_headers import print_content_security_policy
 
 cli = typer.Typer()
@@ -25,6 +26,24 @@ def generate_csp(
 ) -> None:
     print_content_security_policy(filepath)
 
+
+# ? Elastic Compute
+
+@cli.command()
+def create_load_balancer(
+        load_balancer_name = typer.Option(..., prompt="Choose Load Balancer Name"),
+        load_balancer_type = typer.Option(..., prompt="Choose Load Balancer Type"),
+        load_balancer_subnets = typer.Option(..., prompt="Choose Subnets"),
+        aws_region = typer.Option(..., prompt="Choose AWS Region"),
+        aws_profile = typer.Option(..., prompt="Choose AWS Profile"),
+    ) -> None:
+    create_load_balancer_from_prompt(
+        load_balancer_name,
+        load_balancer_type,
+        load_balancer_subnets,
+        aws_region,
+        aws_profile
+    )
 
 # ? Elastic Beanstalk
 
