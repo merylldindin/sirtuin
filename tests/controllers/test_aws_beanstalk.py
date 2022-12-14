@@ -109,7 +109,7 @@ def test_write_dockerrun_config(
 
 
 def test_write_beanstalk_customization(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: str, cli_directory: str, monkeypatch: MonkeyPatch
 ) -> None:
     monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
 
@@ -117,7 +117,7 @@ def test_write_beanstalk_customization(
         os.path.basename(beanstalk_sirtuin_config)
     )
 
-    filepaths = aws_beanstalk._write_beanstalk_customization(config)
+    filepaths = aws_beanstalk._write_beanstalk_customization(config, cli_directory=cli_directory)
 
     assert len(filepaths) == 9
 
@@ -142,7 +142,7 @@ def test_write_beanstalk_customization(
 
 
 def test_setup_beanstalk_deployment(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: str, cli_directory: str, monkeypatch: MonkeyPatch
 ) -> None:
     monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
 
@@ -150,7 +150,7 @@ def test_setup_beanstalk_deployment(
         os.path.basename(beanstalk_sirtuin_config)
     )
 
-    filepath = aws_beanstalk._setup_beanstalk_deployment(config)
+    filepath = aws_beanstalk._setup_beanstalk_deployment(config, cli_directory=cli_directory)
 
     assert os.path.exists(filepath)
 

@@ -1,3 +1,5 @@
+import os
+
 import typer
 
 from sirtuin.controllers.aws_beanstalk import (
@@ -14,6 +16,8 @@ from sirtuin.controllers.aws_compute import create_load_balancer_from_prompt
 from sirtuin.controllers.http_headers import print_content_security_policy
 
 cli = typer.Typer()
+
+cli_directory = os.path.join(typer.get_app_dir("sirtuin"), "schemas")
 
 DEFAULT_CONFIG_FILE: str = "sirtuin.toml"
 
@@ -54,7 +58,7 @@ def create_load_balancer(
 def create_beanstalk(
     filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
-    create_beanstalk_from_config(filepath)
+    create_beanstalk_from_config(filepath, cli_directory=cli_directory)
 
 
 @cli.command()
@@ -68,7 +72,7 @@ def upgrade_beanstalk(
 def deploy_beanstalk(
     filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
-    deploy_beanstalk_from_config(filepath)
+    deploy_beanstalk_from_config(filepath, cli_directory=cli_directory)
 
 
 @cli.command()
