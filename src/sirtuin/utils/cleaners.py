@@ -1,12 +1,12 @@
-import os
 import shutil
+from pathlib import Path
 
 
-def delete_file(filepath: str) -> None:
-    if os.path.isfile(filepath):
-        os.remove(filepath)
+def delete_file(filepath: Path) -> None:
+    if filepath.is_file():
+        filepath.unlink()
 
 
-def delete_directory(directory: str) -> None:
-    if os.path.isdir(directory):
+def delete_directory(directory: Path) -> None:
+    if directory.is_dir():
         shutil.rmtree(directory)

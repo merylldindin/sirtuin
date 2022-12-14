@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from pytest import MonkeyPatch
 
@@ -13,13 +14,11 @@ from sirtuin.utils.loaders import (
 
 
 def test_get_sirtuin_config(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
     assert config.beanstalk.application == "my-application"
     assert config.docker.image == "my-dockerhub-repository/my-image"
@@ -32,15 +31,13 @@ def test_get_sirtuin_config(
 
 
 def test_get_environment_variables(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
-    assert config.beanstalk.dotenv_path == ".env"
+    assert config.beanstalk.dotenv_path == Path(".env")
 
     variables = aws_beanstalk._get_environment_variables(config)
 
@@ -49,13 +46,11 @@ def test_get_environment_variables(
 
 
 def test_write_ebignore_config(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
     filepath = aws_beanstalk._write_ebignore_config(config)
 
@@ -66,18 +61,18 @@ def test_write_ebignore_config(
 
 
 def test_write_beanstalk_config(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
     filepath = aws_beanstalk._write_beanstalk_config(config)
 
-    assert os.path.exists(filepath)
+    assert filepath.exists()
+
     beanstalk = read_yaml_file(filepath)
+
     assert beanstalk["deploy"]["artifact"] == "artifact.zip"
     assert beanstalk["branch-defaults"]["default"]["environment"] == "my-service"
     assert beanstalk["global"]["application_name"] == "my-application"
@@ -87,13 +82,11 @@ def test_write_beanstalk_config(
 
 
 def test_write_dockerrun_config(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
     filepath = aws_beanstalk._write_dockerrun_config(config)
 
@@ -109,31 +102,27 @@ def test_write_dockerrun_config(
 
 
 def test_write_beanstalk_customization(
-    beanstalk_sirtuin_config: str, cli_directory: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
-    filepaths = aws_beanstalk._write_beanstalk_customization(
-        config, cli_directory=cli_directory
-    )
+    filepaths = aws_beanstalk._write_beanstalk_customization(config)
 
     assert len(filepaths) == 9
 
     assert any(
-        filepath.endswith(".ebextensions/autoscaling.config") for filepath in filepaths
+        filepath == Path(".ebextensions/autoscaling.config") for filepath in filepaths
     )
     assert any(
-        filepath.endswith(".ebextensions/security.config") for filepath in filepaths
+        filepath == Path(".ebextensions/security.config") for filepath in filepaths
     )
     assert any(
-        filepath.endswith(".platform/nginx/conf.d/sizes.conf") for filepath in filepaths
+        filepath == Path(".platform/nginx/conf.d/sizes.conf") for filepath in filepaths
     )
 
-    security = read_yaml_file(".ebextensions/security.config")
+    security = read_yaml_file(Path(".ebextensions/security.config"))
 
     assert (
         security["option_settings"]["aws:autoscaling:launchconfiguration"]["EC2KeyName"]
@@ -144,21 +133,18 @@ def test_write_beanstalk_customization(
 
 
 def test_setup_beanstalk_deployment(
-    beanstalk_sirtuin_config: str, cli_directory: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
-    filepath = aws_beanstalk._setup_beanstalk_deployment(
-        config, cli_directory=cli_directory
-    )
+    filepath = aws_beanstalk._setup_beanstalk_deployment(config)
 
-    assert os.path.exists(filepath)
+    assert filepath.exists()
 
     zip_files = list_zip_files(filepath)
+
     assert any(filepath.startswith(".ebextensions/") for filepath in zip_files)
     assert any(filepath.startswith(".platform/") for filepath in zip_files)
     assert "Dockerrun.aws.json" in zip_files
@@ -167,13 +153,11 @@ def test_setup_beanstalk_deployment(
 
 
 def test_create_beanstalk_service(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
     assert aws_beanstalk._create_beanstalk_service(config) == (
         "eb create my-service "
@@ -190,13 +174,11 @@ def test_create_beanstalk_service(
 
 
 def test_upgrade_beanstalk_instance(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
     assert aws_beanstalk._upgrade_beanstalk_instance(config) == (
         "eb upgrade my-service --force --region us-east-2 --profile my-profile"
@@ -204,13 +186,11 @@ def test_upgrade_beanstalk_instance(
 
 
 def test_deploy_beanstalk_service(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
     assert aws_beanstalk._deploy_beanstalk_service(config) == (
         "eb deploy my-service --region us-east-2 --profile my-profile"
@@ -218,13 +198,11 @@ def test_deploy_beanstalk_service(
 
 
 def test_terminate_beanstalk_service(
-    beanstalk_sirtuin_config: str, monkeypatch: MonkeyPatch
+    beanstalk_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
-    monkeypatch.chdir(os.path.dirname(beanstalk_sirtuin_config))
+    monkeypatch.chdir(beanstalk_sirtuin_config.parent)
 
-    config = aws_beanstalk._get_sirtuin_config(
-        os.path.basename(beanstalk_sirtuin_config)
-    )
+    config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
     assert aws_beanstalk._terminate_beanstalk_service(config) == (
         "eb terminate my-service --force --region us-east-2 --profile my-profile"

@@ -1,33 +1,15 @@
-import os
-import subprocess
+import sysconfig
+from pathlib import Path
 
 
-def get_service_directory() -> str:
-    return os.getcwd()
+def _get_sitepackage_path() -> Path:
+    sitepackages_directory = Path(sysconfig.get_paths()["purelib"])
+
+    if (sitepackages_directory / "sirtuin").exists():
+        return sitepackages_directory / "sirtuin"
+
+    return Path(sysconfig.get_paths()["data"]).parent / "src/sirtuin"
 
 
-def _get_virtual_environment_path() -> str:
-    try:
-        return subprocess.check_output(["poetry env info", "--path"]).decode()[:-1]
-    except Exception:
-        return os.path.join(os.getcwd(), ".venv")
-
-
-def get_schemas_path() -> str:
-    filepath = os.path.join(
-        _get_virtual_environment_path(),
-        "lib",
-        "python3.10",
-        "site-packages",
-        "sirtuin",
-        "schemas",
-    )
-
-    if not os.path.exists(filepath):
-        package_root = os.getcwd()
-        while not package_root.endswith("sirtuin"):
-            package_root = os.path.dirname(package_root)
-
-        return os.path.join(package_root, "src", "sirtuin", "schemas")
-
-    return filepath
+def get_schemas_path() -> Path:
+    return _get_sitepackage_path() / "schemas"

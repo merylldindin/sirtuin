@@ -1,30 +1,25 @@
-import os
+from pathlib import Path
 
 import pytest
 
-DEFAULT_PATH_TO_FIXTURES = "tests/fixtures"
+DEFAULT_PATH_TO_FIXTURES = Path("tests/fixtures")
 
 
 @pytest.fixture
-def cli_directory() -> str:
-    return os.path.join(os.getcwd(), "src/sirtuin/schemas")
+def beanstalk_sirtuin_config() -> Path:
+    return DEFAULT_PATH_TO_FIXTURES / "beanstalk/sirtuin.toml"
 
 
 @pytest.fixture
-def beanstalk_sirtuin_config() -> str:
-    return f"{DEFAULT_PATH_TO_FIXTURES}/beanstalk/sirtuin.toml"
+def cloudfront_sirtuin_config() -> Path:
+    return DEFAULT_PATH_TO_FIXTURES / "cloudfront/sirtuin.toml"
 
 
 @pytest.fixture
-def cloudfront_sirtuin_config() -> str:
-    return f"{DEFAULT_PATH_TO_FIXTURES}/cloudfront/sirtuin.toml"
+def gateway_sirtuin_config() -> Path:
+    return DEFAULT_PATH_TO_FIXTURES / "gateway/sirtuin.toml"
 
 
 @pytest.fixture
-def gateway_sirtuin_config() -> str:
-    return f"{DEFAULT_PATH_TO_FIXTURES}/gateway/sirtuin.toml"
-
-
-@pytest.fixture
-def headers_sirtuin_config() -> str:
-    return f"{DEFAULT_PATH_TO_FIXTURES}/headers/sirtuin.toml"
+def headers_sirtuin_config() -> Path:
+    return DEFAULT_PATH_TO_FIXTURES / "headers/sirtuin.toml"

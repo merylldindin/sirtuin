@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import typer
 
@@ -17,16 +17,14 @@ from sirtuin.controllers.http_headers import print_content_security_policy
 
 cli = typer.Typer()
 
-cli_directory = os.path.join(typer.get_app_dir("sirtuin"), "schemas")
-
-DEFAULT_CONFIG_FILE: str = "sirtuin.toml"
+DEFAULT_CONFIG_FILE: Path = Path("sirtuin.toml")
 
 # ? HTTP Headers
 
 
 @cli.command()
 def generate_csp(
-    filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
     print_content_security_policy(filepath)
 
@@ -56,28 +54,28 @@ def create_load_balancer(
 
 @cli.command()
 def create_beanstalk(
-    filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
-    create_beanstalk_from_config(filepath, cli_directory=cli_directory)
+    create_beanstalk_from_config(filepath)
 
 
 @cli.command()
 def upgrade_beanstalk(
-    filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
     upgrade_beanstalk_from_config(filepath)
 
 
 @cli.command()
 def deploy_beanstalk(
-    filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
-    deploy_beanstalk_from_config(filepath, cli_directory=cli_directory)
+    deploy_beanstalk_from_config(filepath)
 
 
 @cli.command()
 def terminate_beanstalk(
-    filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
     terminate_beanstalk_from_config(filepath)
 
@@ -87,13 +85,13 @@ def terminate_beanstalk(
 
 @cli.command()
 def deploy_cloudfront(
-    filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
     deploy_cloudfront_from_config(filepath)
 
 
 @cli.command()
 def create_invalidation(
-    filepath: str = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
 ) -> None:
     invalidate_cloudfront_distribution(filepath)

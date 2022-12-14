@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from pydantic import BaseModel, Field
 
 from .aws_regions import AwsRegion
@@ -20,5 +22,4 @@ class CloudfrontSirtuinConfig(BaseModel):
     application: CloudfrontApplicationConfig
     bucket: CloudfrontBucketConfig
     cloudfront: CloudfrontDistributionConfig
-    directory: str = Field(default=".")
     profile: str | None = Field(default=None, alias="Profile")

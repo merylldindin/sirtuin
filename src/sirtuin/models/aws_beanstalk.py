@@ -1,19 +1,21 @@
+from pathlib import Path
+
 from pydantic import BaseModel, Field, PositiveInt
 
 from .aws_instances import AwsInstance
 from .aws_regions import AwsRegion
 from .base_models import SanitizedBaseModel
 
-DEFAULT_BEANSTALK_ARTIFACT_PATH: str = "artifact.zip"
-DEFAULT_BEANSTALK_CONFIG_DIRECTORY: str = ".elasticbeanstalk"
-DEFAULT_BEANSTALK_CONFIG_PATH: str = f"{DEFAULT_BEANSTALK_CONFIG_DIRECTORY}/config.yml"
-DEFAULT_BEANSTALK_DOCKERRUN_PATH: str = "Dockerrun.aws.json"
-DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY: str = ".ebextensions"
-DEFAULT_BEANSTALK_EBEXTENSIONS_SCHEMAS: str = "ebextensions"
-DEFAULT_BEANSTALK_EBIGNORE_PATH: str = ".ebignore"
+DEFAULT_BEANSTALK_ARTIFACT_PATH: Path = Path("artifact.zip")
+DEFAULT_BEANSTALK_CONFIG_DIRECTORY: Path = Path(".elasticbeanstalk")
+DEFAULT_BEANSTALK_CONFIG_PATH: Path = DEFAULT_BEANSTALK_CONFIG_DIRECTORY / "config.yml"
+DEFAULT_BEANSTALK_DOCKERRUN_PATH: Path = Path("Dockerrun.aws.json")
+DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY: Path = Path(".ebextensions")
+DEFAULT_BEANSTALK_EBEXTENSIONS_SCHEMAS: Path = Path("ebextensions")
+DEFAULT_BEANSTALK_EBIGNORE_PATH: Path = Path(".ebignore")
 DEFAULT_BEANSTALK_PLATFORM: str = "Docker running on 64bit Amazon Linux 2"
-DEFAULT_BEANSTALK_PLATFORM_DIRECTORY: str = ".platform"
-DEFAULT_BEANSTALK_PLATFORM_SCHEMAS: str = "platform"
+DEFAULT_BEANSTALK_PLATFORM_DIRECTORY: Path = Path(".platform")
+DEFAULT_BEANSTALK_PLATFORM_SCHEMAS: Path = Path("platform")
 
 # ? .elasticbeanstalk/config.yml
 
@@ -36,7 +38,7 @@ class ElasticBeanstalkBranchConfig(BaseModel):
 
 
 class ElasticBeanstalkArtifact(BaseModel):
-    artifact: str = Field(default=DEFAULT_BEANSTALK_ARTIFACT_PATH)
+    artifact: Path = Field(default=DEFAULT_BEANSTALK_ARTIFACT_PATH)
 
 
 class ElasticBeanstalkConfig(BaseModel):
@@ -85,7 +87,7 @@ class ElasticBeanstalkServiceConfig(BaseModel):
     application: str = Field(alias="ApplicationName")
     ec2_keyname: str = Field(alias="EC2KeyName")
     service: str = Field(alias="ServiceName")
-    dotenv_path: str | None = Field(default=None, alias="DotenvPath")
+    dotenv_path: Path | None = Field(default=None, alias="DotenvPath")
 
 
 class ElasticBeanstalkDockerPort(BaseModel):
@@ -130,7 +132,6 @@ class ElasticBeanstalkVpcConfig(BaseModel):
 
 class ElasticBeanstalkSirtuinConfig(BaseModel):
     beanstalk: ElasticBeanstalkServiceConfig
-    directory: str = Field(default=".")
     docker: ElasticBeanstalkDockerConfig
     ebextensions: dict[str, dict[str, str | int] | None]
     instance: ElasticBeanstalkInstanceConfig

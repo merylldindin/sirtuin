@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 from zipfile import ZipFile
 
 from sirtuin.models.aws_beanstalk import (
@@ -18,15 +18,12 @@ from sirtuin.models.aws_beanstalk import (
 from sirtuin.utils.cleaners import delete_directory, delete_file
 from sirtuin.utils.decorators import run_command
 from sirtuin.utils.dumpers import copy_file, dump_as_json, dump_as_raw, dump_as_yaml
-from sirtuin.utils.filepaths import get_service_directory
+from sirtuin.utils.filepaths import get_schemas_path
 from sirtuin.utils.loaders import read_dotenv_file, read_raw_file, read_toml_file
 
 
-def _get_sirtuin_config(filepath: str) -> ElasticBeanstalkSirtuinConfig:
-    config = ElasticBeanstalkSirtuinConfig(**read_toml_file(filepath))
-    config.directory = get_service_directory()
-
-    return config
+def _get_sirtuin_config(filepath: Path) -> ElasticBeanstalkSirtuinConfig:
+    return ElasticBeanstalkSirtuinConfig(**read_toml_file(filepath))
 
 
 def _get_environment_variables(
@@ -35,20 +32,16 @@ def _get_environment_variables(
     if config.beanstalk.dotenv_path is None:
         return None
 
-    return read_dotenv_file(
-        os.path.join(config.directory, config.beanstalk.dotenv_path)
-    )
+    return read_dotenv_file(config.beanstalk.dotenv_path)
 
 
-def _write_ebignore_config(config: ElasticBeanstalkSirtuinConfig) -> str:
-    filepath = os.path.join(config.directory, DEFAULT_BEANSTALK_EBIGNORE_PATH)
+def _write_ebignore_config(_: ElasticBeanstalkSirtuinConfig) -> Path:
+    dump_as_raw("*\n\n!artifact.zip", DEFAULT_BEANSTALK_EBIGNORE_PATH)
 
-    dump_as_raw("*\n\n!artifact.zip", filepath)
-
-    return filepath
+    return DEFAULT_BEANSTALK_EBIGNORE_PATH
 
 
-def _write_beanstalk_config(config: ElasticBeanstalkSirtuinConfig) -> str:
+def _write_beanstalk_config(config: ElasticBeanstalkSirtuinConfig) -> Path:
     beanstalk_config = ElasticBeanstalkConfig(
         **{
             "branch-defaults": {
@@ -65,14 +58,12 @@ def _write_beanstalk_config(config: ElasticBeanstalkSirtuinConfig) -> str:
         }
     )
 
-    filepath = os.path.join(config.directory, DEFAULT_BEANSTALK_CONFIG_PATH)
+    dump_as_yaml(beanstalk_config.dict(by_alias=True), DEFAULT_BEANSTALK_CONFIG_PATH)
 
-    dump_as_yaml(beanstalk_config.dict(by_alias=True), filepath)
-
-    return filepath
+    return DEFAULT_BEANSTALK_CONFIG_PATH
 
 
-def _write_dockerrun_config(config: ElasticBeanstalkSirtuinConfig) -> str:
+def _write_dockerrun_config(config: ElasticBeanstalkSirtuinConfig) -> Path:
     dockerrun_config = ElasticBeanstalkDockerrunConfig(
         **{
             "Image": {
@@ -93,14 +84,15 @@ def _write_dockerrun_config(config: ElasticBeanstalkSirtuinConfig) -> str:
         }
     )
 
-    filepath = os.path.join(config.directory, DEFAULT_BEANSTALK_DOCKERRUN_PATH)
+    dump_as_json(
+        dockerrun_config.dict(by_alias=True, use_sanitization=True),
+        DEFAULT_BEANSTALK_DOCKERRUN_PATH,
+    )
 
-    dump_as_json(dockerrun_config.dict(by_alias=True, use_sanitization=True), filepath)
-
-    return filepath
+    return DEFAULT_BEANSTALK_DOCKERRUN_PATH
 
 
-def _inject_variables(filepath: str, variables: dict[str, str | int]) -> None:
+def _inject_variables(filepath: Path, variables: dict[str, str | int]) -> None:
     source = read_raw_file(filepath)
 
     for variable, value in variables.items():
@@ -111,82 +103,69 @@ def _inject_variables(filepath: str, variables: dict[str, str | int]) -> None:
 
 def _write_extensions(
     files: dict[str, dict[str, str | int] | None],
-    schema_source: str,
-    target_directory: str,
-    known_extensions: list[str],
+    schema_source: Path,
+    target_directory: Path,
+    known_extensions: list[Path],
 ) -> None:
     for file, variables in files.items():
-        filepath = os.path.join(target_directory, file)
-
-        copy_file(os.path.join(schema_source, file), filepath)
+        copy_file(schema_source / file, target_directory / file)
 
         if variables is not None:
-            _inject_variables(filepath, variables)
+            _inject_variables(target_directory / file, variables)
 
-        known_extensions.append(filepath)
+        known_extensions.append(target_directory / file)
 
 
-def _write_beanstalk_customization(
-    config: ElasticBeanstalkSirtuinConfig, cli_directory: str
-) -> list[str]:
-    extensions: list[str] = []
+def _write_beanstalk_customization(config: ElasticBeanstalkSirtuinConfig) -> list[Path]:
+    extensions: list[Path] = []
 
     _write_extensions(
         config.ebextensions,
-        os.path.join(cli_directory, DEFAULT_BEANSTALK_EBEXTENSIONS_SCHEMAS),
-        os.path.join(config.directory, DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY),
+        get_schemas_path() / DEFAULT_BEANSTALK_EBEXTENSIONS_SCHEMAS,
+        DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY,
         extensions,
     )
 
     _write_extensions(
         config.platform,
-        os.path.join(cli_directory, DEFAULT_BEANSTALK_PLATFORM_SCHEMAS),
-        os.path.join(config.directory, DEFAULT_BEANSTALK_PLATFORM_DIRECTORY),
+        get_schemas_path() / DEFAULT_BEANSTALK_PLATFORM_SCHEMAS,
+        DEFAULT_BEANSTALK_PLATFORM_DIRECTORY,
         extensions,
     )
 
     return extensions
 
 
-def _setup_beanstalk_deployment(
-    config: ElasticBeanstalkSirtuinConfig, cli_directory: str
-) -> str:
+def _setup_beanstalk_deployment(config: ElasticBeanstalkSirtuinConfig) -> Path:
     _write_ebignore_config(config)
 
     _write_beanstalk_config(config)
 
-    filepaths: list[str] = [
+    filepaths: list[Path] = [
         _write_dockerrun_config(config)
-    ] + _write_beanstalk_customization(config, cli_directory=cli_directory)
+    ] + _write_beanstalk_customization(config)
 
-    artifact = os.path.join(config.directory, DEFAULT_BEANSTALK_ARTIFACT_PATH)
-
-    with ZipFile(artifact, mode="w") as zip_file:
+    with ZipFile(DEFAULT_BEANSTALK_ARTIFACT_PATH, mode="w") as zip_file:
         for filepath in filepaths:
-            if len(config.directory) > 0:
-                zip_file.write(
-                    filepath, arcname=filepath.replace(config.directory, ".")
-                )
-            else:
-                zip_file.write(filepath)
+            zip_file.write(filepath)
 
-    return artifact
+    return DEFAULT_BEANSTALK_ARTIFACT_PATH
 
 
-def _clean_beanstalk_deployment(config: ElasticBeanstalkSirtuinConfig) -> None:
+def _clean_beanstalk_deployment(_: ElasticBeanstalkSirtuinConfig) -> None:
     for filepath in [
         DEFAULT_BEANSTALK_ARTIFACT_PATH,
         DEFAULT_BEANSTALK_DOCKERRUN_PATH,
         DEFAULT_BEANSTALK_EBIGNORE_PATH,
     ]:
-        delete_file(os.path.join(config.directory, filepath))
+        delete_file(filepath)
 
     for directory in [
         DEFAULT_BEANSTALK_CONFIG_DIRECTORY,
         DEFAULT_BEANSTALK_EBEXTENSIONS_DIRECTORY,
         DEFAULT_BEANSTALK_PLATFORM_DIRECTORY,
     ]:
-        delete_directory(os.path.join(config.directory, directory))
+        delete_directory(directory)
 
 
 @run_command
@@ -224,10 +203,10 @@ def _create_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
     )
 
 
-def create_beanstalk_from_config(filepath: str, cli_directory: str = ".") -> None:
+def create_beanstalk_from_config(filepath: Path) -> None:
     config = _get_sirtuin_config(filepath)
 
-    _setup_beanstalk_deployment(config, cli_directory=cli_directory)
+    _setup_beanstalk_deployment(config)
     _create_beanstalk_service(config)
     _clean_beanstalk_deployment(config)
 
@@ -242,7 +221,7 @@ def _upgrade_beanstalk_instance(config: ElasticBeanstalkSirtuinConfig) -> str:
     )
 
 
-def upgrade_beanstalk_from_config(filepath: str) -> None:
+def upgrade_beanstalk_from_config(filepath: Path) -> None:
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)
@@ -259,10 +238,10 @@ def _deploy_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
     )
 
 
-def deploy_beanstalk_from_config(filepath: str, cli_directory: str = ".") -> None:
+def deploy_beanstalk_from_config(filepath: Path) -> None:
     config = _get_sirtuin_config(filepath)
 
-    _setup_beanstalk_deployment(config, cli_directory=cli_directory)
+    _setup_beanstalk_deployment(config)
     _deploy_beanstalk_service(config)
     _clean_beanstalk_deployment(config)
 
@@ -277,7 +256,7 @@ def _terminate_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
     )
 
 
-def terminate_beanstalk_from_config(filepath: str) -> None:
+def terminate_beanstalk_from_config(filepath: Path) -> None:
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)

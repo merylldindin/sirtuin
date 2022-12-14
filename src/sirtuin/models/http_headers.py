@@ -13,7 +13,6 @@ class HttpHeadersSirtuinConfig(BaseModel):
     cache_control: HttpHeaderConfig
     content_security_policy: HttpHeaderConfig
     csp: dict[str, dict[str, list[str]]]
-    expect_ct: HttpHeaderConfig
     referrer_policy: HttpHeaderConfig
     strict_transport_security: HttpHeaderConfig
     x_content_type_options: HttpHeaderConfig

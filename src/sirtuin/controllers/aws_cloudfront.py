@@ -1,21 +1,19 @@
+from pathlib import Path
+
 from sirtuin.models.aws_cloudfront import CloudfrontSirtuinConfig
 from sirtuin.utils.decorators import run_command
-from sirtuin.utils.filepaths import get_service_directory
 from sirtuin.utils.loaders import read_toml_file
 
 
-def _get_sirtuin_config(filepath: str) -> CloudfrontSirtuinConfig:
-    config = CloudfrontSirtuinConfig(**read_toml_file(filepath))
-    config.directory = get_service_directory()
-
-    return config
+def _get_sirtuin_config(filepath: Path) -> CloudfrontSirtuinConfig:
+    return CloudfrontSirtuinConfig(**read_toml_file(filepath))
 
 
 @run_command
 def _synchronize_hosting_bucket(config: CloudfrontSirtuinConfig) -> str:
     return (
         f"aws "
-        f"s3 sync {config.directory}/{config.application.bundle} "
+        f"s3 sync {config.application.bundle} "
         f"s3://{config.bucket.name} "
         f"--delete "
         f"--region {config.bucket.region.value} "
@@ -27,7 +25,7 @@ def _synchronize_hosting_bucket(config: CloudfrontSirtuinConfig) -> str:
 def _copy_application_bundle_to_bucket(config: CloudfrontSirtuinConfig) -> str:
     return (
         f"aws "
-        f"s3 cp {config.directory}/{config.application.bundle} "
+        f"s3 cp {config.application.bundle} "
         f"s3://{config.bucket.name} "
         f"--recursive --content-type 'text/html' --exclude '*.*' "
         f"--region {config.bucket.region.value} "
@@ -37,7 +35,7 @@ def _copy_application_bundle_to_bucket(config: CloudfrontSirtuinConfig) -> str:
 
 @run_command
 def invalidate_cloudfront_distribution(
-    filepath: str, config: CloudfrontSirtuinConfig | None = None
+    filepath: Path, config: CloudfrontSirtuinConfig | None = None
 ) -> str:
     config = config or _get_sirtuin_config(filepath)
 
@@ -51,7 +49,7 @@ def invalidate_cloudfront_distribution(
     )
 
 
-def deploy_cloudfront_from_config(filepath: str) -> None:
+def deploy_cloudfront_from_config(filepath: Path) -> None:
     sirtuin_config = _get_sirtuin_config(filepath)
 
     _synchronize_hosting_bucket(sirtuin_config)
