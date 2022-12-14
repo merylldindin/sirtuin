@@ -1,5 +1,6 @@
 # dependencies
 .venv/
+.yarn/
 node_modules/
 
 # cache

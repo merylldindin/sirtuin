@@ -1,11 +1,21 @@
-PYTHON_FILES = `(find . -iname "*.py" -not -path "./.venv/*")`
 TOML_FILES = `(find . -iname "*.toml" -not -path "./.venv/*")`
+PYTHON_FILES = `(find . -iname "*.py" -not -path "./.venv/*")`
 
-install: ## Install monorepo dependencies
+setup: ## Install developer experience
+	yarn install
+	yarn husky:setup
+
+setup-hard: ## Install developer experience with no cache
+	rm -rf node_modules/
+	yarn cache clean
+	make setup
+
+install: ## Install package dependencies
 	poetry install --sync
 
-install-extra: ## Install monorepo dependencies and developer dependencies
-	make install && yarn install --silent --ignore-optional
+install-hard: ## Install package dependencies from scratch
+	rm -rf .venv/
+	make install
 
 poetry-update: ## Upgrade poetry and dependencies
 	poetry self update

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "husky:install": "husky install && chmod ug+x .husky/*"
+    "husky:setup": "husky install && chmod ug+x .husky/*"
   },
   "browserslist": [
     "> 1%",
@@ -14,5 +14,6 @@
     "@commitlint/config-conventional": "17.3.0",
     "husky": "8.0.2",
     "prettier": "2.8.1"
-  }
+  },
+  "packageManager": "yarn@3.3.0"
 }

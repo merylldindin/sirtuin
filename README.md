@@ -16,7 +16,7 @@ Many of our internal toolings are enforced via [husky](https://typicode.github.i
 Make sure you correctly initialized your hooks prior to starting:
 
 ```bash
-yarn husky:install
+yarn husky:setup
 ```
 
 ### Return Statements
