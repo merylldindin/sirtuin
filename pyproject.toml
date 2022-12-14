@@ -57,20 +57,15 @@ tomli = "^2.0.1"
 typer = {extras = ["all"], version = "^0.7.0"}
 
 [tool.poetry.group.dev.dependencies]
-toml-sort = "^0.20.1"
-tomli = "^2.0.1"
-
-[tool.poetry.group.quality.dependencies]
 black = "^22.10.0"
 isort = "^5.10.1"
 mypy = "^0.991"
 pytest = "^7.2.0"
-ruff = "^0.0.176"
-
-[tool.poetry.group.testing.dependencies]
 pytest-cov = "^4.0.0"
+ruff = "^0.0.176"
+toml-sort = "^0.20.1"
 
-[tool.poetry.group.typing.dependencies]
+[tool.poetry.group.types.dependencies]
 types-pyyaml = "^6.0.12.1"
 
 [tool.poetry.scripts]

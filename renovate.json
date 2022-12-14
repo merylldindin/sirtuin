@@ -6,14 +6,57 @@
   "packageRules": [
     {
       "automerge": true,
-      "groupName": "minor",
-      "matchDepTypes": [
-        "dependencies",
-        "dev",
-        "test",
-        "types",
-        "devDependencies"
+      "groupName": "poetry/minor",
+      "matchDepTypes": ["dependencies", "dev", "types"],
+      "matchManagers": ["poetry"],
+      "matchUpdateTypes": [
+        "bump",
+        "digest",
+        "lockFileMaintenance",
+        "minor",
+        "patch",
+        "pin",
+        "rollback"
       ],
+      "semanticCommitType": "chore"
+    },
+    {
+      "automerge": true,
+      "groupName": "yarn/minor",
+      "matchDepTypes": ["dependencies", "devDependencies"],
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": [
+        "bump",
+        "digest",
+        "lockFileMaintenance",
+        "minor",
+        "patch",
+        "pin",
+        "rollback"
+      ],
+      "semanticCommitType": "chore"
+    },
+    {
+      "automerge": true,
+      "groupName": "poetry/major",
+      "matchDepTypes": ["dev", "types"],
+      "matchManagers": ["poetry"],
+      "matchUpdateTypes": [
+        "bump",
+        "digest",
+        "lockFileMaintenance",
+        "minor",
+        "patch",
+        "pin",
+        "rollback"
+      ],
+      "semanticCommitType": "chore"
+    },
+    {
+      "automerge": true,
+      "groupName": "yarn/major",
+      "matchDepTypes": ["devDependencies"],
+      "matchManagers": ["npm"],
       "matchUpdateTypes": [
         "bump",
         "digest",
