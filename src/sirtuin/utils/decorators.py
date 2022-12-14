@@ -33,7 +33,6 @@ def run_command(
                 SpinnerColumn(),
                 TextColumn("[progress.description]{task.description}"),
                 TimeElapsedColumn(),
-                transient=True,
             ) as spinner:
                 spinner.add_task(description=description, total=None)
 
