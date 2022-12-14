@@ -9,7 +9,7 @@ def _get_sirtuin_config(filepath: Path) -> CloudfrontSirtuinConfig:
     return CloudfrontSirtuinConfig(**read_toml_file(filepath))
 
 
-@run_command
+@run_command(description="Synchronize application bundle with S3 bucket")
 def _synchronize_hosting_bucket(config: CloudfrontSirtuinConfig) -> str:
     return (
         f"aws "
@@ -21,7 +21,7 @@ def _synchronize_hosting_bucket(config: CloudfrontSirtuinConfig) -> str:
     )
 
 
-@run_command
+@run_command(description="Copy application bundle to S3 bucket")
 def _copy_application_bundle_to_bucket(config: CloudfrontSirtuinConfig) -> str:
     return (
         f"aws "
@@ -33,7 +33,7 @@ def _copy_application_bundle_to_bucket(config: CloudfrontSirtuinConfig) -> str:
     )
 
 
-@run_command
+@run_command(description="Invalidate Cloudfront distribution")
 def invalidate_cloudfront_distribution(
     filepath: Path, config: CloudfrontSirtuinConfig | None = None
 ) -> str:

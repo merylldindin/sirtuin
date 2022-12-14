@@ -150,8 +150,6 @@ EB CLI 3.20.3 (Python 3.10.)
 
 # TODO's
 
-- [ ] Move from `os.system` to `subprocess`
-- [ ] Share configs properly using `CLI Application Directory`
 - [ ] Embed processes within descriptive spinners
 - [ ] Add lambda / gateway routines
 - [ ] Build CDN for assets (best practices) via sirtuin

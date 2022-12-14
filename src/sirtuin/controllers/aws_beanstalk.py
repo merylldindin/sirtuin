@@ -168,7 +168,7 @@ def _clean_beanstalk_deployment(_: ElasticBeanstalkSirtuinConfig) -> None:
         delete_directory(directory)
 
 
-@run_command
+@run_command(description="Create Elastic Beanstalk application")
 def _create_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
     environment_variables = _get_environment_variables(config)
 
@@ -211,7 +211,7 @@ def create_beanstalk_from_config(filepath: Path) -> None:
     _clean_beanstalk_deployment(config)
 
 
-@run_command
+@run_command(description="Upgrade Elastic Beanstalk instance")
 def _upgrade_beanstalk_instance(config: ElasticBeanstalkSirtuinConfig) -> str:
     return (
         f"eb upgrade {config.beanstalk.service} "
@@ -229,7 +229,7 @@ def upgrade_beanstalk_from_config(filepath: Path) -> None:
     _clean_beanstalk_deployment(config)
 
 
-@run_command
+@run_command(description="Deploy Elastic Beanstalk application")
 def _deploy_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
     return (
         f"eb deploy {config.beanstalk.service} "
@@ -246,7 +246,7 @@ def deploy_beanstalk_from_config(filepath: Path) -> None:
     _clean_beanstalk_deployment(config)
 
 
-@run_command
+@run_command(description="Terminate Elastic Beanstalk instance")
 def _terminate_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
     return (
         f"eb terminate {config.beanstalk.service} "
