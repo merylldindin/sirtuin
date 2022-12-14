@@ -1,6 +1,7 @@
+import subprocess
 import sys
 from pathlib import Path
-from subprocess import Popen
+from subprocess import CompletedProcess
 from typing import Any, Callable, TypeVar
 
 T = TypeVar("T")
@@ -16,12 +17,12 @@ def if_exists(function: Callable[[Path], T]) -> Callable[[Path], T]:
     return wrapper
 
 
-def run_command(function: Callable[[T], str]) -> Callable[[T], int | str]:
-    def wrapper(*args: Any, **kwargs: Any) -> int | str:
+def run_command(function: Callable[[T], str]) -> Callable[[T], CompletedProcess | str]:
+    def wrapper(*args: Any, **kwargs: Any) -> CompletedProcess | str:
         return (
             function(*args, **kwargs)
             if "pytest" in sys.modules
-            else Popen(function(*args, **kwargs)).wait()
+            else subprocess.run(function(*args, **kwargs))
         )
 
     return wrapper
