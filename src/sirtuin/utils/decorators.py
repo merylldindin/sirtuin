@@ -37,7 +37,11 @@ def run_command(
             ) as spinner:
                 spinner.add_task(description=description, total=None)
 
-                return subprocess.run(function(*args, **kwargs).split(" "))
+                return subprocess.run(
+                    function(*args, **kwargs).split(" "),
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.STDOUT,
+                )
 
         return wrapper
 
