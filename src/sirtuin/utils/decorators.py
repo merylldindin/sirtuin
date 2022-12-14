@@ -24,7 +24,7 @@ def run_command(
         return (
             function(*args, **kwargs)
             if "pytest" in sys.modules
-            else subprocess.run(function(*args, **kwargs))
+            else subprocess.run(function(*args, **kwargs).split(" "))
         )
 
     return wrapper
