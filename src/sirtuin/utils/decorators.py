@@ -17,8 +17,10 @@ def if_exists(function: Callable[[Path], T]) -> Callable[[Path], T]:
     return wrapper
 
 
-def run_command(function: Callable[[T], str]) -> Callable[[T], CompletedProcess | str]:
-    def wrapper(*args: Any, **kwargs: Any) -> CompletedProcess | str:
+def run_command(
+    function: Callable[[T], str]
+) -> Callable[[T], CompletedProcess[Any] | str]:
+    def wrapper(*args: Any, **kwargs: Any) -> CompletedProcess[Any] | str:
         return (
             function(*args, **kwargs)
             if "pytest" in sys.modules
