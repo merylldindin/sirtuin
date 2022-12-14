@@ -4,6 +4,7 @@ import pytest
 
 DEFAULT_PATH_TO_FIXTURES = "tests/fixtures"
 
+
 @pytest.fixture
 def cli_directory() -> str:
     return os.path.join(os.getcwd(), "src/sirtuin/schemas")

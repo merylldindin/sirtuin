@@ -18,7 +18,7 @@ from sirtuin.models.aws_beanstalk import (
 from sirtuin.utils.cleaners import delete_directory, delete_file
 from sirtuin.utils.decorators import run_command
 from sirtuin.utils.dumpers import copy_file, dump_as_json, dump_as_raw, dump_as_yaml
-from sirtuin.utils.filepaths import get_schemas_path, get_service_directory
+from sirtuin.utils.filepaths import get_service_directory
 from sirtuin.utils.loaders import read_dotenv_file, read_raw_file, read_toml_file
 
 
@@ -126,7 +126,9 @@ def _write_extensions(
         known_extensions.append(filepath)
 
 
-def _write_beanstalk_customization(config: ElasticBeanstalkSirtuinConfig, cli_directory: str) -> list[str]:
+def _write_beanstalk_customization(
+    config: ElasticBeanstalkSirtuinConfig, cli_directory: str
+) -> list[str]:
     extensions: list[str] = []
 
     _write_extensions(
@@ -146,7 +148,9 @@ def _write_beanstalk_customization(config: ElasticBeanstalkSirtuinConfig, cli_di
     return extensions
 
 
-def _setup_beanstalk_deployment(config: ElasticBeanstalkSirtuinConfig, cli_directory: str) -> str:
+def _setup_beanstalk_deployment(
+    config: ElasticBeanstalkSirtuinConfig, cli_directory: str
+) -> str:
     _write_ebignore_config(config)
 
     _write_beanstalk_config(config)

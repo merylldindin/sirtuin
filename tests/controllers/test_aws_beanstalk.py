@@ -117,7 +117,9 @@ def test_write_beanstalk_customization(
         os.path.basename(beanstalk_sirtuin_config)
     )
 
-    filepaths = aws_beanstalk._write_beanstalk_customization(config, cli_directory=cli_directory)
+    filepaths = aws_beanstalk._write_beanstalk_customization(
+        config, cli_directory=cli_directory
+    )
 
     assert len(filepaths) == 9
 
@@ -150,7 +152,9 @@ def test_setup_beanstalk_deployment(
         os.path.basename(beanstalk_sirtuin_config)
     )
 
-    filepath = aws_beanstalk._setup_beanstalk_deployment(config, cli_directory=cli_directory)
+    filepath = aws_beanstalk._setup_beanstalk_deployment(
+        config, cli_directory=cli_directory
+    )
 
     assert os.path.exists(filepath)
 
