@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "checks:run": "make black && make isort && make mypy && make ruff",
+    "checks:run": "make black & make isort & make mypy & make ruff",
     "checks:fix": "make black-fix && make isort-fix && make ruff-fix",
     "husky:setup": "husky install && chmod ug+x .husky/*"
   },

@@ -122,8 +122,10 @@ There are simple rules in regards to our PR management:
 To get started with the skeleton of the application (database, backend and frontend), here are a few steps:
 
 ```bash
-# 1 - install all dependencies
-make install-extra
+# 1 - setup developer experience
+make setup
+# 2 - install package dependencies
+make install
 ```
 
 ## Installing `awscli`
@@ -150,7 +152,6 @@ EB CLI 3.20.3 (Python 3.10.)
 
 # TODO's
 
-- [ ] Embed processes within descriptive spinners
 - [ ] Add lambda / gateway routines
 - [ ] Build CDN for assets (best practices) via sirtuin
 - [ ] Add EC2 SSH routines (Docker, NGNIX, ...)
