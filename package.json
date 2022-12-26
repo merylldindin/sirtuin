@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "checks:run": "make black && make isort && make mypy && make ruff",
+    "checks:run": "make black & make isort & make mypy & make ruff",
     "checks:fix": "make black-fix && make isort-fix && make ruff-fix",
     "husky:setup": "husky install && chmod ug+x .husky/*"
   },
@@ -17,5 +17,5 @@
     "husky": "8.0.2",
     "prettier": "2.8.1"
   },
-  "packageManager": "yarn@3.3.0"
+  "packageManager": "yarn@3.3.1"
 }
