@@ -7,6 +7,7 @@ setup: ## Install developer experience
 
 setup-hard: ## Install developer experience with no cache
 	rm -rf node_modules/
+	yarn set version berry
 	yarn cache clean
 	make setup
 

@@ -41,15 +41,7 @@
       "groupName": "poetry/major",
       "matchDepTypes": ["dev", "types"],
       "matchManagers": ["poetry"],
-      "matchUpdateTypes": [
-        "bump",
-        "digest",
-        "lockFileMaintenance",
-        "minor",
-        "patch",
-        "pin",
-        "rollback"
-      ],
+      "matchUpdateTypes": ["major"],
       "semanticCommitType": "chore"
     },
     {
@@ -57,15 +49,7 @@
       "groupName": "yarn/major",
       "matchDepTypes": ["devDependencies"],
       "matchManagers": ["npm"],
-      "matchUpdateTypes": [
-        "bump",
-        "digest",
-        "lockFileMaintenance",
-        "minor",
-        "patch",
-        "pin",
-        "rollback"
-      ],
+      "matchUpdateTypes": ["major"],
       "semanticCommitType": "chore"
     }
   ],

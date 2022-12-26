@@ -40,7 +40,7 @@ def test_copy_application_bundle_to_bucket(
 
     assert str(aws_cloudfront._copy_application_bundle_to_bucket(config)).endswith(
         "s3://my-bucket-name "
-        "--recursive --content-type 'text/html' --exclude '*.*' "
+        "--recursive --content-type text/html --exclude *.* "
         "--region us-east-2 --profile my-profile"
     )
 
@@ -55,7 +55,7 @@ def test_invalidate_cloudfront_distribution(
     ) == (
         "aws cloudfront create-invalidation "
         "--distribution-id my-cloudfront-distribution-id "
-        "--paths '/*' --region us-east-2 --profile my-profile"
+        "--paths /* --region us-east-2 --profile my-profile"
     )
 
     config = aws_cloudfront._get_sirtuin_config(Path(cloudfront_sirtuin_config.name))
@@ -65,5 +65,5 @@ def test_invalidate_cloudfront_distribution(
     ) == (
         "aws cloudfront create-invalidation "
         "--distribution-id my-cloudfront-distribution-id "
-        "--paths '/*' --region us-east-2 --profile my-profile"
+        "--paths /* --region us-east-2 --profile my-profile"
     )
