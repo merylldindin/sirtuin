@@ -547,14 +547,14 @@ files = [
 
 [[package]]
 name = "toml-sort"
-version = "0.21.0"
+version = "0.22.0"
 description = "Toml sorting library"
 category = "dev"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "toml_sort-0.21.0-py3-none-any.whl", hash = "sha256:7f3ad678abf2f23658b97f6a00a9d9f8e1339861276ec2920cf3452095c0a214"},
-    {file = "toml_sort-0.21.0.tar.gz", hash = "sha256:6543b6e246ae54f173183525de2fa4845e22e071a3f6316f23e8ffc6eed39bcb"},
+    {file = "toml_sort-0.22.0-py3-none-any.whl", hash = "sha256:7f492e2c42b8df5f4f3028414128204f443a3304e0e000d0de8217b9352ecdbd"},
+    {file = "toml_sort-0.22.0.tar.gz", hash = "sha256:7000e09d1e13ce424dcd454466798aaa79bd5dfd797ac29f19d0ed7e8de15ed3"},
 ]
 
 [package.dependencies]
@@ -635,4 +635,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "4e414a61eb3e40c6fb8bd4960380a675d1e56abe0a9b2fe5f908227fa635751f"
+content-hash = "25a3e0dfd2217c59af8f03b9bb2e1cad49e69447d18a4acacf3090f0c7d451a0"
