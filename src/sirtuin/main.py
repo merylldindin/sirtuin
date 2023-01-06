@@ -47,7 +47,7 @@ def create_load_balancer(
         load_balancer_subnets,
         aws_region,
         aws_profile,
-        verbose,
+        verbose=verbose,
     )
 
 
@@ -57,29 +57,33 @@ def create_load_balancer(
 @cli.command()
 def create_beanstalk(
     filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    create_beanstalk_from_config(filepath)
+    create_beanstalk_from_config(filepath, verbose=verbose)
 
 
 @cli.command()
 def upgrade_beanstalk(
     filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    upgrade_beanstalk_from_config(filepath)
+    upgrade_beanstalk_from_config(filepath, verbose=verbose)
 
 
 @cli.command()
 def deploy_beanstalk(
     filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    deploy_beanstalk_from_config(filepath)
+    deploy_beanstalk_from_config(filepath, verbose=verbose)
 
 
 @cli.command()
 def terminate_beanstalk(
     filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    terminate_beanstalk_from_config(filepath)
+    terminate_beanstalk_from_config(filepath, verbose=verbose)
 
 
 # ? Cloudfront
@@ -88,12 +92,14 @@ def terminate_beanstalk(
 @cli.command()
 def deploy_cloudfront(
     filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    deploy_cloudfront_from_config(filepath)
+    deploy_cloudfront_from_config(filepath, verbose=verbose)
 
 
 @cli.command()
 def create_invalidation(
     filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    invalidate_cloudfront_distribution(filepath)
+    invalidate_cloudfront_distribution(filepath, verbose=verbose)

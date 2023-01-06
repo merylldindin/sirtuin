@@ -170,7 +170,7 @@ def _clean_beanstalk_deployment(_: ElasticBeanstalkSirtuinConfig) -> None:
 
 @run_command(description="Create Elastic Beanstalk application")
 def _create_beanstalk_service(
-    config: ElasticBeanstalkSirtuinConfig, verbose: bool = True
+    config: ElasticBeanstalkSirtuinConfig, verbose: bool = False
 ) -> str:
     environment_variables = _get_environment_variables(config)
 
@@ -205,17 +205,17 @@ def _create_beanstalk_service(
     )
 
 
-def create_beanstalk_from_config(filepath: Path) -> None:
+def create_beanstalk_from_config(filepath: Path, verbose: bool = False) -> None:
     config = _get_sirtuin_config(filepath)
 
     _setup_beanstalk_deployment(config)
-    _create_beanstalk_service(config)
+    _create_beanstalk_service(config, verbose=verbose)
     _clean_beanstalk_deployment(config)
 
 
 @run_command(description="Upgrade Elastic Beanstalk instance")
 def _upgrade_beanstalk_instance(
-    config: ElasticBeanstalkSirtuinConfig, verbose: bool = True
+    config: ElasticBeanstalkSirtuinConfig, verbose: bool = False
 ) -> str:
     return (
         f"eb upgrade {config.beanstalk.service} "
@@ -225,17 +225,17 @@ def _upgrade_beanstalk_instance(
     )
 
 
-def upgrade_beanstalk_from_config(filepath: Path) -> None:
+def upgrade_beanstalk_from_config(filepath: Path, verbose: bool = False) -> None:
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)
-    _upgrade_beanstalk_instance(config)
+    _upgrade_beanstalk_instance(config, verbose=verbose)
     _clean_beanstalk_deployment(config)
 
 
 @run_command(description="Deploy Elastic Beanstalk application")
 def _deploy_beanstalk_service(
-    config: ElasticBeanstalkSirtuinConfig, verbose: bool = True
+    config: ElasticBeanstalkSirtuinConfig, verbose: bool = False
 ) -> str:
     return (
         f"eb deploy {config.beanstalk.service} "
@@ -244,17 +244,17 @@ def _deploy_beanstalk_service(
     )
 
 
-def deploy_beanstalk_from_config(filepath: Path) -> None:
+def deploy_beanstalk_from_config(filepath: Path, verbose: bool = False) -> None:
     config = _get_sirtuin_config(filepath)
 
     _setup_beanstalk_deployment(config)
-    _deploy_beanstalk_service(config)
+    _deploy_beanstalk_service(config, verbose=verbose)
     _clean_beanstalk_deployment(config)
 
 
 @run_command(description="Terminate Elastic Beanstalk instance")
 def _terminate_beanstalk_service(
-    config: ElasticBeanstalkSirtuinConfig, verbose: bool = True
+    config: ElasticBeanstalkSirtuinConfig, verbose: bool = False
 ) -> str:
     return (
         f"eb terminate {config.beanstalk.service} "
@@ -264,9 +264,9 @@ def _terminate_beanstalk_service(
     )
 
 
-def terminate_beanstalk_from_config(filepath: Path) -> None:
+def terminate_beanstalk_from_config(filepath: Path, verbose=False) -> None:
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)
-    _terminate_beanstalk_service(config)
+    _terminate_beanstalk_service(config, verbose=verbose)
     _clean_beanstalk_deployment(config)

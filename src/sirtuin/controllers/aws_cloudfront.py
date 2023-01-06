@@ -11,7 +11,7 @@ def _get_sirtuin_config(filepath: Path) -> CloudfrontSirtuinConfig:
 
 @run_command(description="Synchronize application bundle with S3 bucket")
 def _synchronize_hosting_bucket(
-    config: CloudfrontSirtuinConfig, verbose: bool = True
+    config: CloudfrontSirtuinConfig, verbose: bool = False
 ) -> str:
     return (
         f"aws "
@@ -25,7 +25,7 @@ def _synchronize_hosting_bucket(
 
 @run_command(description="Copy application bundle to S3 bucket")
 def _copy_application_bundle_to_bucket(
-    config: CloudfrontSirtuinConfig, verbose: bool = True
+    config: CloudfrontSirtuinConfig, verbose: bool = False
 ) -> str:
     return (
         f"aws "
@@ -39,7 +39,7 @@ def _copy_application_bundle_to_bucket(
 
 @run_command(description="Invalidate Cloudfront distribution")
 def invalidate_cloudfront_distribution(
-    filepath: Path, config: CloudfrontSirtuinConfig | None = None, verbose: bool = True
+    filepath: Path, verbose: bool = False, config: CloudfrontSirtuinConfig | None = None
 ) -> str:
     config = config or _get_sirtuin_config(filepath)
 
@@ -53,9 +53,9 @@ def invalidate_cloudfront_distribution(
     )
 
 
-def deploy_cloudfront_from_config(filepath: Path) -> None:
+def deploy_cloudfront_from_config(filepath: Path, verbose: bool = False) -> None:
     sirtuin_config = _get_sirtuin_config(filepath)
 
-    _synchronize_hosting_bucket(sirtuin_config)
-    _copy_application_bundle_to_bucket(sirtuin_config)
-    invalidate_cloudfront_distribution(filepath, config=sirtuin_config)
+    _synchronize_hosting_bucket(sirtuin_config, verbose=verbose)
+    _copy_application_bundle_to_bucket(sirtuin_config, verbose=verbose)
+    invalidate_cloudfront_distribution(filepath, verbose=verbose, config=sirtuin_config)
