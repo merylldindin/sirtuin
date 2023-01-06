@@ -5,7 +5,7 @@ from sirtuin.utils.decorators import run_command
 
 @run_command(description="Create load balancer")
 def create_load_balancer_from_prompt(
-    name: str, type: str, subnets: str, region: str, profile: str
+    name: str, type: str, subnets: str, region: str, profile: str, verbose: bool = True
 ) -> str:
     return (
         f"aws elbv2 create-load-balancer "

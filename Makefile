@@ -12,10 +12,11 @@ setup-hard: ## Install developer experience with no cache
 	make setup
 
 install: ## Install package dependencies
-	poetry install --sync
+	poetry install --sync --with dev
 
 install-hard: ## Install package dependencies from scratch
 	rm -rf .venv/
+	poetry lock
 	make install
 
 poetry-update: ## Upgrade poetry and dependencies

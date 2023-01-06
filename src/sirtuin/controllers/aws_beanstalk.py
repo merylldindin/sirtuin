@@ -169,7 +169,9 @@ def _clean_beanstalk_deployment(_: ElasticBeanstalkSirtuinConfig) -> None:
 
 
 @run_command(description="Create Elastic Beanstalk application")
-def _create_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
+def _create_beanstalk_service(
+    config: ElasticBeanstalkSirtuinConfig, verbose: bool = True
+) -> str:
     environment_variables = _get_environment_variables(config)
 
     dumped_variables = (
@@ -212,7 +214,9 @@ def create_beanstalk_from_config(filepath: Path) -> None:
 
 
 @run_command(description="Upgrade Elastic Beanstalk instance")
-def _upgrade_beanstalk_instance(config: ElasticBeanstalkSirtuinConfig) -> str:
+def _upgrade_beanstalk_instance(
+    config: ElasticBeanstalkSirtuinConfig, verbose: bool = True
+) -> str:
     return (
         f"eb upgrade {config.beanstalk.service} "
         f"--force "
@@ -230,7 +234,9 @@ def upgrade_beanstalk_from_config(filepath: Path) -> None:
 
 
 @run_command(description="Deploy Elastic Beanstalk application")
-def _deploy_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
+def _deploy_beanstalk_service(
+    config: ElasticBeanstalkSirtuinConfig, verbose: bool = True
+) -> str:
     return (
         f"eb deploy {config.beanstalk.service} "
         f"--region {config.instance.region.value} "
@@ -247,7 +253,9 @@ def deploy_beanstalk_from_config(filepath: Path) -> None:
 
 
 @run_command(description="Terminate Elastic Beanstalk instance")
-def _terminate_beanstalk_service(config: ElasticBeanstalkSirtuinConfig) -> str:
+def _terminate_beanstalk_service(
+    config: ElasticBeanstalkSirtuinConfig, verbose: bool = True
+) -> str:
     return (
         f"eb terminate {config.beanstalk.service} "
         f"--force "

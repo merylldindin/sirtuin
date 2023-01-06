@@ -1,8 +1,10 @@
+from pathlib import Path
+
 from sirtuin.models.http_headers import ESCAPED_SOURCES, HttpHeadersSirtuinConfig
 from sirtuin.utils.loaders import read_toml_file
 
 
-def _get_sirtuin_config(filepath: str) -> HttpHeadersSirtuinConfig:
+def _get_sirtuin_config(filepath: Path) -> HttpHeadersSirtuinConfig:
     return HttpHeadersSirtuinConfig(**read_toml_file(filepath))
 
 
@@ -36,7 +38,7 @@ def _generate_content_security_policy(config: HttpHeadersSirtuinConfig) -> str:
     )
 
 
-def print_content_security_policy(filepath: str) -> None:
+def print_content_security_policy(filepath: Path) -> None:
     print(_generate_content_security_policy(_get_sirtuin_config(filepath)))
 
 

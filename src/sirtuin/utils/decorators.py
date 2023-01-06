@@ -29,6 +29,13 @@ def run_command(
             if "pytest" in sys.modules:
                 return function(*args, **kwargs)
 
+            if kwargs["verbose"]:
+                return subprocess.run(
+                    function(*args, **kwargs).split(" "),
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.STDOUT,
+                )
+
             with Progress(
                 SpinnerColumn(),
                 TextColumn("[progress.description]{task.description}"),

@@ -11,6 +11,7 @@
     "python.analysis.importFormat": "relative",
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.typeCheckingMode": "basic",
+    "python.defaultInterpreterPath": ".venv/bin/python3.10",
     "python.terminal.activateEnvironment": false,
     "workbench.startupEditor": "none",
     "[python]": {

@@ -56,6 +56,9 @@ pyyaml = "^6.0"
 tomli = "^2.0.1"
 typer = {extras = ["all"], version = "^0.7.0"}
 
+[tool.poetry.group.dev]
+optional = true
+
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"
 isort = "^5.10.1"
@@ -64,6 +67,9 @@ pytest = "^7.2.0"
 pytest-cov = "^4.0.0"
 ruff = "^0.0.194"
 toml-sort = "^0.20.1"
+
+[tool.poetry.group.types]
+optional = true
 
 [tool.poetry.group.types.dependencies]
 types-pyyaml = "^6.0.12.1"

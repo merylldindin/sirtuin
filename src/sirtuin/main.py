@@ -39,6 +39,7 @@ def create_load_balancer(
     load_balancer_subnets: str = typer.Option(..., prompt="Choose Subnets"),
     aws_region: str = typer.Option(..., prompt="Choose AWS Region"),
     aws_profile: str = typer.Option(..., prompt="Choose AWS Profile"),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
     create_load_balancer_from_prompt(
         load_balancer_name,
@@ -46,6 +47,7 @@ def create_load_balancer(
         load_balancer_subnets,
         aws_region,
         aws_profile,
+        verbose,
     )
 
 
