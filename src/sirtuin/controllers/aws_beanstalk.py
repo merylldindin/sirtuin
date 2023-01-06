@@ -264,7 +264,7 @@ def _terminate_beanstalk_service(
     )
 
 
-def terminate_beanstalk_from_config(filepath: Path, verbose=False) -> None:
+def terminate_beanstalk_from_config(filepath: Path, verbose: bool = False) -> None:
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)
