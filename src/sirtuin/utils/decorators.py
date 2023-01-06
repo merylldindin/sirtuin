@@ -30,11 +30,7 @@ def run_command(
                 return function(*args, **kwargs)
 
             if kwargs["verbose"]:
-                return subprocess.run(
-                    function(*args, **kwargs).split(" "),
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.STDOUT,
-                )
+                return subprocess.run(function(*args, **kwargs).split(" "))
 
             with Progress(
                 SpinnerColumn(),
