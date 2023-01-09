@@ -180,9 +180,6 @@ def _create_beanstalk_service(
         else None
     )
 
-    if dumped_variables is not None:
-        dumped_variables = dumped_variables.replace(" ", "\\")
-
     return (
         f"eb create {config.beanstalk.service} "
         f"--instance_type {config.instance.instance_type.value} "

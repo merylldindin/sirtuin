@@ -1,3 +1,4 @@
+import shlex
 import subprocess
 import sys
 from pathlib import Path
@@ -20,7 +21,7 @@ def if_exists(function: Callable[[Path], T]) -> Callable[[Path], T]:
 
 
 def _format_command(command: str) -> list[str]:
-    return [item.replace("\\", " ") for item in command.split(" ")]
+    return shlex.split(command)
 
 
 def run_command(
@@ -34,7 +35,9 @@ def run_command(
                 return function(*args, **kwargs)
 
             if kwargs["verbose"]:
-                return subprocess.run(_format_command(function(*args, **kwargs)))
+                return subprocess.run(
+                    _format_command(function(*args, **kwargs)), shell=True
+                )
 
             with Progress(
                 SpinnerColumn(),
@@ -47,6 +50,7 @@ def run_command(
                     _format_command(function(*args, **kwargs)),
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.STDOUT,
+                    shell=True,
                 )
 
         return wrapper
