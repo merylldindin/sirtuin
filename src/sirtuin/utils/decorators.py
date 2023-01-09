@@ -26,16 +26,18 @@ def _format_command(command: str) -> list[str]:
 
 def run_command(
     description: str,
-) -> Callable[..., Callable[[T], str | subprocess.Popen[bytes]]]:
+) -> Callable[..., Callable[[T], str | tuple[bytes, bytes]]]:
     def decorator(
         function: Callable[[T], str]
-    ) -> Callable[[T], str | subprocess.Popen[bytes]]:
-        def wrapper(*args: Any, **kwargs: Any) -> str | subprocess.Popen[bytes]:
+    ) -> Callable[[T], str | tuple[bytes, bytes]]:
+        def wrapper(*args: Any, **kwargs: Any) -> str | tuple[bytes, bytes]:
             if "pytest" in sys.modules:
                 return function(*args, **kwargs)
 
             if kwargs["verbose"]:
-                return subprocess.Popen(function(*args, **kwargs), shell=True)
+                return subprocess.Popen(
+                    function(*args, **kwargs), shell=True
+                ).communicate()
 
             with Progress(
                 SpinnerColumn(),
@@ -49,7 +51,7 @@ def run_command(
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.STDOUT,
                     shell=True,
-                )
+                ).communicate()
 
         return wrapper
 
