@@ -1,8 +1,6 @@
-import shlex
 import subprocess
 import sys
 from pathlib import Path
-from subprocess import CompletedProcess
 from typing import Any, Callable, TypeVar
 
 from rich.progress import Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
@@ -18,10 +16,6 @@ def if_exists(function: Callable[[Path], T]) -> Callable[[Path], T]:
         return function(filepath, *args, **kwargs)
 
     return wrapper
-
-
-def _format_command(command: str) -> list[str]:
-    return shlex.split(command)
 
 
 def run_command(
