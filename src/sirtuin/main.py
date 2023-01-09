@@ -13,6 +13,7 @@ from sirtuin.controllers.aws_cloudfront import (
     invalidate_cloudfront_distribution,
 )
 from sirtuin.controllers.aws_compute import create_load_balancer_from_prompt
+from sirtuin.controllers.aws_container import publish_docker_image_from_config
 from sirtuin.controllers.http_headers import print_content_security_policy
 
 cli = typer.Typer()
@@ -49,6 +50,17 @@ def create_load_balancer(
         aws_profile,
         verbose=verbose,
     )
+
+
+# ? Elastic Container
+
+
+@cli.command()
+def publish_docker_image(
+    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
+) -> None:
+    publish_docker_image_from_config(filepath, verbose=verbose)
 
 
 # ? Elastic Beanstalk

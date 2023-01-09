@@ -48,7 +48,7 @@ def _untag_docker_image(
     return f"docker rmi {config.registry.account}/{config.image.target}"
 
 
-def publish_docker_image(filepath: Path, verbose: bool = False) -> None:
+def publish_docker_image_from_config(filepath: Path, verbose: bool = False) -> None:
     config = _get_sirtuin_config(filepath)
 
     _login_container_registry(config, verbose=verbose)
