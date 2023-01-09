@@ -26,18 +26,16 @@ def _format_command(command: str) -> list[str]:
 
 def run_command(
     description: str,
-) -> Callable[..., Callable[[T], str | CompletedProcess[Any]]]:
+) -> Callable[..., Callable[[T], str | subprocess.Popen[bytes]]]:
     def decorator(
         function: Callable[[T], str]
-    ) -> Callable[[T], str | CompletedProcess[Any]]:
-        def wrapper(*args: Any, **kwargs: Any) -> str | CompletedProcess[Any]:
+    ) -> Callable[[T], str | subprocess.Popen[bytes]]:
+        def wrapper(*args: Any, **kwargs: Any) -> str | subprocess.Popen[bytes]:
             if "pytest" in sys.modules:
                 return function(*args, **kwargs)
 
             if kwargs["verbose"]:
-                return subprocess.run(
-                    _format_command(function(*args, **kwargs)), shell=True
-                )
+                return subprocess.Popen(function(*args, **kwargs), shell=True)
 
             with Progress(
                 SpinnerColumn(),
@@ -46,8 +44,8 @@ def run_command(
             ) as spinner:
                 spinner.add_task(description=description, total=None)
 
-                return subprocess.run(
-                    _format_command(function(*args, **kwargs)),
+                return subprocess.Popen(
+                    function(*args, **kwargs),
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.STDOUT,
                     shell=True,
