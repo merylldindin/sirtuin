@@ -16,6 +16,11 @@ def cloudfront_sirtuin_config() -> Path:
 
 
 @pytest.fixture
+def container_sirtuin_config() -> Path:
+    return DEFAULT_PATH_TO_FIXTURES / "container/sirtuin.toml"
+
+
+@pytest.fixture
 def gateway_sirtuin_config() -> Path:
     return DEFAULT_PATH_TO_FIXTURES / "gateway/sirtuin.toml"
 

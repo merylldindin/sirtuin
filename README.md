@@ -153,5 +153,7 @@ EB CLI 3.20.3 (Python 3.10.)
 # TODO's
 
 - [ ] Add lambda / gateway routines
+- [ ] Build ECS task definition management
+- [ ] Enable retrieval of secrets from s3 directly
 - [ ] Build CDN for assets (best practices) via sirtuin
 - [ ] Add EC2 SSH routines (Docker, NGNIX, ...)

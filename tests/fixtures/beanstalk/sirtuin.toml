@@ -10,7 +10,7 @@ ServiceName = "my-service"
 AuthBucket = "my-bucket"
 AuthKey = "my-key"
 Image = "my-dockerhub-repository/my-image"
-Ports = [{ container = 5000, host = 5000 }]
+Ports = [{container = 5000, host = 5000}]
 Volumes = []
 
 [ebextensions."autoscaling-policy.config"]
