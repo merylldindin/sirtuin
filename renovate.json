@@ -6,7 +6,7 @@
   "packageRules": [
     {
       "automerge": true,
-      "groupName": "poetry/minor",
+      "groupName": "poetry-minor",
       "matchDepTypes": ["dependencies", "dev", "types"],
       "matchManagers": ["poetry"],
       "matchUpdateTypes": [
@@ -22,7 +22,7 @@
     },
     {
       "automerge": true,
-      "groupName": "yarn/minor",
+      "groupName": "yarn-minor",
       "matchDepTypes": ["dependencies", "devDependencies"],
       "matchManagers": ["npm"],
       "matchUpdateTypes": [
@@ -38,7 +38,7 @@
     },
     {
       "automerge": true,
-      "groupName": "poetry/major",
+      "groupName": "poetry-major",
       "matchDepTypes": ["dev", "types"],
       "matchManagers": ["poetry"],
       "matchUpdateTypes": ["major"],
@@ -46,7 +46,7 @@
     },
     {
       "automerge": true,
-      "groupName": "yarn/major",
+      "groupName": "yarn-major",
       "matchDepTypes": ["devDependencies"],
       "matchManagers": ["npm"],
       "matchUpdateTypes": ["major"],
