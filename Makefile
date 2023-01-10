@@ -12,7 +12,7 @@ setup-hard: ## Install developer experience with no cache
 	make setup
 
 install: ## Install package dependencies
-	poetry install --sync --with dev
+	poetry install --sync --with dev,types
 
 install-hard: ## Install package dependencies from scratch
 	rm -rf .venv/

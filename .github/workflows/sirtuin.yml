@@ -35,7 +35,7 @@ jobs:
 
       - name: Install Dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --sync --with dev
+        run: poetry install --sync --with dev,types
 
       - name: Run Black
         run: make black
