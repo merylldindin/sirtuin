@@ -72,18 +72,18 @@ def _load_config_from_s3(file_arn: str, profile: str) -> None:
 def catch_remote_config(
     function: Callable[[Path, str, bool], T]
 ) -> Callable[[str, str, bool], T]:
-    def wrapper(*args: Any, **kwargs: Any) -> Any:
-        filepath, profile, *_ = args
+    def wrapper(*args: Any) -> Any:
+        filepath, profile, verbose = args
 
         if filepath.startswith("s3://"):
             _load_config_from_s3(filepath, profile)
 
-            result = function(Path(DEFAULT_SIRTUIN_CONFIG_NAME), *args, **kwargs)
+            result = function(Path(DEFAULT_SIRTUIN_CONFIG_NAME), profile, verbose)
 
             Path(DEFAULT_SIRTUIN_CONFIG_NAME).unlink()
 
             return result
 
-        return function(Path(filepath), *args, **kwargs)
+        return function(Path(filepath), profile, verbose)
 
     return wrapper
