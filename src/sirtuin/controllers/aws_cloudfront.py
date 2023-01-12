@@ -58,7 +58,7 @@ def invalidate_cloudfront_from_config(
 ) -> None:
     sirtuin_config = _get_sirtuin_config(filepath)
 
-    _invalidate_cloudfront_distribution(sirtuin_config, verbose=verbose)
+    _invalidate_cloudfront_distribution(sirtuin_config, verbose)
 
 
 @catch_remote_config
@@ -67,6 +67,6 @@ def deploy_cloudfront_from_config(
 ) -> None:
     sirtuin_config = _get_sirtuin_config(filepath)
 
-    _synchronize_hosting_bucket(sirtuin_config, verbose=verbose)
-    _copy_application_bundle_to_bucket(sirtuin_config, verbose=verbose)
-    _invalidate_cloudfront_distribution(sirtuin_config, verbose=verbose)
+    _synchronize_hosting_bucket(sirtuin_config, verbose)
+    _copy_application_bundle_to_bucket(sirtuin_config, verbose)
+    _invalidate_cloudfront_distribution(sirtuin_config, verbose)

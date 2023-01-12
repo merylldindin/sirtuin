@@ -213,7 +213,7 @@ def create_beanstalk_from_config(
     config = _get_sirtuin_config(filepath)
 
     _setup_beanstalk_deployment(config)
-    _create_beanstalk_service(config, verbose=verbose)
+    _create_beanstalk_service(config, verbose)
     _clean_beanstalk_deployment(config)
 
 
@@ -236,7 +236,7 @@ def upgrade_beanstalk_from_config(
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)
-    _upgrade_beanstalk_instance(config, verbose=verbose)
+    _upgrade_beanstalk_instance(config, verbose)
     _clean_beanstalk_deployment(config)
 
 
@@ -258,7 +258,7 @@ def deploy_beanstalk_from_config(
     config = _get_sirtuin_config(filepath)
 
     _setup_beanstalk_deployment(config)
-    _deploy_beanstalk_service(config, verbose=verbose)
+    _deploy_beanstalk_service(config, verbose)
     _clean_beanstalk_deployment(config)
 
 
@@ -281,5 +281,5 @@ def terminate_beanstalk_from_config(
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)
-    _terminate_beanstalk_service(config, verbose=verbose)
+    _terminate_beanstalk_service(config, verbose)
     _clean_beanstalk_deployment(config)

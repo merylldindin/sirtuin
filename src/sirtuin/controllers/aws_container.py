@@ -55,7 +55,7 @@ def publish_docker_image_from_config(
 ) -> None:
     config = _get_sirtuin_config(filepath)
 
-    _login_container_registry(config, verbose=verbose)
-    _tag_docker_image(config, verbose=verbose)
-    _push_docker_image(config, verbose=verbose)
-    _untag_docker_image(config, verbose=verbose)
+    _login_container_registry(config, verbose)
+    _tag_docker_image(config, verbose)
+    _push_docker_image(config, verbose)
+    _untag_docker_image(config, verbose)
