@@ -1,6 +1,8 @@
 from pathlib import Path
 
 from sirtuin.models.http_headers import ESCAPED_SOURCES, HttpHeadersSirtuinConfig
+from sirtuin.utils.constants import DEFAULT_AWS_PROFILE
+from sirtuin.utils.decorators import catch_remote_config
 from sirtuin.utils.loaders import read_toml_file
 
 
@@ -38,5 +40,8 @@ def _generate_content_security_policy(config: HttpHeadersSirtuinConfig) -> str:
     )
 
 
-def print_content_security_policy(filepath: Path) -> None:
+@catch_remote_config
+def print_content_security_policy(
+    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+) -> None:
     print(_generate_content_security_policy(_get_sirtuin_config(filepath)))

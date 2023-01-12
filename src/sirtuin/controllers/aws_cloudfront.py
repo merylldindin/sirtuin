@@ -1,7 +1,8 @@
 from pathlib import Path
 
 from sirtuin.models.aws_cloudfront import CloudfrontSirtuinConfig
-from sirtuin.utils.decorators import run_command
+from sirtuin.utils.constants import DEFAULT_AWS_PROFILE
+from sirtuin.utils.decorators import catch_remote_config, run_command
 from sirtuin.utils.loaders import read_toml_file
 
 
@@ -38,11 +39,9 @@ def _copy_application_bundle_to_bucket(
 
 
 @run_command(description="Invalidate Cloudfront distribution")
-def invalidate_cloudfront_distribution(
-    filepath: Path, verbose: bool = False, config: CloudfrontSirtuinConfig | None = None
+def _invalidate_cloudfront_distribution(
+    config: CloudfrontSirtuinConfig, verbose: bool = False
 ) -> str:
-    config = config or _get_sirtuin_config(filepath)
-
     return (
         f"aws "
         f"cloudfront create-invalidation "
@@ -53,9 +52,21 @@ def invalidate_cloudfront_distribution(
     )
 
 
-def deploy_cloudfront_from_config(filepath: Path, verbose: bool = False) -> None:
+@catch_remote_config
+def invalidate_cloudfront_from_config(
+    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+) -> None:
+    sirtuin_config = _get_sirtuin_config(filepath)
+
+    _invalidate_cloudfront_distribution(sirtuin_config, verbose=verbose)
+
+
+@catch_remote_config
+def deploy_cloudfront_from_config(
+    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+) -> None:
     sirtuin_config = _get_sirtuin_config(filepath)
 
     _synchronize_hosting_bucket(sirtuin_config, verbose=verbose)
     _copy_application_bundle_to_bucket(sirtuin_config, verbose=verbose)
-    invalidate_cloudfront_distribution(filepath, verbose=verbose, config=sirtuin_config)
+    _invalidate_cloudfront_distribution(sirtuin_config, verbose=verbose)

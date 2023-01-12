@@ -16,7 +16,8 @@ from sirtuin.models.aws_beanstalk import (
     ElasticBeanstalkSirtuinConfig,
 )
 from sirtuin.utils.cleaners import delete_directory, delete_file
-from sirtuin.utils.decorators import run_command
+from sirtuin.utils.constants import DEFAULT_AWS_PROFILE
+from sirtuin.utils.decorators import catch_remote_config, run_command
 from sirtuin.utils.dumpers import copy_file, dump_as_json, dump_as_raw, dump_as_yaml
 from sirtuin.utils.filepaths import get_schemas_path
 from sirtuin.utils.loaders import read_dotenv_file, read_raw_file, read_toml_file
@@ -205,7 +206,10 @@ def _create_beanstalk_service(
     )
 
 
-def create_beanstalk_from_config(filepath: Path, verbose: bool = False) -> None:
+@catch_remote_config
+def create_beanstalk_from_config(
+    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+) -> None:
     config = _get_sirtuin_config(filepath)
 
     _setup_beanstalk_deployment(config)
@@ -225,7 +229,10 @@ def _upgrade_beanstalk_instance(
     )
 
 
-def upgrade_beanstalk_from_config(filepath: Path, verbose: bool = False) -> None:
+@catch_remote_config
+def upgrade_beanstalk_from_config(
+    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+) -> None:
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)
@@ -244,7 +251,10 @@ def _deploy_beanstalk_service(
     )
 
 
-def deploy_beanstalk_from_config(filepath: Path, verbose: bool = False) -> None:
+@catch_remote_config
+def deploy_beanstalk_from_config(
+    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+) -> None:
     config = _get_sirtuin_config(filepath)
 
     _setup_beanstalk_deployment(config)
@@ -264,7 +274,10 @@ def _terminate_beanstalk_service(
     )
 
 
-def terminate_beanstalk_from_config(filepath: Path, verbose: bool = False) -> None:
+@catch_remote_config
+def terminate_beanstalk_from_config(
+    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+) -> None:
     config = _get_sirtuin_config(filepath)
 
     _write_beanstalk_config(config)

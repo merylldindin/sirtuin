@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import typer
 
 from sirtuin.controllers.aws_beanstalk import (
@@ -10,25 +8,14 @@ from sirtuin.controllers.aws_beanstalk import (
 )
 from sirtuin.controllers.aws_cloudfront import (
     deploy_cloudfront_from_config,
-    invalidate_cloudfront_distribution,
+    invalidate_cloudfront_from_config,
 )
 from sirtuin.controllers.aws_compute import create_load_balancer_from_prompt
 from sirtuin.controllers.aws_container import publish_docker_image_from_config
 from sirtuin.controllers.http_headers import print_content_security_policy
+from sirtuin.utils.constants import DEFAULT_SIRTUIN_CONFIG_NAME
 
 cli = typer.Typer()
-
-DEFAULT_CONFIG_FILE: Path = Path("sirtuin.toml")
-
-# ? HTTP Headers
-
-
-@cli.command()
-def generate_csp(
-    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
-) -> None:
-    print_content_security_policy(filepath)
-
 
 # ? Elastic Compute
 
@@ -52,15 +39,28 @@ def create_load_balancer(
     )
 
 
+# ? HTTP Headers
+
+
+@cli.command()
+def generate_csp(
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
+) -> None:
+    print_content_security_policy(filepath, profile, verbose)
+
+
 # ? Elastic Container
 
 
 @cli.command()
 def publish_docker_image(
-    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    publish_docker_image_from_config(filepath, verbose=verbose)
+    publish_docker_image_from_config(filepath, profile, verbose)
 
 
 # ? Elastic Beanstalk
@@ -68,34 +68,38 @@ def publish_docker_image(
 
 @cli.command()
 def create_beanstalk(
-    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    create_beanstalk_from_config(filepath, verbose=verbose)
+    create_beanstalk_from_config(filepath, profile, verbose)
 
 
 @cli.command()
 def upgrade_beanstalk(
-    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    upgrade_beanstalk_from_config(filepath, verbose=verbose)
+    upgrade_beanstalk_from_config(filepath, profile, verbose)
 
 
 @cli.command()
 def deploy_beanstalk(
-    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    deploy_beanstalk_from_config(filepath, verbose=verbose)
+    deploy_beanstalk_from_config(filepath, profile, verbose)
 
 
 @cli.command()
 def terminate_beanstalk(
-    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    terminate_beanstalk_from_config(filepath, verbose=verbose)
+    terminate_beanstalk_from_config(filepath, profile, verbose)
 
 
 # ? Cloudfront
@@ -103,15 +107,17 @@ def terminate_beanstalk(
 
 @cli.command()
 def deploy_cloudfront(
-    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    deploy_cloudfront_from_config(filepath, verbose=verbose)
+    deploy_cloudfront_from_config(filepath, profile, verbose)
 
 
 @cli.command()
 def create_invalidation(
-    filepath: Path = typer.Argument(default=DEFAULT_CONFIG_FILE),
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    invalidate_cloudfront_distribution(filepath, verbose=verbose)
+    invalidate_cloudfront_from_config(filepath, profile, verbose)

@@ -50,19 +50,9 @@ def test_invalidate_cloudfront_distribution(
 ) -> None:
     monkeypatch.chdir(cloudfront_sirtuin_config.parent)
 
-    assert aws_cloudfront.invalidate_cloudfront_distribution(
-        Path(cloudfront_sirtuin_config.name)
-    ) == (
-        "aws cloudfront create-invalidation "
-        "--distribution-id my-cloudfront-distribution-id "
-        "--paths /* --region us-east-2 --profile my-profile"
-    )
-
     config = aws_cloudfront._get_sirtuin_config(Path(cloudfront_sirtuin_config.name))
 
-    assert aws_cloudfront.invalidate_cloudfront_distribution(
-        Path(cloudfront_sirtuin_config.name), config=config
-    ) == (
+    assert aws_cloudfront._invalidate_cloudfront_distribution(config) == (
         "aws cloudfront create-invalidation "
         "--distribution-id my-cloudfront-distribution-id "
         "--paths /* --region us-east-2 --profile my-profile"
