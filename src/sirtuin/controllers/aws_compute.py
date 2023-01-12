@@ -1,6 +1,5 @@
 from sirtuin.models.aws_compute import LoadBalancerType
 from sirtuin.models.aws_regions import AwsRegion
-from sirtuin.utils.decorators import run_command
 
 
 def create_load_balancer_from_prompt(

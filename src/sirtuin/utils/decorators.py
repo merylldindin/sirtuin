@@ -41,7 +41,7 @@ def _interactive_subprocess(description: str, command: str) -> None:
 
 def run_command(
     description: str,
-) -> Callable[..., Callable[[S, bool], str | None]]:  # type: ignore
+) -> Callable[..., Callable[[S, bool], str | None]]:
     def decorator(
         function: Callable[[S, bool], str]
     ) -> Callable[[S, bool], str | None]:
@@ -54,6 +54,8 @@ def run_command(
             ).communicate() if args[1] else _interactive_subprocess(
                 description, function(*args, **kwargs)
             )
+
+            return None
 
         return wrapper
 
