@@ -16,15 +16,33 @@ from sirtuin.models.aws_beanstalk import (
     ElasticBeanstalkSirtuinConfig,
 )
 from sirtuin.utils.cleaners import delete_directory, delete_file
-from sirtuin.utils.constants import DEFAULT_AWS_PROFILE
-from sirtuin.utils.decorators import catch_remote_config, run_command
+from sirtuin.utils.constants import DEFAULT_AWS_PROFILE, DEFAULT_ENV_FILENAME
+from sirtuin.utils.decorators import (
+    catch_remote_config,
+    run_command,
+    run_interactive_subprocess,
+)
 from sirtuin.utils.dumpers import copy_file, dump_as_json, dump_as_raw, dump_as_yaml
 from sirtuin.utils.filepaths import get_schemas_path
 from sirtuin.utils.loaders import read_dotenv_file, read_raw_file, read_toml_file
 
 
-def _get_sirtuin_config(filepath: Path) -> ElasticBeanstalkSirtuinConfig:
-    return ElasticBeanstalkSirtuinConfig(**read_toml_file(filepath))
+def _get_sirtuin_config(
+    filepath: Path, profile: str = "default"
+) -> ElasticBeanstalkSirtuinConfig:
+    raw_config = read_toml_file(filepath)
+
+    if (
+        dotenv_path := raw_config["beanstalk"].get("DotenvPath")
+    ) is not None and dotenv_path.startswith("s3://"):
+        run_interactive_subprocess(
+            "Loading environment variables from S3",
+            f"aws s3 cp {dotenv_path} {DEFAULT_ENV_FILENAME} --profile {profile}",
+        )
+
+        raw_config["beanstalk"]["DotenvPath"] = DEFAULT_ENV_FILENAME
+
+    return ElasticBeanstalkSirtuinConfig(**raw_config)
 
 
 def _get_environment_variables(
@@ -65,28 +83,30 @@ def _write_beanstalk_config(config: ElasticBeanstalkSirtuinConfig) -> Path:
 
 
 def _write_dockerrun_config(config: ElasticBeanstalkSirtuinConfig) -> Path:
-    dockerrun_config = ElasticBeanstalkDockerrunConfig(
-        **{
-            "Image": {
-                "Name": config.docker.image,
-            },
-            "Ports": [
-                {"ContainerPort": port.container, "HostPort": port.host}
-                for port in config.docker.ports
-            ],
-            "Volumes": [
-                {"ContainerDirectory": volume.container, "HostDirectory": volume.host}
-                for volume in config.docker.volumes
-            ],
-            "Authentication": {
-                "Bucket": config.docker.auth_bucket,
-                "Key": config.docker.auth_key,
-            },
+    raw_config = {
+        "Image": {
+            "Name": config.docker.image,
+        },
+        "Ports": [
+            {"ContainerPort": port.container, "HostPort": port.host}
+            for port in config.docker.ports
+        ],
+        "Volumes": [
+            {"ContainerDirectory": volume.container, "HostDirectory": volume.host}
+            for volume in config.docker.volumes
+        ],
+    }
+
+    if config.docker.auth_key is not None and config.docker.auth_bucket is not None:
+        raw_config["Authentication"] = {
+            "Bucket": config.docker.auth_bucket,
+            "Key": config.docker.auth_key,
         }
-    )
+
+    dockerrun_config = ElasticBeanstalkDockerrunConfig(**raw_config)
 
     dump_as_json(
-        dockerrun_config.dict(by_alias=True, use_sanitization=True),
+        dockerrun_config.dict(by_alias=True, exclude_none=True, use_sanitization=True),
         DEFAULT_BEANSTALK_DOCKERRUN_PATH,
     )
 
@@ -155,6 +175,7 @@ def _setup_beanstalk_deployment(config: ElasticBeanstalkSirtuinConfig) -> Path:
 
 def _clean_beanstalk_deployment(_: ElasticBeanstalkSirtuinConfig) -> None:
     for filepath in [
+        Path(DEFAULT_ENV_FILENAME),
         DEFAULT_BEANSTALK_ARTIFACT_PATH,
         DEFAULT_BEANSTALK_DOCKERRUN_PATH,
         DEFAULT_BEANSTALK_EBIGNORE_PATH,
@@ -210,7 +231,7 @@ def _create_beanstalk_service(
 def create_beanstalk_from_config(
     filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
 ) -> None:
-    config = _get_sirtuin_config(filepath)
+    config = _get_sirtuin_config(filepath, profile=profile)
 
     _setup_beanstalk_deployment(config)
     _create_beanstalk_service(config, verbose)
@@ -233,7 +254,7 @@ def _upgrade_beanstalk_instance(
 def upgrade_beanstalk_from_config(
     filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
 ) -> None:
-    config = _get_sirtuin_config(filepath)
+    config = _get_sirtuin_config(filepath, profile=profile)
 
     _write_beanstalk_config(config)
     _upgrade_beanstalk_instance(config, verbose)
@@ -255,7 +276,7 @@ def _deploy_beanstalk_service(
 def deploy_beanstalk_from_config(
     filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
 ) -> None:
-    config = _get_sirtuin_config(filepath)
+    config = _get_sirtuin_config(filepath, profile=profile)
 
     _setup_beanstalk_deployment(config)
     _deploy_beanstalk_service(config, verbose)
@@ -278,7 +299,7 @@ def _terminate_beanstalk_service(
 def terminate_beanstalk_from_config(
     filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
 ) -> None:
-    config = _get_sirtuin_config(filepath)
+    config = _get_sirtuin_config(filepath, profile=profile)
 
     _write_beanstalk_config(config)
     _terminate_beanstalk_service(config, verbose)

@@ -71,8 +71,8 @@ class ElasticBeanstalkDockerrunAuthentication(SanitizedBaseModel):
 
 
 class ElasticBeanstalkDockerrunConfig(SanitizedBaseModel):
-    authentication: ElasticBeanstalkDockerrunAuthentication = Field(
-        alias="Authentication"
+    authentication: ElasticBeanstalkDockerrunAuthentication | None = Field(
+        None, alias="Authentication"
     )
     aws_eb_dockerrun_version: int = Field(default=1, alias="AWSEBDockerrunVersion")
     image: ElasticBeanstalkDockerrunImage = Field(alias="Image")
@@ -102,8 +102,8 @@ class ElasticBeanstalkDockerVolume(BaseModel):
 
 class ElasticBeanstalkDockerConfig(BaseModel):
     image: str = Field(alias="Image")
-    auth_bucket: str = Field(alias="AuthBucket")
-    auth_key: str = Field(alias="AuthKey")
+    auth_bucket: str | None = Field(None, alias="AuthBucket")
+    auth_key: str | None = Field(None, alias="AuthKey")
     ports: list[ElasticBeanstalkDockerPort] = Field(alias="Ports")
     volumes: list[ElasticBeanstalkDockerVolume] = Field(alias="Volumes")
 

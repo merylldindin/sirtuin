@@ -23,7 +23,7 @@ def if_exists(function: Callable[[Path], T]) -> Callable[[Path], T]:
     return wrapper
 
 
-def _interactive_subprocess(description: str, command: str) -> None:
+def run_interactive_subprocess(description: str, command: str) -> None:
     with Progress(
         SpinnerColumn(),
         TextColumn("[progress.description]{task.description}"),
@@ -51,7 +51,7 @@ def run_command(
 
             subprocess.Popen(
                 function(*args, **kwargs), shell=True
-            ).communicate() if args[1] else _interactive_subprocess(
+            ).communicate() if args[1] else run_interactive_subprocess(
                 description, function(*args, **kwargs)
             )
 
@@ -63,7 +63,7 @@ def run_command(
 
 
 def _load_config_from_s3(file_arn: str, profile: str) -> None:
-    return _interactive_subprocess(
+    return run_interactive_subprocess(
         "Loading configuration from S3",
         f"aws s3 cp {file_arn} {DEFAULT_SIRTUIN_CONFIG_NAME} --profile {profile}",
     )
