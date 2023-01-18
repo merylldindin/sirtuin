@@ -159,7 +159,7 @@ def test_create_beanstalk_service(
 
     config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
-    assert aws_beanstalk._create_beanstalk_service(config) == (
+    assert aws_beanstalk._create_beanstalk_service(config, False) == (
         "eb create my-service "
         "--instance_type t3.small --min-instances 1 --max-instances 1 "
         "--elb-type application --timeout 30 "
@@ -180,7 +180,7 @@ def test_upgrade_beanstalk_instance(
 
     config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
-    assert aws_beanstalk._upgrade_beanstalk_instance(config) == (
+    assert aws_beanstalk._upgrade_beanstalk_instance(config, False) == (
         "eb upgrade my-service --force --region us-east-2 --profile my-profile"
     )
 
@@ -192,7 +192,7 @@ def test_deploy_beanstalk_service(
 
     config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
-    assert aws_beanstalk._deploy_beanstalk_service(config) == (
+    assert aws_beanstalk._deploy_beanstalk_service(config, False) == (
         "eb deploy my-service --region us-east-2 --profile my-profile"
     )
 
@@ -204,6 +204,6 @@ def test_terminate_beanstalk_service(
 
     config = aws_beanstalk._get_sirtuin_config(Path(beanstalk_sirtuin_config.name))
 
-    assert aws_beanstalk._terminate_beanstalk_service(config) == (
+    assert aws_beanstalk._terminate_beanstalk_service(config, False) == (
         "eb terminate my-service --force --region us-east-2 --profile my-profile"
     )

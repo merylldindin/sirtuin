@@ -1,7 +1,9 @@
+from pathlib import Path
+
 from sirtuin.controllers import http_headers
 
 
-def test_get_sirtuin_config(headers_sirtuin_config: str) -> None:
+def test_get_sirtuin_config(headers_sirtuin_config: Path) -> None:
     config = http_headers._get_sirtuin_config(headers_sirtuin_config)
 
     assert config.static_redirection
@@ -12,7 +14,7 @@ def test_get_sirtuin_config(headers_sirtuin_config: str) -> None:
     assert config.x_xss_protection.key == "X-XSS-Protection"
 
 
-def test_merge_csp_sources(headers_sirtuin_config: str) -> None:
+def test_merge_csp_sources(headers_sirtuin_config: Path) -> None:
     config = http_headers._get_sirtuin_config(headers_sirtuin_config)
 
     csp_sources = http_headers._merge_csp_sources(config)
@@ -21,7 +23,7 @@ def test_merge_csp_sources(headers_sirtuin_config: str) -> None:
     assert csp_sources["worker-src"] == ["blob:", "www.google.com"]
 
 
-def test_generate_content_security_policy(headers_sirtuin_config: str) -> None:
+def test_generate_content_security_policy(headers_sirtuin_config: Path) -> None:
     config = http_headers._get_sirtuin_config(headers_sirtuin_config)
 
     assert http_headers._generate_content_security_policy(config) == (
