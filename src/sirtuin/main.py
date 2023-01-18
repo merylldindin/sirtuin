@@ -11,7 +11,10 @@ from sirtuin.controllers.aws_cloudfront import (
     invalidate_cloudfront_from_config,
 )
 from sirtuin.controllers.aws_compute import create_load_balancer_from_prompt
-from sirtuin.controllers.aws_container import publish_docker_image_from_config
+from sirtuin.controllers.aws_container import (
+    deploy_container_from_config,
+    push_container_from_config,
+)
 from sirtuin.controllers.http_headers import print_content_security_policy
 from sirtuin.utils.constants import DEFAULT_SIRTUIN_CONFIG_NAME
 
@@ -21,7 +24,7 @@ cli = typer.Typer()
 
 
 @cli.command()
-def create_load_balancer(
+def compute_create_lb(
     load_balancer_name: str = typer.Option(..., prompt="Choose Load Balancer Name"),
     load_balancer_type: str = typer.Option(..., prompt="Choose Load Balancer Type"),
     load_balancer_subnets: str = typer.Option(..., prompt="Choose Subnets"),
@@ -39,35 +42,32 @@ def create_load_balancer(
     )
 
 
-# ? HTTP Headers
-
-
-@cli.command()
-def generate_csp(
-    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
-    profile: str = typer.Option("default", "--profile", "-p"),
-    verbose: bool = typer.Option(False, "--verbose", "-v"),
-) -> None:
-    print_content_security_policy(filepath, profile, verbose)
-
-
 # ? Elastic Container
 
 
 @cli.command()
-def publish_docker_image(
+def container_push(
     filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
     profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
-    publish_docker_image_from_config(filepath, profile, verbose)
+    push_container_from_config(filepath, profile, verbose)
+
+
+@cli.command()
+def container_deploy(
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
+) -> None:
+    deploy_container_from_config(filepath, profile, verbose)
 
 
 # ? Elastic Beanstalk
 
 
 @cli.command()
-def create_beanstalk(
+def beantalk_create(
     filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
     profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
@@ -76,7 +76,7 @@ def create_beanstalk(
 
 
 @cli.command()
-def upgrade_beanstalk(
+def beanstalk_upgrade(
     filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
     profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
@@ -85,7 +85,7 @@ def upgrade_beanstalk(
 
 
 @cli.command()
-def deploy_beanstalk(
+def beanstalk_deploy(
     filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
     profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
@@ -94,7 +94,7 @@ def deploy_beanstalk(
 
 
 @cli.command()
-def terminate_beanstalk(
+def beanstalk_terminate(
     filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
     profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
@@ -106,7 +106,7 @@ def terminate_beanstalk(
 
 
 @cli.command()
-def deploy_cloudfront(
+def cloudfront_deploy(
     filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
     profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
@@ -115,9 +115,18 @@ def deploy_cloudfront(
 
 
 @cli.command()
-def create_invalidation(
+def cloudfront_invalidate(
     filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
     profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
     invalidate_cloudfront_from_config(filepath, profile, verbose)
+
+
+@cli.command()
+def cloudfront_headers(
+    filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
+    profile: str = typer.Option("default", "--profile", "-p"),
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
+) -> None:
+    print_content_security_policy(filepath, profile, verbose)

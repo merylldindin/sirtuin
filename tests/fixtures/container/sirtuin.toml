@@ -3,6 +3,7 @@ Profile = "my-profile"
 [cluster]
 Name = "my-cluster"
 Region = "us-east-2"
+Service = "my-service"
 
 [image]
 Source = "source:tag"

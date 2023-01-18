@@ -16,6 +16,7 @@ class ElasticContainerImageConfig(BaseModel):
 class ElasticContainerClusterConfig(BaseModel):
     name: str = Field(alias="Name")
     region: AwsRegion = Field(alias="Region")
+    service: str = Field(alias="Service")
 
 
 class ElasticContainerServiceConfig(BaseModel):
