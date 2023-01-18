@@ -28,7 +28,7 @@ def test_login_container_registry(
 
     config = aws_container._get_sirtuin_config(Path(container_sirtuin_config.name))
 
-    assert aws_container._login_container_registry(config) == (
+    assert aws_container._login_registry(config, False) == (
         "aws ecr get-login-password "
         "--region us-east-2 "
         "--profile my-profile "
@@ -38,37 +38,54 @@ def test_login_container_registry(
     )
 
 
-def test_tag_docker_image(
+def test_tag_container(
     container_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
     monkeypatch.chdir(container_sirtuin_config.parent)
 
     config = aws_container._get_sirtuin_config(Path(container_sirtuin_config.name))
 
-    assert aws_container._tag_docker_image(config) == (
+    assert aws_container._tag_container(config, False) == (
         "docker tag source:tag 123456789012.dkr.ecr.us-east-2.amazonaws.com/target:tag"
     )
 
 
-def test_push_docker_image(
+def test_push_container(
     container_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
     monkeypatch.chdir(container_sirtuin_config.parent)
 
     config = aws_container._get_sirtuin_config(Path(container_sirtuin_config.name))
 
-    assert aws_container._push_docker_image(config) == (
+    assert aws_container._push_container(config, False) == (
         "docker push 123456789012.dkr.ecr.us-east-2.amazonaws.com/target:tag"
     )
 
 
-def test_untag_docker_image(
+def test_untag_container(
     container_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
     monkeypatch.chdir(container_sirtuin_config.parent)
 
     config = aws_container._get_sirtuin_config(Path(container_sirtuin_config.name))
 
-    assert aws_container._untag_docker_image(config) == (
+    assert aws_container._untag_container(config, False) == (
         "docker rmi 123456789012.dkr.ecr.us-east-2.amazonaws.com/target:tag"
+    )
+
+
+def test_deploy_container(
+    container_sirtuin_config: Path, monkeypatch: MonkeyPatch
+) -> None:
+    monkeypatch.chdir(container_sirtuin_config.parent)
+
+    config = aws_container._get_sirtuin_config(Path(container_sirtuin_config.name))
+
+    assert aws_container._deploy_container(config, False) == (
+        "aws ecs update-service "
+        "--cluster my-cluster "
+        "--service my-service "
+        "--force-new-deployment "
+        "--region us-east-2 "
+        "--profile my-profile"
     )

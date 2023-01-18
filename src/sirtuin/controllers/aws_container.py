@@ -68,7 +68,7 @@ def _deploy_container(
         f"--cluster {config.cluster.name} "
         f"--service {config.cluster.service} "
         f"--force-new-deployment "
-        f"--region {config.cluster.region.value}"
+        f"--region {config.cluster.region.value} "
         f"--profile {config.profile}"
     )
 
