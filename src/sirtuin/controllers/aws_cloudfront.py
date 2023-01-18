@@ -32,7 +32,7 @@ def _copy_application_bundle_to_bucket(
         f"aws "
         f"s3 cp {config.application.bundle} "
         f"s3://{config.bucket.name} "
-        f"--recursive --content-type 'text/html' --exclude *.* "
+        f"--recursive --content-type 'text/html' --exclude '*.*' "
         f"--region {config.bucket.region.value} "
         + (f"--profile {config.profile}" if config.profile is not None else "")
     )
