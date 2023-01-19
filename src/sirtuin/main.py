@@ -67,7 +67,7 @@ def container_deploy(
 
 
 @cli.command()
-def beantalk_create(
+def beanstalk_create(
     filepath: str = typer.Argument(default=DEFAULT_SIRTUIN_CONFIG_NAME),
     profile: str = typer.Option("default", "--profile", "-p"),
     verbose: bool = typer.Option(False, "--verbose", "-v"),
