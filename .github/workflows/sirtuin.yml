@@ -1,6 +1,6 @@
 name: sirtuin
 
-on: [pull_request]
+on: [pull_request, merge_group]
 
 env:
   SERVICE_NAME: "sirtuin"
