@@ -12,10 +12,10 @@
     "last 2 versions"
   ],
   "devDependencies": {
-    "@commitlint/cli": "17.4.4",
+    "@commitlint/cli": "17.5.0",
     "@commitlint/config-conventional": "17.4.4",
     "husky": "8.0.3",
-    "prettier": "2.8.4"
+    "prettier": "2.8.7"
   },
   "packageManager": "yarn@3.5.0"
 }
