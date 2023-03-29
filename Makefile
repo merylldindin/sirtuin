@@ -3,7 +3,7 @@ PYTHON_FILES = `(find . -iname "*.py" -not -path "./.venv/*")`
 
 setup: ## Install developer experience
 	yarn install
-	yarn husky:setup
+	yarn setup
 
 setup-hard: ## Install developer experience with no cache
 	rm -rf node_modules/
