@@ -31,7 +31,7 @@
 ## <summary>Table of Contents</summary>
 
 <ol>
-    <li><a href="#about-helix">About Helix</a></li>
+    <li><a href="#about-sirtuin">About Sirtuin</a></li>
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#get-started">Get Started</a></li>
     <li><a href="#ide-recommendations">IDE Recommendations</a></li>
