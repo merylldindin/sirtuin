@@ -65,7 +65,7 @@ isort = "^5.10.1"
 mypy = "^1.0"
 pytest = "^7.2.0"
 pytest-cov = "^4.0.0"
-ruff = "^0.0.278"
+ruff = "^0.0.279"
 toml-sort = "^0.23.0"
 
 [tool.poetry.group.types]
