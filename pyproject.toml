@@ -47,7 +47,7 @@ authors = ["Meryll Dindin <merylldin@gmail.com>"]
 description = "AWS routines for Python projects"
 name = "sirtuin"
 readme = "README.md"
-version = "0.1.1"
+version = "0.1.2"
 
 [tool.poetry.dependencies]
 pydantic = ">=1.10"
