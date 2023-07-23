@@ -5,7 +5,7 @@
   "scripts": {
     "checks": "make black & make isort & make mypy & make ruff &",
     "checks:fix": "make black-fix && make isort-fix && make ruff-fix",
-    "husky:setup": "husky install && chmod ug+x .husky/*"
+    "setup": "husky install && chmod ug+x .husky/*"
   },
   "browserslist": [
     "> 1%",
