@@ -7,6 +7,9 @@
     "checks:fix": "make black-fix && make isort-fix && make ruff-fix",
     "setup": "husky install && chmod ug+x .husky/*"
   },
+  "resolutions": {
+    "semver": ">=7.5.2"
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions"
@@ -15,7 +18,8 @@
     "@commitlint/cli": "17.6.7",
     "@commitlint/config-conventional": "17.6.7",
     "husky": "8.0.3",
-    "prettier": "3.0.0"
+    "prettier": "3.0.0",
+    "prettier-plugin-packagejson": "2.4.5"
   },
   "packageManager": "yarn@3.6.0"
 }

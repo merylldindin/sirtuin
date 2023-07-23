@@ -6,7 +6,7 @@ requires = ["poetry-core>=1.0.0"]
 color = true
 line-length = 88
 skip-string-normalization = true
-target-version = ['py310']
+target-version = ['py311']
 
 [tool.isort]
 combine_as_imports = true
@@ -31,7 +31,7 @@ ignore_missing_imports = true
 namespace_packages = true
 no_implicit_optional = true
 no_implicit_reexport = true
-python_version = "3.10"
+python_version = "3.11"
 show_error_codes = true
 strict_concatenate = true
 strict_equality = true
@@ -50,29 +50,29 @@ readme = "README.md"
 version = "0.1.0"
 
 [tool.poetry.dependencies]
-pydantic = "^1.10.2"
+pydantic = "1.10 || ^2.0"
 python = "3.10.* || 3.11.*"
 pyyaml = "^6.0"
-tomli = "^2.0.1"
-typer = {extras = ["all"], version = "^0.9.0"}
+tomli = "^2.0"
+typer = {extras = ["all"], version = "^0.9"}
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.0.0"
-isort = "^5.10.1"
+black = "^23.0"
+isort = "^5.10"
 mypy = "^1.0"
-pytest = "^7.2.0"
-pytest-cov = "^4.0.0"
-ruff = "^0.0.280"
-toml-sort = "^0.23.0"
+pytest = "^7.2"
+pytest-cov = "^4.0"
+ruff = "^0.0"
+toml-sort = "^0.23"
 
 [tool.poetry.group.types]
 optional = true
 
 [tool.poetry.group.types.dependencies]
-types-pyyaml = "^6.0.12.1"
+types-pyyaml = "^6.0"
 
 [tool.poetry.scripts]
 sirtuin = "sirtuin.main:cli"
@@ -84,4 +84,4 @@ pythonpath = ["."]
 [tool.ruff]
 extend-select = ["Q"]
 line-length = 88
-target-version = "py310"
+target-version = "py311"
