@@ -2,24 +2,23 @@ name: sirtuin
 
 on: [pull_request, merge_group]
 
-env:
-  SERVICE_NAME: "sirtuin"
-  PYTHON_VERSION: "3.10"
-  POETRY_VERSION: "1.4.1"
-  POETRY_INSTALL_URL: "https://install.python-poetry.org"
-
 jobs:
   workflow:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
 
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v3
 
-      - name: Setup Python ${{ env.PYTHON_VERSION }}
+      - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: ${{ matrix.python-version }}
 
       - name: Cache Dependencies
         id: cache-dependencies
@@ -28,10 +27,10 @@ jobs:
           path: |
             ~/.cache/pypoetry
             ./.venv/
-          key: ${{ runner.os }}-platform-${{ env.SERVICE_NAME }}-${{ env.PYTHON_VERSION }}-${{ env.POETRY_VERSION }}-${{ hashFiles('poetry.lock') }}
+          key: sirtuin-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
 
-      - name: Install Poetry ${{ env.POETRY_VERSION }}
-        run: curl -sSL ${{ env.POETRY_INSTALL_URL }} | python3 - --version ${{ env.POETRY_VERSION }}
+      - name: Setup Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
 
       - name: Install Dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'

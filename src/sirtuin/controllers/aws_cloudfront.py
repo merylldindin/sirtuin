@@ -10,29 +10,32 @@ def _get_sirtuin_config(filepath: Path) -> CloudfrontSirtuinConfig:
     return CloudfrontSirtuinConfig(**read_toml_file(filepath))
 
 
-@run_command(description="Synchronize application bundle with S3 bucket")
-def _synchronize_hosting_bucket(
+@run_command(description="Synchronize bundle engine")
+def _synchronize_bundle_engine(
     config: CloudfrontSirtuinConfig, verbose: bool = False
 ) -> str:
     return (
         f"aws "
-        f"s3 sync {config.application.bundle} "
-        f"s3://{config.bucket.name} "
+        f"s3 sync {config.application.bundle}/_nuxt/ "
+        f"s3://{config.bucket.name}/_nuxt/ "
+        f"--cache-control 'max-age=31536000,public,immutable' "
         f"--delete "
         f"--region {config.bucket.region.value} "
         + (f"--profile {config.profile}" if config.profile is not None else "")
     )
 
 
-@run_command(description="Copy application bundle to S3 bucket")
-def _copy_application_bundle_to_bucket(
+@run_command(description="Synchronize bundle assets")
+def _synchronize_bundle_assets(
     config: CloudfrontSirtuinConfig, verbose: bool = False
 ) -> str:
     return (
         f"aws "
-        f"s3 cp {config.application.bundle} "
+        f"s3 sync {config.application.bundle} "
         f"s3://{config.bucket.name} "
-        f"--recursive --content-type 'text/html' --exclude '*.*' "
+        f"--exclude '_nuxt/*' "
+        f"--cache-control 'max-age=0,public,must-revalidate' "
+        f"--delete "
         f"--region {config.bucket.region.value} "
         + (f"--profile {config.profile}" if config.profile is not None else "")
     )
@@ -67,6 +70,6 @@ def deploy_cloudfront_from_config(
 ) -> None:
     sirtuin_config = _get_sirtuin_config(filepath)
 
-    _synchronize_hosting_bucket(sirtuin_config, verbose)
-    _copy_application_bundle_to_bucket(sirtuin_config, verbose)
+    _synchronize_bundle_engine(sirtuin_config, verbose)
+    _synchronize_bundle_assets(sirtuin_config, verbose)
     _invalidate_cloudfront_distribution(sirtuin_config, verbose)

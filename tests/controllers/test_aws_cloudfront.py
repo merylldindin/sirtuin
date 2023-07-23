@@ -19,31 +19,36 @@ def test_get_sirtuin_config(
     assert config.profile == "my-profile"
 
 
-def test_synchronize_hosting_bucket(
+def test_synchronize_bundle_engine(
     cloudfront_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
     monkeypatch.chdir(cloudfront_sirtuin_config.parent)
 
     config = aws_cloudfront._get_sirtuin_config(Path(cloudfront_sirtuin_config.name))
 
-    assert str(aws_cloudfront._synchronize_hosting_bucket(config, False)).endswith(
-        "s3://my-bucket-name --delete --region us-east-2 --profile my-profile"
+    assert str(aws_cloudfront._synchronize_bundle_engine(config, False)).endswith(
+        "s3://my-bucket-name/_nuxt/ "
+        "--cache-control 'max-age=31536000,public,immutable' "
+        "--delete "
+        "--region us-east-2 "
+        "--profile my-profile"
     )
 
 
-def test_copy_application_bundle_to_bucket(
+def test_synchronize_bundle_assets(
     cloudfront_sirtuin_config: Path, monkeypatch: MonkeyPatch
 ) -> None:
     monkeypatch.chdir(cloudfront_sirtuin_config.parent)
 
     config = aws_cloudfront._get_sirtuin_config(Path(cloudfront_sirtuin_config.name))
 
-    assert str(
-        aws_cloudfront._copy_application_bundle_to_bucket(config, False)
-    ).endswith(
+    assert str(aws_cloudfront._synchronize_bundle_assets(config, False)).endswith(
         "s3://my-bucket-name "
-        "--recursive --content-type 'text/html' --exclude '*.*' "
-        "--region us-east-2 --profile my-profile"
+        "--exclude '_nuxt/*' "
+        "--cache-control 'max-age=0,public,must-revalidate' "
+        "--delete "
+        "--region us-east-2 "
+        "--profile my-profile"
     )
 
 
