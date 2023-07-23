@@ -41,7 +41,7 @@ def _synchronize_bundle_assets(
     )
 
 
-@run_command(description="Invalidate Cloudfront distribution")
+@run_command(description="Invalid CloudFront cache")
 def _invalidate_cloudfront_distribution(
     config: CloudfrontSirtuinConfig, verbose: bool = False
 ) -> str:

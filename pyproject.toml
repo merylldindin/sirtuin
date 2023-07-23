@@ -47,11 +47,11 @@ authors = ["Meryll Dindin <merylldin@gmail.com>"]
 description = "AWS routines for Python projects"
 name = "sirtuin"
 readme = "README.md"
-version = "0.1.0"
+version = "0.1.1"
 
 [tool.poetry.dependencies]
-pydantic = "1.10 || ^2.0"
-python = "3.10.* || 3.11.*"
+pydantic = ">=1.10"
+python = ">=3.10,<3.12"
 pyyaml = "^6.0"
 tomli = "^2.0"
 typer = {extras = ["all"], version = "^0.9"}
