@@ -15,7 +15,7 @@
     "last 2 versions"
   ],
   "devDependencies": {
-    "@commitlint/cli": "18.4.0",
+    "@commitlint/cli": "18.4.1",
     "@commitlint/config-conventional": "18.4.0",
     "husky": "8.0.3",
     "prettier": "3.0.3",
