@@ -18,7 +18,7 @@
     "@commitlint/cli": "18.4.4",
     "@commitlint/config-conventional": "18.4.4",
     "husky": "8.0.3",
-    "prettier": "3.2.2",
+    "prettier": "3.2.4",
     "prettier-plugin-packagejson": "2.4.9"
   },
   "packageManager": "yarn@3.6.1"
