@@ -19,7 +19,7 @@
     "@commitlint/config-conventional": "18.6.2",
     "husky": "9.0.11",
     "prettier": "3.2.5",
-    "prettier-plugin-packagejson": "2.4.11"
+    "prettier-plugin-packagejson": "2.4.12"
   },
   "packageManager": "yarn@3.6.1"
 }
