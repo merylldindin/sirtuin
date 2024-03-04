@@ -11,9 +11,7 @@ def _get_sirtuin_config(filepath: Path) -> ElasticContainerServiceConfig:
 
 
 @run_command(description="Connect to Elastic Container Registry")
-def _login_registry(
-    config: ElasticContainerServiceConfig, verbose: bool = False
-) -> str:
+def _login_registry(config: ElasticContainerServiceConfig, _: bool = False) -> str:
     return (
         f"aws ecr get-login-password "
         f"--region {config.registry.region.value} "
@@ -25,7 +23,7 @@ def _login_registry(
 
 
 @run_command(description="Tag Container")
-def _tag_container(config: ElasticContainerServiceConfig, verbose: bool = False) -> str:
+def _tag_container(config: ElasticContainerServiceConfig, _: bool = False) -> str:
     return (
         f"docker tag "
         f"{config.image.source} "
@@ -34,16 +32,12 @@ def _tag_container(config: ElasticContainerServiceConfig, verbose: bool = False)
 
 
 @run_command(description="Push Container to Elastic Container Registry")
-def _push_container(
-    config: ElasticContainerServiceConfig, verbose: bool = False
-) -> str:
+def _push_container(config: ElasticContainerServiceConfig, _: bool = False) -> str:
     return f"docker push {config.registry.account}/{config.image.target}"
 
 
 @run_command(description="Untag Container")
-def _untag_container(
-    config: ElasticContainerServiceConfig, verbose: bool = False
-) -> str:
+def _untag_container(config: ElasticContainerServiceConfig, _: bool = False) -> str:
     return f"docker rmi {config.registry.account}/{config.image.target}"
 
 
@@ -60,9 +54,7 @@ def push_container_from_config(
 
 
 @run_command(description="Deploy Container to Elastic Container Service")
-def _deploy_container(
-    config: ElasticContainerServiceConfig, verbose: bool = False
-) -> str:
+def _deploy_container(config: ElasticContainerServiceConfig, _: bool = False) -> str:
     return (
         f"aws ecs update-service "
         f"--cluster {config.cluster.name} "
@@ -75,7 +67,7 @@ def _deploy_container(
 
 @catch_remote_config
 def deploy_container_from_config(
-    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+    filepath: Path, _: str = DEFAULT_AWS_PROFILE, verbose: bool = False
 ) -> None:
     config = _get_sirtuin_config(filepath)
 

@@ -42,6 +42,6 @@ def _generate_content_security_policy(config: HttpHeadersSirtuinConfig) -> str:
 
 @catch_remote_config
 def print_content_security_policy(
-    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+    filepath: Path, _: str = DEFAULT_AWS_PROFILE, __: bool = False
 ) -> None:
     print(_generate_content_security_policy(_get_sirtuin_config(filepath)))

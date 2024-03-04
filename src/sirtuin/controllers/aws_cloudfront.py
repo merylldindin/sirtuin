@@ -11,9 +11,7 @@ def _get_sirtuin_config(filepath: Path) -> CloudfrontSirtuinConfig:
 
 
 @run_command(description="Synchronize bundle engine")
-def _synchronize_bundle_engine(
-    config: CloudfrontSirtuinConfig, verbose: bool = False
-) -> str:
+def _synchronize_bundle_engine(config: CloudfrontSirtuinConfig, _: bool = False) -> str:
     return (
         f"aws "
         f"s3 sync {config.application.bundle}/_nuxt/ "
@@ -26,9 +24,7 @@ def _synchronize_bundle_engine(
 
 
 @run_command(description="Synchronize bundle assets")
-def _synchronize_bundle_assets(
-    config: CloudfrontSirtuinConfig, verbose: bool = False
-) -> str:
+def _synchronize_bundle_assets(config: CloudfrontSirtuinConfig, _: bool = False) -> str:
     return (
         f"aws "
         f"s3 sync {config.application.bundle} "
@@ -43,7 +39,7 @@ def _synchronize_bundle_assets(
 
 @run_command(description="Revoke cloudfront caching")
 def _invalidate_cloudfront_distribution(
-    config: CloudfrontSirtuinConfig, verbose: bool = False
+    config: CloudfrontSirtuinConfig, _: bool = False
 ) -> str:
     return (
         f"aws "
@@ -57,7 +53,7 @@ def _invalidate_cloudfront_distribution(
 
 @catch_remote_config
 def invalidate_cloudfront_from_config(
-    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+    filepath: Path, _: str = DEFAULT_AWS_PROFILE, verbose: bool = False
 ) -> None:
     sirtuin_config = _get_sirtuin_config(filepath)
 
@@ -66,7 +62,7 @@ def invalidate_cloudfront_from_config(
 
 @catch_remote_config
 def deploy_cloudfront_from_config(
-    filepath: Path, profile: str = DEFAULT_AWS_PROFILE, verbose: bool = False
+    filepath: Path, _: str = DEFAULT_AWS_PROFILE, verbose: bool = False
 ) -> None:
     sirtuin_config = _get_sirtuin_config(filepath)
 
