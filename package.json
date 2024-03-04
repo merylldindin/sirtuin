@@ -5,7 +5,8 @@
   "scripts": {
     "checks": "bash .husky/pre-push",
     "checks:fix": "make black-fix && make ruff-fix",
-    "setup": "husky install && chmod ug+x .husky/*"
+    "setup": "husky init && rm .husky/pre-commit && chmod ug+x .husky/*",
+    "prepare": "husky"
   },
   "resolutions": {
     "semver": ">=7.6.0"
