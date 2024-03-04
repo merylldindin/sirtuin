@@ -20,7 +20,7 @@ def _sanitize_value(
 
 class SanitizedBaseModel(BaseModel):
     def dict(self, *, use_sanitization: bool = False, **kwargs) -> dict[str, Any]:  # type: ignore # noqa: E501
-        base_object = super().dict(**kwargs)
+        base_object = super().model_dump(**kwargs)
 
         return (
             {key: _sanitize_value(item) for key, item in base_object.items()}

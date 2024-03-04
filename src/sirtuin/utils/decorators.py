@@ -3,9 +3,8 @@ import sys
 from pathlib import Path
 from typing import Any, Callable, TypeVar
 
-from rich.progress import Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
-
 from pydantic import BaseModel
+from rich.progress import Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
 
 from .constants import DEFAULT_SIRTUIN_CONFIG_NAME
 
@@ -47,10 +46,10 @@ def run_command(
             if "pytest" in sys.modules:
                 return function(*args, **kwargs)
 
-            subprocess.Popen(
-                function(*args, **kwargs), shell=True
-            ).communicate() if args[1] else run_interactive_subprocess(
-                description, function(*args, **kwargs)
+            (
+                subprocess.Popen(function(*args, **kwargs), shell=True).communicate()
+                if args[1]
+                else run_interactive_subprocess(description, function(*args, **kwargs))
             )
 
             return "OK"

@@ -1,5 +1,4 @@
 import typer
-
 from sirtuin.controllers.aws_beanstalk import (
     create_beanstalk_from_config,
     deploy_beanstalk_from_config,
