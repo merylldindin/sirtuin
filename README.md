@@ -51,7 +51,6 @@ Sirtuin is a collection of AWS CLI routines that can be used to automate some of
 - [Typer](https://typer.tiangolo.com/)
 - [Pydantic](https://pydantic-docs.helpmanual.io/)
 - [AWS CLI](https://aws.amazon.com/cli/)
-- [AWS EB CLI](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html)
 
 ## Get Started
 
@@ -70,18 +69,7 @@ Verify whether your installation worked by opening a new terminal:
 
 ```bash
 meryll@xps:~/Venvs$ aws --version
-aws-cli/2.7.27 Python/3.9.11 Linux/5.15.0-56-generic exe/x86_64.ubuntu.22 prompt/off
-```
-
-### Installing `awsebcli`:
-
-A fully documented tutorial is available [here](https://github.com/aws/aws-elastic-beanstalk-cli-setup), and is recommended to follow depending on your distribution.
-
-Verify whether your installation worked by opening a new terminal:
-
-```bash
-meryll@xps:~/Venvs$ eb --version
-EB CLI 3.20.3 (Python 3.10.)
+aws-cli/2.15.23 Python/3.11.6 Darwin/23.3.0 exe/x86_64 prompt/off
 ```
 
 ## IDE Recommendations
@@ -149,7 +137,6 @@ I use Python 3.10 so make sure to install a clean venv environment depending on 
 I use some pieces of software to help with code development, those are:
 
 - [black](https://pypi.org/project/black/) configured in `pyproject.toml`
-- [isort](https://pypi.org/project/isort/) configured in `pyproject.toml`
 - [ruff](https://pypi.org/project/ruff/) configured in `pyproject.toml`
 
 ### Naming Conventions:
