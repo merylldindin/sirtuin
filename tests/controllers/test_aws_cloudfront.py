@@ -1,7 +1,6 @@
 from pathlib import Path
 
 from pytest import MonkeyPatch
-
 from sirtuin.controllers import aws_cloudfront
 
 
