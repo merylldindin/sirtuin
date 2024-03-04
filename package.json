@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "checks": "make black & make isort & make mypy & make ruff &",
-    "checks:fix": "make black-fix && make isort-fix && make ruff-fix",
+    "checks": "bash .husky/pre-push",
+    "checks:fix": "make black-fix && make ruff-fix",
     "setup": "husky install && chmod ug+x .husky/*"
   },
   "resolutions": {
-    "semver": ">=7.5.2"
+    "semver": ">=7.6.0"
   },
   "browserslist": [
     "> 1%",
@@ -21,5 +21,5 @@
     "prettier": "3.2.5",
     "prettier-plugin-packagejson": "2.4.12"
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@4.1.0"
 }

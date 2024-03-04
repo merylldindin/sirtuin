@@ -33,20 +33,14 @@ black: ## Run Black
 black-fix: ## Run Black with automated fix
 	poetry run black --quiet $(PYTHON_FILES)
 
-isort: ## Run Isort
-	poetry run isort --check-only $(PYTHON_FILES)
-
-isort-fix: ## Run Isort with automated fix
-	poetry run isort $(PYTHON_FILES)
-
 mypy: ## Run Mypy
 	poetry run mypy $(PYTHON_FILES)
 
 ruff: ## Run Ruff
-	poetry run ruff $(PYTHON_FILES)
+	poetry run ruff check $(PYTHON_FILES)
 
 ruff-fix: ## Run Ruff with automated fix
-	poetry run ruff --fix $(PYTHON_FILES)
+	poetry run ruff check --fix $(PYTHON_FILES)
 
 pytest: ## Run Pytest
 	poetry run pytest tests/

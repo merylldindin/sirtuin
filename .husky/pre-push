@@ -1,4 +1,20 @@
 #!/bin/sh
+
 . "$(dirname "$0")/_/husky.sh"
 
-yarn checks
+set -e
+
+make black &
+pid1=$!
+
+make mypy &
+pid2=$!
+
+make ruff &
+pid3=$!
+
+wait $pid1
+
+wait $pid2
+
+wait $pid3
