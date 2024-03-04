@@ -1,3 +1,5 @@
+from .constants import DEFAULT_SIRTUIN_CONFIG_NAME
+
 import subprocess
 import sys
 from pathlib import Path
@@ -5,8 +7,6 @@ from typing import Any, Callable, TypeVar
 
 from pydantic import BaseModel
 from rich.progress import Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
-
-from .constants import DEFAULT_SIRTUIN_CONFIG_NAME
 
 T = TypeVar("T")
 S = TypeVar("S", bound=BaseModel)

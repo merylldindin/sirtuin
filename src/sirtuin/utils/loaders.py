@@ -1,3 +1,5 @@
+from .decorators import if_exists
+
 import json
 from pathlib import Path
 from typing import Any
@@ -5,8 +7,6 @@ from zipfile import ZipFile
 
 import tomli
 import yaml
-
-from .decorators import if_exists
 
 
 @if_exists
