@@ -38,14 +38,14 @@ authors = ["Meryll Dindin <merylldin@gmail.com>"]
 description = "AWS routines for Python projects"
 name = "sirtuin"
 readme = "README.md"
-version = "1.0.0"
+version = "1.0.1"
 
 [tool.poetry.dependencies]
 pydantic = "^2.6.3"
 python = ">=3.10,<3.13"
 pyyaml = "^6.0"
 tomli = "^2.0"
-typer = {extras = ["all"], version = "^0.12.0"}
+typer = { extras = ["all"], version = "^0.12.0" }
 
 [tool.poetry.group.dev]
 optional = true
@@ -84,4 +84,10 @@ ignore-init-module-imports = true
 select = ["E", "F", "I001", "W"]
 
 [tool.ruff.lint.isort]
-section-order = ["first-party", "future", "local-folder", "standard-library", "third-party"]
+section-order = [
+    "first-party",
+    "future",
+    "local-folder",
+    "standard-library",
+    "third-party",
+]
