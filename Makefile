@@ -1,15 +1,4 @@
-TOML_FILES = `(find . -iname "*.toml" -not -path "./.venv/*")`
 PYTHON_FILES = `(find . -iname "*.py" -not -path "./.venv/*")`
-
-setup: ## Install developer experience
-	yarn install
-	yarn setup
-
-setup-hard: ## Install developer experience with no cache
-	rm -rf node_modules/
-	yarn set version berry
-	yarn cache clean
-	make setup
 
 install: ## Install package dependencies
 	poetry install --sync --with dev,types
@@ -23,9 +12,6 @@ poetry-update: ## Upgrade poetry and dependencies
 	poetry self update
 	poetry run pip install --upgrade pip wheel setuptools
 	poetry update
-
-toml-sort: ## Sort pyproject.toml
-	poetry run toml-sort --all --in-place $(TOML_FILES)
 
 black: ## Run Black
 	poetry run black --quiet --check $(PYTHON_FILES)

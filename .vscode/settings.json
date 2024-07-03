@@ -1,4 +1,17 @@
 {
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": null
+  },
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
   "files.insertFinalNewline": true,
@@ -10,18 +23,5 @@
   "python.analysis.typeCheckingMode": "basic",
   "python.defaultInterpreterPath": ".venv/bin/python3.12",
   "python.terminal.activateEnvironment": false,
-  "workbench.startupEditor": "none",
-  "[python]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
-    }
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": null
-  }
+  "workbench.startupEditor": "none"
 }
