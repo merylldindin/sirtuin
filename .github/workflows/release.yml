@@ -33,7 +33,8 @@ jobs:
         run: |
           git config --local user.name "github[bot]"
           git config --local user.email "github[bot]@github.com"
-          git commit -m "chore: bump version to ${{ inputs.version }}"
+          git add pyproject.toml
+          git commit -m "build: bump version to ${{ inputs.version }}"
           git push origin main
 
       - name: Create release
