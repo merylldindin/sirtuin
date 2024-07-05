@@ -15,14 +15,13 @@
     <img src="https://img.shields.io/github/issues/merylldindin/sirtuin.svg?style=for-the-badge" alt="issues"/>
   </a>
 
-  <a href="https://github.com/merylldindin/sirtuin/issues" target="_blank">
-    <img src="https://img.shields.io/github/issues/merylldindin/sirtuin.svg?style=for-the-badge" alt="issues"/>
-  </a>
-
   <a href="https://pypi.python.org/pypi/sirtuin" target="_blank">
     <img src="https://img.shields.io/pypi/v/sirtuin.svg?style=for-the-badge" alt="pypi version"/>
   </a>
-</div>
+
+  <a href="https://github.com/merylldindin/sirtuin/blob/master/LICENSE" target="_blank">
+    <img src="https://img.shields.io/github/license/merylldindin/sirtuin.svg?style=for-the-badge" alt="license"/>
+  </a></div>
 
 <div align="center">
   <p align="center">
