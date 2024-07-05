@@ -49,7 +49,7 @@ jobs:
 
       - name: Create release
         run: |
-          gh release create ${{ inputs.version }} --title ${{ inputs.version }} --notes "Release ${{ inputs.version }}"
+          gh release create ${{ inputs.version }} --title "Release ${{ inputs.version }}" --notes "Release ${{ inputs.version }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -59,6 +59,6 @@ jobs:
 
       - name: Create pull request
         run: |
-          gh pr create --title "build: release `${{ inputs.version }}`" --body "Release ${{ inputs.version }}" --base master --head gh/release-${{ inputs.version }}
+          gh pr create --title "build: release ${{ inputs.version }}" --body "Release ${{ inputs.version }}" --base master --head gh/release-${{ inputs.version }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
