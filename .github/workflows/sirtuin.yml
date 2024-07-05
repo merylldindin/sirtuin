@@ -30,20 +30,26 @@ jobs:
           key: sirtuin-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
 
       - name: Setup poetry
-        run: curl -sSL https://install.python-poetry.org | python3 -
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
 
       - name: Install dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --sync --with dev
+        run: |
+          poetry install --sync --with dev
 
       - name: Run `black`
-        run: make black
+        run: |
+          make black
 
       - name: Run `mypy`
-        run: make mypy
+        run: |
+          make mypy
 
       - name: Run `ruff`
-        run: make ruff
+        run: |
+          make ruff
 
       - name: Run `pytest`
-        run: make pytest
+        run: |
+          make pytest
