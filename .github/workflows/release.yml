@@ -35,7 +35,7 @@ jobs:
           git config --local user.email "github[bot]@github.com"
           git add pyproject.toml
           git commit -m "build: bump version to ${{ inputs.version }}"
-          git push origin main
+          git push origin master
 
       - name: Create release
         run: gh release create ${{ inputs.version }} --title ${{ inputs.version }} --notes "Release ${{ inputs.version }}"
