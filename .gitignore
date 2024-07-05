@@ -1,10 +1,5 @@
 # dependencies
 .venv/
-node_modules/
-
-# yarn
-.yarn/*
-!.yarn/releases
 
 # cache
 .mypy_cache/
