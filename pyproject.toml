@@ -42,7 +42,7 @@ version = "1.0.3"
 
 [tool.poetry.dependencies]
 pydantic = "^2.6.3"
-python = ">=3.10,<3.13"
+python = ">=3.13,<3.14"
 pyyaml = "^6.0"
 tomli = "^2.0"
 typer = { extras = ["all"], version = "^0.12.0" }
