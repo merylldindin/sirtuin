@@ -51,7 +51,7 @@ typer = { extras = ["all"], version = "^0.13.0" }
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.0.0"
+black = "^25.0.0"
 mypy = "^1.0"
 pytest = "^8.1.0"
 pytest-cov = "^6.0.0"
