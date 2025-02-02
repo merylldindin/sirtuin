@@ -45,7 +45,7 @@ pydantic = "^2.6.3"
 python = ">=3.13,<3.14"
 pyyaml = "^6.0"
 tomli = "^2.0"
-typer = { extras = ["all"], version = "^0.13.0" }
+typer = { extras = ["all"], version = "^0.15.0" }
 
 [tool.poetry.group.dev]
 optional = true
@@ -55,7 +55,7 @@ black = "^25.0.0"
 mypy = "^1.0"
 pytest = "^8.1.0"
 pytest-cov = "^6.0.0"
-ruff = "^0.8.0"
+ruff = "^0.9.0"
 
 [tool.poetry.group.types]
 optional = true
