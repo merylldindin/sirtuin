@@ -67,7 +67,7 @@ def _load_config_from_s3(file_arn: str, profile: str) -> None:
 
 
 def catch_remote_config(
-    function: Callable[[Path, str, bool], T]
+    function: Callable[[Path, str, bool], T],
 ) -> Callable[[str, str, bool], T]:
     def wrapper(*args: Any) -> Any:
         filepath, profile, verbose = args

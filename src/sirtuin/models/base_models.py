@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 def _sanitize_value(
-    value: str | int | bool | dict[Any, Any] | list[Any]
+    value: str | int | bool | dict[Any, Any] | list[Any],
 ) -> str | dict[Any, Any] | list[Any]:
     if isinstance(value, (int, bool)):
         return str(value).lower()
