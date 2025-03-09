@@ -1,9 +1,9 @@
-from pathlib import Path
-
 from sirtuin.models.http_headers import ESCAPED_SOURCES, HttpHeadersSirtuinConfig
 from sirtuin.utils.constants import DEFAULT_AWS_PROFILE
 from sirtuin.utils.decorators import catch_remote_config
 from sirtuin.utils.loaders import read_toml_file
+
+from pathlib import Path
 
 
 def _get_sirtuin_config(filepath: Path) -> HttpHeadersSirtuinConfig:

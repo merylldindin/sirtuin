@@ -1,4 +1,3 @@
-import typer
 from sirtuin.controllers.aws_cloudfront import (
     deploy_cloudfront_from_config,
     invalidate_cloudfront_from_config,
@@ -9,6 +8,8 @@ from sirtuin.controllers.aws_container import (
 )
 from sirtuin.controllers.http_headers import print_content_security_policy
 from sirtuin.utils.constants import DEFAULT_SIRTUIN_CONFIG_NAME
+
+import typer
 
 cli = typer.Typer()
 

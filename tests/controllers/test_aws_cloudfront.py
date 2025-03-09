@@ -1,7 +1,8 @@
+from sirtuin.controllers import aws_cloudfront
+
 from pathlib import Path
 
 from pytest import MonkeyPatch
-from sirtuin.controllers import aws_cloudfront
 
 
 def test_get_sirtuin_config(
