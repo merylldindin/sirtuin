@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: |
-          poetry install --with dev
+          poetry install --with dev,types
 
       - name: Run `black`
         run: |
