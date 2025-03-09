@@ -1,4 +1,6 @@
-name: sirtuin
+name: Continous Integration
+
+run-name: 'ci: continuous integration'
 
 on: [pull_request, merge_group, workflow_dispatch]
 
@@ -9,7 +11,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ['3.12', '3.13']
 
     steps:
       - name: Checkout codebase
@@ -36,7 +38,7 @@ jobs:
       - name: Install dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: |
-          poetry install --sync --with dev
+          poetry install --with dev
 
       - name: Run `black`
         run: |
