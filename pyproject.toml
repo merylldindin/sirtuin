@@ -45,7 +45,7 @@ pydantic = "^2.10.6"
 python = ">=3.12,<3.14"
 pyyaml = "^6.0.2"
 tomli = "^2.2.1"
-typer = {extras = ["all"], version = "^0.18.0"}
+typer = {extras = ["all"], version = "^0.19.0"}
 
 [tool.poetry.group.dev]
 optional = true
