@@ -13,10 +13,10 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "pydantic==2.10.6",
+    "pydantic==2.12.5",
     "pyyaml==6.0.2",
-    "tomli==2.2.1",
-    "typer==0.15.1",
+    "tomli==2.3.0",
+    "typer==0.21.0",
 ]
 
 [project.scripts]
@@ -30,11 +30,11 @@ Repository = "https://github.com/merylldindin/sirtuin"
 dev = [
     "commitizen==4.10.1",
     "pre-commit==4.5.1",
-    "pytest==8.3.4",
-    "pytest-cov==6.0.0",
-    "ruff==0.14.0",
-    "ty==0.0.6",
-    "types-pyyaml==6.0.12.20241230",
+    "pytest==9.0.0",
+    "pytest-cov==7.0.0",
+    "ruff==0.14.10",
+    "ty==0.0.7",
+    "types-pyyaml==6.0.12.20250915",
 ]
 
 [build-system]
