@@ -16,7 +16,7 @@ dependencies = [
     "pydantic==2.10.6",
     "pyyaml==6.0.2",
     "tomli==2.2.1",
-    "typer==0.15.1",
+    "typer==0.21.0",
 ]
 
 [project.scripts]
