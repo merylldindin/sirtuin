@@ -21,56 +21,68 @@
 
   <a href="https://github.com/merylldindin/sirtuin/blob/master/LICENSE" target="_blank">
     <img src="https://img.shields.io/github/license/merylldindin/sirtuin.svg?style=for-the-badge" alt="license"/>
-  </a></div>
+  </a>
+</div>
 
 <div align="center">
   <p align="center">
-    <h2> AWS CLI Routines </h2>
-    <a href="https://github.com/merylldindin/sirtuin/issues">
-        Report Bug
-    </a>
+    <h2>AWS CLI Routines</h2>
+    <a href="https://github.com/merylldindin/sirtuin/issues">Report Bug</a>
   </p>
 </div>
 
-## <summary>Table of Contents</summary>
+## About
 
-<ol>
-    <li><a href="#about-sirtuin">About Sirtuin</a></li>
-    <li><a href="#built-with">Built With</a></li>
-    <li><a href="#get-started">Get Started</a></li>
-    <li><a href="#local-development">Local Development</a></li>
-    <li><a href="#ide-recommendations">IDE Recommendations</a></li>
-    <li><a href="#code-quality">Code quality</a></li>
-    <li><a href="#git-conventions">Git Conventions</a></li>
-</ol>
+Sirtuin is a collection of AWS CLI routines that automate common deployment tasks for CloudFront distributions and container services.
 
-## About Sirtuin
+## Tech Stack
 
-Sirtuin is a collection of AWS CLI routines that can be used to automate some of the most common tasks. It is a work in progress.
+| Layer                | Technology                                        |
+| -------------------- | ------------------------------------------------- |
+| Language             | [Python 3.13](https://www.python.org/)            |
+| Package Manager      | [uv](https://docs.astral.sh/uv/)                  |
+| CLI Framework        | [Typer](https://typer.tiangolo.com/)              |
+| Data Validation      | [Pydantic](https://docs.pydantic.dev/)            |
+| Linting & Formatting | [Ruff](https://docs.astral.sh/ruff/)              |
+| Type Checking        | [ty](https://docs.astral.sh/ty/)                  |
+| Testing              | [Pytest](https://docs.pytest.org/)                |
+| Cloud                | [AWS CLI](https://aws.amazon.com/cli/)            |
 
-## Built With
-
-- [Python](https://www.python.org/)
-- [uv](https://docs.astral.sh/uv/)
-- [Typer](https://typer.tiangolo.com/)
-- [Pydantic](https://pydantic-docs.helpmanual.io/)
-- [AWS CLI](https://aws.amazon.com/cli/)
-
-## Get Started
+## Installation
 
 ```bash
 pip install sirtuin
-# or with uv
+```
+
+Or with uv:
+
+```bash
 uv add sirtuin
 ```
 
-### How To Use
+## Usage
 
-Deploy a cloudfront distribution via a local configuration:
+### CloudFront Operations
+
+Deploy a CloudFront distribution via a local configuration:
 
 ```bash
 sirtuin cloudfront-deploy .cloudfront -p profile
 ```
+
+Invalidate CloudFront cache:
+
+```bash
+sirtuin cloudfront-invalidate .cloudfront -p profile
+```
+
+Display Content Security Policy headers:
+
+```bash
+sirtuin cloudfront-headers .cloudfront
+```
+
+### Container Operations
 
 Push an updated container to AWS via a stored configuration on S3:
 
@@ -86,29 +98,45 @@ sirtuin container-deploy s3://bucket/.container -p profile
 
 ## Local Development
 
+### Prerequisites
+
+- Python 3.13
+- [uv](https://docs.astral.sh/uv/) package manager
+- [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) configured with profiles
+
+### Setup
+
 ```bash
 git clone https://github.com/merylldindin/sirtuin
 cd sirtuin
-
-# Install dependencies and pre-commit hooks
 make setup
-
-# Format code
-make format
-
-# Run linting
-make lint
-
-# Run type checking
-make types
-
-# Run tests
-make test
 ```
 
-**Installing `awscli`:** A fully documented tutorial is available [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), and is recommended to follow depending on your distribution. Verify whether your installation worked by opening a new terminal:
+This installs all dependencies and configures pre-commit hooks.
 
-```bash
-meryll@xps:~/Venvs$ aws --version
-aws-cli/2.15.23 Python/3.11.6 Darwin/23.5.0 exe/x86_64 prompt/off
-```
+### Available Commands
+
+| Command              | Description                        |
+| -------------------- | ---------------------------------- |
+| `make setup`         | Install dependencies + hooks       |
+| `make setup-hard`    | Clean install from scratch         |
+| `make format`        | Format code with Ruff              |
+| `make format-check`  | Check formatting (CI)              |
+| `make lint`          | Lint code with Ruff                |
+| `make lint-fix`      | Auto-fix linting issues            |
+| `make types`         | Type check with ty                 |
+| `make test`          | Run test suite                     |
+| `make test-coverage` | Run tests with coverage            |
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on:
+
+- Code quality standards
+- Naming conventions
+- Git workflow and conventional commits
+- Pre-commit hooks
+
+## License
+
+Apache License 2.0 - see [LICENSE](LICENSE) for details.

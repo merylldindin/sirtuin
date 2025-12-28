@@ -1,10 +1,4 @@
 {
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": null
-  },
   "[python]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
