@@ -1,6 +1,6 @@
-from sirtuin.controllers import http_headers
-
 from pathlib import Path
+
+from sirtuin.controllers import http_headers
 
 
 def test_get_sirtuin_config(headers_sirtuin_config: Path) -> None:

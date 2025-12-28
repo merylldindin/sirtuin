@@ -1,39 +1,41 @@
-PYTHON_FILES = `(find . -iname "*.py" -not -path "./.venv/*")`
+PYTHON_FILES = $(shell find src tests -iname "*.py" -not -path "**/__pycache__/**")
 
-install: ## Install package dependencies
-	poetry install --with dev,types
+.PHONY: setup setup-hard format format-check lint lint-fix types test test-coverage uv-lock uv-update help
 
-install-hard: ## Install package dependencies from scratch
-	rm -rf .venv/
-	poetry lock
-	make install
+setup: ## Install developer experience
+	@uv sync
+	@uv run pre-commit install --install-hooks || echo "Warning: pre-commit hooks not installed (core.hooksPath may be set)"
 
-poetry-update: ## Upgrade poetry and dependencies
-	poetry self update
-	poetry run pip install --upgrade pip wheel setuptools
-	poetry update
+setup-hard: ## Clean install (remove caches)
+	@rm -rf .venv uv.lock
+	@make setup
 
-black: ## Run Black
-	poetry run black --quiet --check $(PYTHON_FILES)
+format: ## Format all Python files
+	@uv run ruff format $(PYTHON_FILES)
 
-black-fix: ## Run Black with automated fix
-	poetry run black --quiet $(PYTHON_FILES)
+format-check: ## Check Python formatting
+	@uv run ruff format --check $(PYTHON_FILES)
 
-mypy: ## Run Mypy
-	poetry run mypy $(PYTHON_FILES)
+lint: ## Lint all Python files
+	@uv run ruff check $(PYTHON_FILES)
 
-ruff: ## Run Ruff
-	poetry run ruff check $(PYTHON_FILES)
+lint-fix: ## Lint and auto-fix Python files
+	@uv run ruff check --fix $(PYTHON_FILES)
 
-ruff-fix: ## Run Ruff with automated fix
-	poetry run ruff check --fix $(PYTHON_FILES)
+types: ## Type check all Python files
+	@uv run ty check
 
-pytest: ## Run Pytest
-	poetry run pytest tests/
+test: ## Run test suite
+	@uv run pytest tests/
 
-pytest-coverage: ## Run coverage report
-	poetry run coverage run -m pytest tests/
-	poetry run coverage report
+test-coverage: ## Run test suite with coverage
+	@uv run pytest tests/ --cov=src/sirtuin --cov-report=term-missing
 
-help: ## Description of the Makefile commands
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
+uv-lock: ## Lock dependencies
+	@uv lock
+
+uv-update: ## Update dependencies
+	@uv lock --upgrade
+
+help: ## Show available commands
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

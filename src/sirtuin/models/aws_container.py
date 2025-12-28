@@ -1,6 +1,6 @@
-from .aws_regions import AwsRegion
-
 from pydantic import BaseModel, Field
+
+from .aws_regions import AwsRegion
 
 
 class ElasticContainerRegistryConfig(BaseModel):

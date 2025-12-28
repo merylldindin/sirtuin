@@ -2,10 +2,13 @@
 .venv/
 
 # cache
-.mypy_cache/
 .pytest_cache/
 .ruff_cache/
 **/__pycache__/
 
 # package
 dist/
+*.egg-info/
+
+# lock file (generated)
+uv.lock

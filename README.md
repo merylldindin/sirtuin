@@ -38,6 +38,7 @@
     <li><a href="#about-sirtuin">About Sirtuin</a></li>
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#get-started">Get Started</a></li>
+    <li><a href="#local-development">Local Development</a></li>
     <li><a href="#ide-recommendations">IDE Recommendations</a></li>
     <li><a href="#code-quality">Code quality</a></li>
     <li><a href="#git-conventions">Git Conventions</a></li>
@@ -50,7 +51,7 @@ Sirtuin is a collection of AWS CLI routines that can be used to automate some of
 ## Built With
 
 - [Python](https://www.python.org/)
-- [Poetry](https://python-poetry.org/)
+- [uv](https://docs.astral.sh/uv/)
 - [Typer](https://typer.tiangolo.com/)
 - [Pydantic](https://pydantic-docs.helpmanual.io/)
 - [AWS CLI](https://aws.amazon.com/cli/)
@@ -59,8 +60,8 @@ Sirtuin is a collection of AWS CLI routines that can be used to automate some of
 
 ```bash
 pip install sirtuin
-# or with poetry
-poetry add sirtuin
+# or with uv
+uv add sirtuin
 ```
 
 ### How To Use
@@ -68,27 +69,41 @@ poetry add sirtuin
 Deploy a cloudfront distribution via a local configuration:
 
 ```bash
-poetry run sirtuin cloudfront-deploy .cloudfront -p profile
+sirtuin cloudfront-deploy .cloudfront -p profile
 ```
 
 Push an updated container to AWS via a stored configuration on S3:
 
 ```bash
-poetry run sirtuin container-push s3://bucket/.container -p profile
+sirtuin container-push s3://bucket/.container -p profile
 ```
 
 Deploy a new container to AWS via a stored configuration on S3:
 
 ```bash
-poetry run sirtuin container-deploy s3://bucket/.container -p profile
+sirtuin container-deploy s3://bucket/.container -p profile
 ```
 
-### Local Installation
+## Local Development
 
 ```bash
 git clone https://github.com/merylldindin/sirtuin
-# install dependencies
-make install
+cd sirtuin
+
+# Install dependencies and pre-commit hooks
+make setup
+
+# Format code
+make format
+
+# Run linting
+make lint
+
+# Run type checking
+make types
+
+# Run tests
+make test
 ```
 
 **Installing `awscli`:** A fully documented tutorial is available [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), and is recommended to follow depending on your distribution. Verify whether your installation worked by opening a new terminal:
