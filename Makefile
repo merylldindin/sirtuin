@@ -10,11 +10,11 @@ setup-hard: ## Clean install (remove caches)
 	@rm -rf .venv uv.lock
 	@make setup
 
-format: ## Format all Python files
-	@uv run ruff format $(PYTHON_FILES)
-
-format-check: ## Check Python formatting
+format: ## Check all Python files format
 	@uv run ruff format --check $(PYTHON_FILES)
+
+format-fix: ## Format Python files
+	@uv run ruff format $(PYTHON_FILES)
 
 lint: ## Lint all Python files
 	@uv run ruff check $(PYTHON_FILES)
@@ -27,9 +27,6 @@ types: ## Type check all Python files
 
 test: ## Run test suite
 	@uv run pytest tests/
-
-test-coverage: ## Run test suite with coverage
-	@uv run pytest tests/ --cov=src/sirtuin --cov-report=term-missing
 
 uv-lock: ## Lock dependencies
 	@uv lock
