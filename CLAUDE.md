@@ -67,8 +67,8 @@ sirtuin/
 | -------------------- | --------------------------------------- |
 | `make setup`         | Install dependencies + pre-commit hooks |
 | `make setup-hard`    | Clean install from scratch              |
-| `make format`        | Format code with Ruff                   |
-| `make format-check`  | Check formatting (CI)                   |
+| `make format`        | Check code formatting                   |
+| `make format-fix`    | Format code with Ruff                   |
 | `make lint`          | Lint code with Ruff                     |
 | `make lint-fix`      | Auto-fix linting issues                 |
 | `make types`         | Type check with ty                      |
