@@ -12,3 +12,11 @@ dist/
 
 # lock file (generated)
 uv.lock
+
+# claude
+.claude/*
+!.claude/agents
+!.claude/references
+!.claude/rules
+!.claude/skills
+!.claude/settings.json
