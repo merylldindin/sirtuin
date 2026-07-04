@@ -40,7 +40,7 @@ def run_interactive_subprocess(description: str, command: str) -> None:
 
 def run_command(
     description: str,
-) -> Callable[..., Callable[[S, bool], str]]:
+) -> Callable[[Callable[[S, bool], str]], Callable[[S, bool], str]]:
     def decorator(function: Callable[[S, bool], str]) -> Callable[[S, bool], str]:
         def wrapper(*args: Any, **kwargs: Any) -> str:
             if "pytest" in sys.modules:
