@@ -1,0 +1,23 @@
+src/sirtuin/models/base_models.py
+  s_feb4384680c329::t_50f0b111d396aa 22
+pyproject.toml
+  s_feb4384680c329::t_04c60de91bcc7c 36
+src/sirtuin/utils/decorators.py
+  s_feb4384680c329::t_b716a07e771018 43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7f4a850a7b3424548f21f5f48c94095d587831b0",
+  "prompts": {},
+  "sessions": {
+    "s_feb4384680c329": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3976ac73-3e2b-4e73-8443-6c0bf43ba66a",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Meryll Dindin <merylldin@gmail.com>"
+    }
+  }
+}
