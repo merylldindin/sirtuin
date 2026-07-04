@@ -19,7 +19,7 @@
     <img src="https://img.shields.io/pypi/v/sirtuin.svg?style=for-the-badge" alt="pypi version"/>
   </a>
 
-  <a href="https://github.com/merylldindin/sirtuin/blob/master/LICENSE" target="_blank">
+  <a href="https://github.com/merylldindin/sirtuin/blob/main/LICENSE" target="_blank">
     <img src="https://img.shields.io/github/license/merylldindin/sirtuin.svg?style=for-the-badge" alt="license"/>
   </a>
 </div>
@@ -126,7 +126,8 @@ This installs all dependencies and configures pre-commit hooks.
 | `make lint-fix`      | Auto-fix linting issues            |
 | `make types`         | Type check with ty                 |
 | `make test`          | Run test suite                     |
-| `make test-coverage` | Run tests with coverage            |
+| `make uv-lock`       | Lock dependencies                  |
+| `make uv-update`     | Update dependencies                |
 
 ## Contributing
 
