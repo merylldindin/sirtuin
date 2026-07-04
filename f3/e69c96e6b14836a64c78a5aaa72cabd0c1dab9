@@ -1,0 +1,20 @@
+README.md
+  s_c7ffb6a42bc652::t_7417e25513b952 129-130
+  s_c7ffb6a42bc652::t_103351586dd2fe 22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f3e69c96e6b14836a64c78a5aaa72cabd0c1dab9",
+  "prompts": {},
+  "sessions": {
+    "s_c7ffb6a42bc652": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5424298a-3eef-4884-84fd-6d49d9d0464c",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Meryll Dindin <merylldin@gmail.com>"
+    }
+  }
+}
