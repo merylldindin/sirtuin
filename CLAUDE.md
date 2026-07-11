@@ -87,17 +87,6 @@ sirtuin/
 | `sirtuin cloudfront-invalidate` | Invalidate CloudFront cache             |
 | `sirtuin cloudfront-headers`    | Display Content Security Policy headers |
 
-## Code Conventions
-
-- Line length: 88 characters
-- Type hints required on all functions
-- Conventional commits enforced via pre-commit
-- Branch naming: `{initials}/{descriptive-kebab-case}`
-- Naming:
-  - `snake_case` for functions and variables
-  - `PascalCase` for classes
-  - `SCREAMING_SNAKE_CASE` for constants
-
 ## CI/CD
 
 - **Continuous Integration**: Runs on PR/merge_group
