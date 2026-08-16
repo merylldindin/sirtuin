@@ -18,6 +18,7 @@ dist/
 !**/.vscode/extensions.json
 .claude/*
 !.claude/agents/
+!.claude/output-styles/
 !.claude/references/
 !.claude/rules/
 !.claude/skills/
