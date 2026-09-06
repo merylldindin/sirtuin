@@ -13,8 +13,6 @@ from sirtuin.utils.constants import DEFAULT_SIRTUIN_CONFIG_NAME
 
 cli = typer.Typer()
 
-# ? Elastic Container
-
 
 @cli.command()
 def container_push(
@@ -32,9 +30,6 @@ def container_deploy(
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ) -> None:
     deploy_container_from_config(filepath, profile, verbose)
-
-
-# ? Cloudfront
 
 
 @cli.command()
