@@ -1,65 +1,44 @@
 # Sirtuin
 
-AWS CLI routines library for Python projects.
+AWS deployment CLI for CloudFront distributions and Elastic Container Service. Published to PyPI as `sirtuin`; installing it puts a `sirtuin` console script on the path.
 
-## Tech Stack
+## Stack
 
-| Layer                | Technology     |
-| -------------------- | -------------- |
-| Language             | Python 3.13    |
-| Package Manager      | uv             |
-| Linting & Formatting | Ruff           |
-| Type Checking        | ty             |
-| Testing              | Pytest         |
-| CI/CD                | GitHub Actions |
+Python is pinned to `==3.13.*` — an exact pin, not a floor, so `uv sync` refuses any other interpreter. uv for packaging, Typer for the CLI, Pydantic for config parsing, Ruff for lint and format, `ty` for type checking, Pytest for tests, GitHub Actions for CI.
 
-## Prerequisites
+Sirtuin drives the **AWS CLI v2 and Docker as subprocesses**. There is no boto3 and no AWS SDK. AWS CLI v2 must be installed and its profiles configured for anything but the tests to work.
 
-- Python 3.13
-- uv (Astral package manager)
-- AWS CLI v2 (configured with profiles)
+`rich.progress` is imported by `utils/decorators.py` but `rich` is not a declared dependency — it arrives transitively through Typer. Treat that as a latent break, not a licence to add more undeclared imports.
 
-## Quick Start
+## Architecture
 
-```bash
-git clone https://github.com/merylldindin/sirtuin
-cd sirtuin
-make setup
-```
+`src/sirtuin/` is a Typer entry point over three layers:
 
-## Project Structure
+- `main.py` — the five commands, one thin function each, delegating straight to a controller
+- `controllers/` — one module per surface (`aws_cloudfront`, `aws_container`, `http_headers`)
+- `models/` — Pydantic models for the config file and AWS enums; nothing here touches AWS
+- `utils/` — loaders, dumpers, cleaners, filepaths, decorators, constants
 
-```
-sirtuin/
-├── src/sirtuin/           # Main package
-│   ├── main.py            # CLI entry point (Typer)
-│   ├── controllers/       # AWS operation handlers
-│   │   ├── aws_cloudfront.py
-│   │   ├── aws_container.py
-│   │   └── http_headers.py
-│   ├── models/            # Pydantic data models
-│   │   ├── base_models.py
-│   │   ├── aws_regions.py
-│   │   ├── aws_container.py
-│   │   ├── aws_cloudfront.py
-│   │   ├── aws_instances.py
-│   │   └── http_headers.py
-│   └── utils/             # Utility functions
-│       ├── constants.py
-│       ├── loaders.py
-│       ├── cleaners.py
-│       ├── dumpers.py
-│       ├── filepaths.py
-│       └── decorators.py
-├── tests/                 # Pytest test suite
-│   ├── conftest.py
-│   ├── controllers/
-│   └── fixtures/
-├── pyproject.toml         # uv configuration
-├── .pre-commit-config.yaml
-├── Makefile
-└── renovate.json
-```
+Two conventions in `utils/decorators.py` govern how a controller is written, and both are invisible from a call site:
+
+- A function wrapped in `@run_command` **returns a shell command string**; the decorator executes it with `subprocess.Popen(shell=True)`. Write the string, never call the process yourself. Under pytest the decorator short-circuits and returns the string unexecuted, which is what every controller test asserts against — so a controller test checks the command that would run, not an AWS effect.
+- `@catch_remote_config` accepts an `s3://` URI in place of a path: it downloads the object to `.sirtuin.cfg` in the working directory, runs the command, and deletes it. That is why container commands take an S3 URI and CloudFront commands take a local path.
+
+Every command takes a config file rather than flags. The default filename is `.sirtuin.cfg`, TOML, defined as `DEFAULT_SIRTUIN_CONFIG_NAME` in `utils/constants.py`.
+
+## Public API
+
+The CLI is the public surface, so semver tracks it: renaming a command, dropping an option, or changing a config-file key is a breaking change. The importable modules carry no compatibility promise.
+
+| Command                         | Purpose                                 |
+| ------------------------------- | --------------------------------------- |
+| `sirtuin cloudfront-deploy`     | Deploy a CloudFront distribution        |
+| `sirtuin cloudfront-headers`    | Print Content Security Policy headers   |
+| `sirtuin cloudfront-invalidate` | Invalidate a CloudFront cache           |
+| `sirtuin container-deploy`      | Deploy a new container to ECS           |
+| `sirtuin container-push`        | Push an updated container to ECR        |
+
+All five accept `--profile/-p` and `--verbose/-v`. Verbose streams subprocess output instead of showing a spinner.
 
 ## Commands
 
@@ -67,50 +46,32 @@ sirtuin/
 | -------------------- | --------------------------------------- |
 | `make setup`         | Install dependencies + pre-commit hooks |
 | `make setup-hard`    | Clean install from scratch              |
-| `make format`        | Check code formatting                   |
-| `make format-fix`    | Format code with Ruff                   |
-| `make lint`          | Lint code with Ruff                     |
-| `make lint-fix`      | Auto-fix linting issues                 |
+| `make format`        | Check formatting                        |
+| `make format-fix`    | Format with Ruff                        |
+| `make lint`          | Lint with Ruff                          |
+| `make lint-fix`      | Lint and auto-fix                       |
 | `make types`         | Type check with ty                      |
-| `make test`          | Run test suite                          |
-| `make test-coverage` | Run tests with coverage                 |
+| `make test`          | Run the test suite                      |
+| `make test-coverage` | Run tests with a coverage report        |
 | `make uv-lock`       | Lock dependencies                       |
-| `make uv-update`     | Update dependencies                     |
+| `make uv-update`     | Upgrade the lockfile                    |
 
-## CLI Commands
+There is no `check` aggregate. `make format lint types test` is the full local gate, and it matches CI exactly.
 
-| Command                         | Purpose                                 |
-| ------------------------------- | --------------------------------------- |
-| `sirtuin container-push`        | Push updated container to AWS           |
-| `sirtuin container-deploy`      | Deploy new container to AWS             |
-| `sirtuin cloudfront-deploy`     | Deploy CloudFront distribution          |
-| `sirtuin cloudfront-invalidate` | Invalidate CloudFront cache             |
-| `sirtuin cloudfront-headers`    | Display Content Security Policy headers |
+## Gates
 
-## CI/CD
+`make setup` installs the pre-commit hooks. They run on every commit: trailing whitespace, end-of-file, YAML and TOML syntax, `ruff format`, `ruff check --fix`, and commitizen on the message — so every commit must be a Conventional Commit.
 
-- **Continuous Integration**: Runs on PR/merge_group
-  - Ruff format check
-  - Ruff lint
-  - ty type check
-  - Pytest test suite
-- **PyPI Release**: Manual trigger with semantic version
+CI runs on `pull_request` and `merge_group`, and runs the same four make targets.
+
+Ruff selects only `E`, `F`, `I001`, `W`. Annotation, naming and docstring rules are **not enforced by any tool here**, so what `CONTRIBUTING.md` states about typing and naming is convention a reviewer checks, not a gate. One convention it does not state: no inline comments and no docstrings — names carry the meaning, and a comment is a second source of truth nothing verifies.
+
+## Release
+
+The version lives in `[project] version` of `pyproject.toml`, and that field is the only one the release reads.
+
+Publishing is manual and never happens on merge. Run the `PyPI Release` workflow with a semantic version; it rewrites that field, pushes the bump directly to `main`, cuts the GitHub release, builds, publishes to PyPI, and opens a pull request from `gh/release-<version>`.
 
 ## Dependencies
 
-All dependencies pinned to exact versions. Renovate handles updates automatically:
-
-- Minor/patch updates: Auto-merged after 7 days
-- Major updates (dev deps): Auto-merged after 14 days
-- Security updates: Immediate
-
-## Key Files
-
-| File                                           | Purpose                                     |
-| ---------------------------------------------- | ------------------------------------------- |
-| `pyproject.toml`                               | Project config, dependencies, tool settings |
-| `.pre-commit-config.yaml`                      | Pre-commit hooks configuration              |
-| `Makefile`                                     | Development commands                        |
-| `renovate.json`                                | Dependency update automation                |
-| `.github/workflows/continuous-integration.yml` | CI workflow                                 |
-| `.github/workflows/pypi-release.yml`           | PyPI release workflow                       |
+Every dependency is pinned to an exact version. Renovate auto-merges minor and patch updates after 7 days, major updates to dev dependencies after 14, and security updates immediately.
