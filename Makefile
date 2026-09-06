@@ -1,6 +1,6 @@
 PYTHON_FILES = $(shell find src tests -iname "*.py" -not -path "**/__pycache__/**")
 
-.PHONY: setup setup-hard format format-check lint lint-fix types test test-coverage uv-lock uv-update help
+.PHONY: setup setup-hard format format-fix lint lint-fix types test test-coverage uv-lock uv-update help
 
 setup: ## Install developer experience
 	@uv sync
@@ -27,6 +27,9 @@ types: ## Type check all Python files
 
 test: ## Run test suite
 	@uv run pytest tests/
+
+test-coverage: ## Run tests with coverage
+	@uv run pytest tests/ --cov=src/sirtuin --cov-report=term-missing
 
 uv-lock: ## Lock dependencies
 	@uv lock
