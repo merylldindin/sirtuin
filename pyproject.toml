@@ -34,7 +34,7 @@ dev = [
     "pytest-cov==7.1.0",
     "ruff==0.16.6",
     "ty==0.0.78",
-    "types-pyyaml==6.0.12.20260518",
+    "types-pyyaml==6.0.12.20260906",
 ]
 
 [build-system]
