@@ -15,7 +15,7 @@ classifiers = [
 dependencies = [
     "pydantic==2.13.4",
     "pyyaml==6.0.3",
-    "tomli==2.4.1",
+    "tomli==2.5.0",
     "typer==0.26.8",
 ]
 
