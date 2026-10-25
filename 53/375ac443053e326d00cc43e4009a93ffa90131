@@ -1,0 +1,25 @@
+.github/workflows/pypi-release.yml
+  s_fb419abe801638::t_35847c28bede4f 30-31,37
+Makefile
+  s_fb419abe801638::t_35847c28bede4f 10
+CLAUDE.md
+  s_fb419abe801638::t_35847c28bede4f 73,77
+renovate.json
+  s_fb419abe801638::t_35847c28bede4f 101-102,107-108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "53375ac443053e326d00cc43e4009a93ffa90131",
+  "prompts": {},
+  "sessions": {
+    "s_fb419abe801638": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bdb6ae95-2845-4456-8a42-d724d33a58e4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Meryll Dindin <merylldin@gmail.com>"
+    }
+  }
+}
