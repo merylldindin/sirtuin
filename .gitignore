@@ -4,7 +4,6 @@
 
 # Dependencies
 .venv/
-uv.lock
 
 # Build Artifacts
 **/__pycache__/
