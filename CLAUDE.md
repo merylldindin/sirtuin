@@ -74,4 +74,4 @@ Publishing is manual and never happens on merge. Run the `PyPI Release` workflow
 
 ## Dependencies
 
-Every direct dependency is pinned to an exact version. Renovate auto-merges minor and patch updates after 7 days, and major updates to dev dependencies after 14.
+Every direct dependency is pinned to an exact version. Renovate auto-merges minor and patch updates to workflow env versions annotated with a `# renovate:` comment after 7 days; GitHub Actions `uses:` bumps open PRs that are merged by hand. Renovate's pre-commit manager is not enabled, so hook revisions in `.pre-commit-config.yaml` are bumped by hand. Python dependency updates open as individual PRs and are merged by hand, because the `matchDepTypes` in the Python rules of `renovate.json` use Poetry names that uv's dependencies never carry.
