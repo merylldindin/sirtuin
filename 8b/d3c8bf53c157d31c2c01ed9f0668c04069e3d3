@@ -1,0 +1,21 @@
+pyproject.toml
+  s_fb419abe801638::t_053bda55d5252d 60
+CLAUDE.md
+  s_fb419abe801638::t_79c24b25fe1848 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8bd3c8bf53c157d31c2c01ed9f0668c04069e3d3",
+  "prompts": {},
+  "sessions": {
+    "s_fb419abe801638": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bdb6ae95-2845-4456-8a42-d724d33a58e4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    }
+  }
+}
