@@ -70,7 +70,7 @@ Ruff selects only `E`, `F`, `I001`, `W`. Annotation, naming and docstring rules 
 
 The version lives in `[project] version` of `pyproject.toml`, and that field is the only one the release reads.
 
-Publishing is manual and never happens on merge. Run the `PyPI Release` workflow with a semantic version; it sets the version with `uv version`, which rewrites that field and `uv.lock` together, pushes the bump directly to `main`, cuts the GitHub release, builds, publishes to PyPI, and opens a pull request from `gh/release-<version>`.
+Publishing is manual and never happens on merge. Run the `PyPI Release` workflow with a semantic version; it sets the version with `uv version`, which rewrites that field and `uv.lock` together, commits the bump on `gh/release-<version>`, cuts the GitHub release from that branch so the tag holds the bump, builds, publishes to PyPI, and opens a pull request that brings the bump to `main`.
 
 ## Dependencies
 
