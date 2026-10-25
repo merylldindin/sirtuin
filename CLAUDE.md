@@ -4,7 +4,7 @@ AWS deployment CLI for CloudFront distributions and Elastic Container Service. P
 
 ## Stack
 
-Python is pinned to `==3.13.*` — an exact pin, not a floor, so `uv sync` refuses any other interpreter. uv for packaging, Typer for the CLI, Pydantic for config parsing, Ruff for lint and format, `ty` for type checking, Pytest for tests, GitHub Actions for CI.
+Python is bounded to `>=3.13,<3.15`: 3.13 and 3.14 are supported, and CI runs the full gate on both. Ruff and `ty` target 3.13, the floor, so code using a 3.14-only feature fails the gate. uv for packaging, Typer for the CLI, Pydantic for config parsing, Ruff for lint and format, `ty` for type checking, Pytest for tests, GitHub Actions for CI.
 
 Sirtuin drives the **AWS CLI v2 and Docker as subprocesses**. There is no boto3 and no AWS SDK. AWS CLI v2 must be installed and its profiles configured for anything but the tests to work.
 
