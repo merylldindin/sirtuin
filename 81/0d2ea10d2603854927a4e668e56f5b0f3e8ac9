@@ -1,0 +1,21 @@
+CLAUDE.md
+  s_fb419abe801638::t_8eb098e4d8b184 77
+.vscode/settings.json
+  s_fb419abe801638::t_b77c913db9637b 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "810d2ea10d2603854927a4e668e56f5b0f3e8ac9",
+  "prompts": {},
+  "sessions": {
+    "s_fb419abe801638": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bdb6ae95-2845-4456-8a42-d724d33a58e4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Meryll Dindin <merylldin@gmail.com>"
+    }
+  }
+}
