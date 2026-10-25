@@ -4,7 +4,7 @@ AWS deployment CLI for CloudFront distributions and Elastic Container Service. P
 
 ## Stack
 
-Python is bounded to `>=3.13,<3.15`: 3.13 and 3.14 are supported, and CI runs the full gate on both. Ruff and `ty` target 3.13, the floor, so code using a 3.14-only feature fails the gate. uv for packaging, Typer for the CLI, Pydantic for config parsing, Ruff for lint and format, `ty` for type checking, Pytest for tests, GitHub Actions for CI.
+Python is bounded to `>=3.13,<3.15`: 3.13 and 3.14 are supported, and CI runs the full gate on both. Ruff and `ty` target 3.13, the floor. uv for packaging, Typer for the CLI, Pydantic for config parsing, Ruff for lint and format, `ty` for type checking, Pytest for tests, GitHub Actions for CI.
 
 Sirtuin drives the **AWS CLI v2 and Docker as subprocesses**. There is no boto3 and no AWS SDK. AWS CLI v2 must be installed and its profiles configured for anything but the tests to work.
 
@@ -56,13 +56,13 @@ All five accept `--profile/-p` and `--verbose/-v`. Verbose streams subprocess ou
 | `make uv-lock`       | Lock dependencies                       |
 | `make uv-update`     | Upgrade the lockfile                    |
 
-There is no `check` aggregate. `make format lint types test` is the full local gate, and it matches CI exactly.
+There is no `check` aggregate. `make format lint types test` is the full local gate.
 
 ## Gates
 
 `make setup` installs the pre-commit hooks. They run on every commit: trailing whitespace, end-of-file, YAML and TOML syntax, `ruff format`, `ruff check --fix`, and commitizen on the message — so every commit must be a Conventional Commit.
 
-CI runs on `pull_request` and `merge_group`, and runs the same four make targets.
+CI runs on `pull_request`, `merge_group` and `workflow_dispatch`. It runs the same four make targets, plus `renovate-config-validator` on the 3.13 leg.
 
 Ruff selects only `E`, `F`, `I001`, `W`. Annotation, naming and docstring rules are **not enforced by any tool here**, so what `CONTRIBUTING.md` states about typing and naming is convention a reviewer checks, not a gate. One convention it does not state: no inline comments and no docstrings — names carry the meaning, and a comment is a second source of truth nothing verifies.
 
@@ -74,4 +74,4 @@ Publishing is manual and never happens on merge. Run the `PyPI Release` workflow
 
 ## Dependencies
 
-Every dependency is pinned to an exact version. Renovate auto-merges minor and patch updates after 7 days, major updates to dev dependencies after 14, and security updates immediately.
+Every direct dependency is pinned to an exact version. Renovate auto-merges minor and patch updates after 7 days, and major updates to dev dependencies after 14.

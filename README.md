@@ -39,7 +39,7 @@ Sirtuin is a collection of AWS CLI routines that automate common deployment task
 
 | Layer                | Technology                                        |
 | -------------------- | ------------------------------------------------- |
-| Language             | [Python 3.13+](https://www.python.org/)           |
+| Language             | [Python 3.13 or 3.14](https://www.python.org/)    |
 | Package Manager      | [uv](https://docs.astral.sh/uv/)                  |
 | CLI Framework        | [Typer](https://typer.tiangolo.com/)              |
 | Data Validation      | [Pydantic](https://docs.pydantic.dev/)            |
