@@ -1,0 +1,19 @@
+CONTRIBUTING.md
+  s_fb419abe801638::t_334081c600e7b3 49-50,55-56,60-62,67-68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "90a98a8f7de7b159bed7e5659fe3027ccd887118",
+  "prompts": {},
+  "sessions": {
+    "s_fb419abe801638": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bdb6ae95-2845-4456-8a42-d724d33a58e4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Meryll Dindin <merylldin@gmail.com>"
+    }
+  }
+}
