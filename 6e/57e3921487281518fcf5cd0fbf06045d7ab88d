@@ -1,0 +1,19 @@
+uv.lock
+  s_bda037620d3f4b::t_64bff99f5e7ec0 158-215,250,252,254,373,375,377,391,393,395,548,553,555,808,813,815,820,829,831,864-901
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6e57e3921487281518fcf5cd0fbf06045d7ab88d",
+  "prompts": {},
+  "sessions": {
+    "s_bda037620d3f4b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "dd8c701e-e7ad-4fec-a273-5b24ed61c51a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Meryll Dindin <merylldin@gmail.com>"
+    }
+  }
+}
