@@ -14,10 +14,10 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-    "pydantic==2.14.2",
+    "pydantic==2.14.3",
     "pyyaml==6.0.3",
     "tomli==2.5.0",
-    "typer==0.27.3",
+    "typer==0.28.0",
 ]
 
 [project.scripts]
@@ -33,9 +33,9 @@ dev = [
     "pre-commit==4.7.0",
     "pytest==9.2.0",
     "pytest-cov==7.1.0",
-    "ruff==0.17.3",
-    "ty==0.0.95",
-    "types-pyyaml==6.0.12.20261030",
+    "ruff==0.17.4",
+    "ty==0.0.99",
+    "types-pyyaml==6.0.12.20261103",
 ]
 
 [build-system]
